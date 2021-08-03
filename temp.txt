@@ -1,0 +1,33 @@
+sas
+penis 
+golus to kox
+jak zrobic tablice ?????
+tak
+
+// Tablice statyczne
+int a[3] = {1,2,3};
+int b[] = {4,5};
+
+// Tablice dynamiczne
+int* c = new int[3]; // tablica jednowymiarowa
+
+int** d = new int*[5]; // tablica dwuwymiarowa
+for(unsigned char i = 0; i < 5; i++) {
+  d[i] = new int[4]; // uzupełnienie tablicy tablicami
+}
+
+bartosz biek <3
+
+
+
+B - 
+	waz jako tablica 
+	PODEJSCIE OBIEKTOWE!!!!!
+
+
+NIENAWIDZE WSKAZNIKOW1
+
+
+NAUCZYC SIE SDL2!!!!!
+
+ep5
