@@ -18,15 +18,12 @@ int main(int argc, char *args[])
 	//player pos init
 	SDL_Rect playerPos;
 	playerPos.w = 100;
-	playerPos.h = 100;
+	playerPos.h = 100; 
 	playerPos.x = 0;
 	playerPos.y = 0;
 
 	//keyboard movment flags
-	bool keyW = false;
-	bool keyA = false;
-	bool keyS = false;
-	bool keyD = false;
+	bool keyW = false, keyA = false, keyS = false, keyD = false;
 
 	//initializing window
 	SDL_Init(SDL_INIT_VIDEO);
