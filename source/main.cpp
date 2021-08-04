@@ -4,6 +4,7 @@
 #include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"
+#include "global/fileSystem/fileSystem.h"
 
 #define FPS 60
 #define SPEED 6
@@ -35,12 +36,10 @@ int main(int argc, char *args[])
 
 	//loading images
 	windowSurface = SDL_GetWindowSurface(window);
-	imageSurface = SDL_LoadBMP("assets/background_blasck.bmp");
+	imageSurface = SDL_LoadBMP("assets/background_black.bmp");
 	playerSurface = SDL_LoadBMP("assets/mariss.bmp");
+	std::string sds = FileSystem::LoadFile("text.txt");
 
-	Logger::Log("ale fajnie");
-	Logger::Warn("chyba jest zle");
-	Logger::Error("jest zle");
 
 	Uint32 colorkey = SDL_MapRGB(playerSurface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(playerSurface, SDL_TRUE, colorkey);
