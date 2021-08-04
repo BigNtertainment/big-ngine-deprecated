@@ -50,14 +50,20 @@ void FileSystem::SaveFile(std::string path, std::string contents)
 void FileSystem::AppendFile(std::string path, std::string contents)
 {
 	std::fstream file;
+	std::fstream ifile;
 
+	ifile.open(path);
+	if (!ifile)
+	{
+		Logger::Error("Could not open file: " + path);
+		return;
+	}
 	file.open(path, std::ios::app);
 	if (!file.good())
 	{
 		Logger::Error("Could not open file: " + path);
 		return;
 	}
-
 
 	file << contents;
 	file.close();
