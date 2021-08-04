@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <math.h>
-#include "./project/namespaces/logger.h"
+#include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"
 
@@ -35,8 +35,12 @@ int main(int argc, char *args[])
 
 	//loading images
 	windowSurface = SDL_GetWindowSurface(window);
-	imageSurface = SDL_LoadBMP("assets/background.bmp");
+	imageSurface = SDL_LoadBMP("assets/background_blasck.bmp");
 	playerSurface = SDL_LoadBMP("assets/mariss.bmp");
+
+	Logger::Log("ale fajnie");
+	Logger::Warn("chyba jest zle");
+	Logger::Error("jest zle");
 
 	Uint32 colorkey = SDL_MapRGB(playerSurface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(playerSurface, SDL_TRUE, colorkey);
@@ -76,7 +80,9 @@ int main(int argc, char *args[])
 		if (playerPos.y >= HEIGHT - playerPos.h)
 			playerPos.y = HEIGHT - playerPos.h;
 
+		// bliting background to window surface 
 		SDL_BlitSurface(imageSurface, NULL, windowSurface, NULL);
+		// bliting player to background @ playerPos
 		SDL_BlitSurface(playerSurface, NULL, windowSurface, &playerPos);
 
 		SDL_UpdateWindowSurface(window);
