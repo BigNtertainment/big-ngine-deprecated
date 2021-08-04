@@ -1,8 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <math.h>
-#include "game.h"
-#include "input.h"
+#include "global/game/game.h"
+#include "global/input/input.h"
 
 #define FPS 60
 #define SPEED 6
@@ -23,9 +23,6 @@ int main(int argc, char *args[])
 	playerPos.h = 100; 
 	playerPos.x = 0;
 	playerPos.y = 0;
-
-	//keyboard movment flags
-	bool keyW = false, keyA = false, keyS = false, keyD = false;
 
 	//initializing window
 	SDL_Init(SDL_INIT_VIDEO);
@@ -56,11 +53,9 @@ int main(int argc, char *args[])
 		}
 		//the main loop
 
-		std::cout << Input::Get(SDLK_w) << " " << Input::Get(SDLK_d) << std::endl;
-
 		//movment stuff
-		float x_vel = (keyD - keyA);
-		float y_vel = (keyS - keyW);
+		float x_vel = (Input::Get(SDLK_d) - Input::Get(SDLK_a));
+		float y_vel = (Input::Get(SDLK_s) - Input::Get(SDLK_w));
 
 		float magnitude = sqrt(pow(x_vel, 2) + pow(y_vel, 2));
 
