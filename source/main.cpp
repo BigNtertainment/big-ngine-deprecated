@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <math.h>
+#include "game.h"
+#include "input.h"
 
 #define FPS 60
 #define SPEED 6
@@ -34,8 +36,7 @@ int main(int argc, char *args[])
 	window = SDL_CreateWindow("fumo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
 
 	//window created
-	bool isRunning = true;
-	SDL_Event ev;
+	SDL_Event event;
 
 	//loading images
 	windowSurface = SDL_GetWindowSurface(window);
@@ -47,58 +48,18 @@ int main(int argc, char *args[])
 
 	//making player with Rect to later blit him into window
 	// TODO this is stupid and overcomplicated but i dont know how to do it better
-	while (isRunning)
+	while (Game::running)
 	{
-
-		while (SDL_PollEvent(&ev) != 0)
+		while (SDL_PollEvent(&event) != 0)
 		{
-			if (ev.type == SDL_QUIT)
-				isRunning = false;
-			//keypress shit
-			else if (ev.type == SDL_KEYDOWN)
-			{
-				switch (ev.key.keysym.sym)
-				{
-				case SDLK_w:
-					keyW = true;
-					break;
-
-				case SDLK_s:
-					keyS = true;
-					break;
-
-				case SDLK_d:
-					keyD = true;
-					break;
-
-				case SDLK_a:
-					keyA = true;
-					break;
-				}
-			}
-			else if (ev.type == SDL_KEYUP)
-			{
-				switch (ev.key.keysym.sym)
-				{
-				case SDLK_w:
-					keyW = false;
-					break;
-
-				case SDLK_s:
-					keyS = false;
-					break;
-
-				case SDLK_d:
-					keyD = false;
-					break;
-
-				case SDLK_a:
-					keyA = false;
-					break;
-				}
-			}
+			if (event.type == SDL_QUIT)
+				Game::running = false;
+			
+			Input::Update(event);
 		}
 		//the main loop
+
+		std::cout << Input::Get(SDLK_w) << " " << Input::Get(SDLK_d) << std::endl;
 
 		//movment stuff
 		float x_vel = (keyD - keyA);
