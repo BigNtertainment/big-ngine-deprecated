@@ -51,7 +51,7 @@ int main(int argc, char *args[])
 		while (SDL_PollEvent(&event) != 0)
 		{
 			if (event.type == SDL_QUIT)
-				Game::running = false;
+				Game::Stop();
 			
 			Input::Update(event);
 		}
