@@ -3,4 +3,4 @@ build.bat
 project.4coder
 run.bat
 obj/*
-.vscode/
+.vscode

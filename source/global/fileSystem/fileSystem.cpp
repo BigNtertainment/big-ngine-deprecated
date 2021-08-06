@@ -58,10 +58,12 @@ void FileSystem::AppendFile(std::string path, std::string contents)
 		Logger::Error("Could not open file: " + path);
 		return;
 	}
+	ifile.close();
 	file.open(path, std::ios::app);
 	if (!file.good())
 	{
 		Logger::Error("Could not open file: " + path);
+		file.close();
 		return;
 	}
 
