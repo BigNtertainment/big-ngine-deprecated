@@ -15,12 +15,11 @@
 #define WIDTH 640
 #define HEIGHT 480
 
-SDL_Window *window = nullptr;
-SDL_Surface *windowSurface = nullptr;
-SDL_Surface *imageSurface = nullptr;
-SDL_Surface *playerSurface = nullptr;
 
 SDL_Rect playerPos;
+SDL_Surface *imageSurface = nullptr;
+SDL_Surface *playerSurface = nullptr;
+SDL_Surface *iconSurface = nullptr;
 
 BigNgine::Scene* firstScene;
 BigNgine::Scene* secondScene;
@@ -61,33 +60,19 @@ void Start() {
 
 	//player pos init
 	playerPos.w = 100;
-	playerPos.h = 100; 
+	playerPos.h = 100;
 	playerPos.x = 0;
 	playerPos.y = 0;
 
-	//initializing window
-	SDL_Init(SDL_INIT_VIDEO);
-
-	if (SDL_Init(SDL_INIT_AUDIO) < 0)
-		Logger::Error("cant load SDL_AUDIO");
-
-	Mix_Init(MIX_INIT_MP3);
-
-	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
-	window = SDL_CreateWindow("fumo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
-	//window created
-
+	
 	//loading images
-	windowSurface = SDL_GetWindowSurface(window);
-
-	//loading images
-	windowSurface = SDL_GetWindowSurface(window);
 	imageSurface = SDL_LoadBMP("assets/background_black.bmp");
 	playerSurface = SDL_LoadBMP("assets/mariss.bmp");
+	iconSurface = SDL_LoadBMP("assets/icon.bmp");
 
-	
 	Uint32 colorkey = SDL_MapRGB(playerSurface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(playerSurface, SDL_TRUE, colorkey);
+	SDL_SetColorKey(iconSurface, SDL_TRUE, colorkey);
 
 	firstScene = new BigNgine::Scene();
 	secondScene = new BigNgine::Scene();
@@ -101,15 +86,16 @@ void Start() {
 	firstScene->AddEntity(man);
 
 	Game::ActiveScene = firstScene;
+	SDL_SetWindowIcon(Game::window, iconSurface);
+
 }
 
-void Update(int deltaTime) {
-	//making player with Rect to later blit him into window
-	// TODO this is stupid and overcomplicated but i dont know how to do it better
+void Update(int deltaTime)
+{
 
 	//movment stuff
-	float x_vel = (Input::Get(SDLK_d) - Input::Get(SDLK_a));
-	float y_vel = (Input::Get(SDLK_s) - Input::Get(SDLK_w));
+	float x_vel = (Input::Get((int)SDLK_d) - Input::Get((int)SDLK_a));
+	float y_vel = (Input::Get((int)SDLK_s) - Input::Get((int)SDLK_w));
 
 	float magnitude = sqrt(pow(x_vel, 2) + pow(y_vel, 2));
 
@@ -129,19 +115,22 @@ void Update(int deltaTime) {
 	if (playerPos.y >= HEIGHT - playerPos.h)
 		playerPos.y = HEIGHT - playerPos.h;
 
-	// bliting background to window surface 
-	SDL_BlitSurface(imageSurface, NULL, windowSurface, NULL);
+	// bliting background to window surface
+	SDL_BlitSurface(imageSurface, NULL, Game::windowSurface, NULL);
 	// bliting player to background @ playerPos
-	SDL_BlitSurface(playerSurface, NULL, windowSurface, &playerPos);
-
-	SDL_UpdateWindowSurface(window);
+	SDL_BlitSurface(playerSurface, NULL, Game::windowSurface, &playerPos);
+	SDL_UpdateWindowSurface(Game::window);
 }
 
 int main(int argc, char *args[])
 {
-	try {
+	Game::Name = "GigNgine";
+	try
+	{
 		Game::Start(Start, Update);
-	} catch (std::exception e) {
+	}
+	catch (std::exception e)
+	{
 		Logger::Error(e.what());
 	}
 
@@ -150,11 +139,5 @@ int main(int argc, char *args[])
 	imageSurface = nullptr;
 	SDL_FreeSurface(playerSurface);
 	playerSurface = nullptr;
-	SDL_DestroyWindow(window);
-	window = nullptr;
-	windowSurface = nullptr;
-	SDL_Quit();
-	Mix_Quit();
-
 	return 0;
 }

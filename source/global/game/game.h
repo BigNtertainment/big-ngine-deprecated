@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <SDL2/SDL.h>
 
 #include "../../types/scene/scene.h"
 
@@ -10,4 +12,7 @@ namespace Game
 	void Stop();
 
 	extern BigNgine::Scene* ActiveScene;
+	extern SDL_Window* window;
+	extern SDL_Surface* windowSurface;
+	extern std::string Name;
 };
