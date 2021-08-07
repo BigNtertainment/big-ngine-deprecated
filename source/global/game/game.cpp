@@ -1,5 +1,6 @@
 #include "game.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include "../input/input.h"
 #include "../logger/logger.h"
 #include "../../types/entity/entity.h"
@@ -9,6 +10,9 @@
 #define FPS 60
 
 bool Game::running = true;
+SDL_Window* Game::window = nullptr;
+SDL_Surface* Game::windowSurface = nullptr;
+std::string Game::Name;
 
 void Game::Stop() {
 	SDL_Quit();
@@ -16,20 +20,17 @@ void Game::Stop() {
 }
 
 void Game::Start(void(*Start)(), void(*Update)(int)) {
-	// //declaring shit
-	// SDL_Window *window = nullptr;
-	// SDL_Surface *windowSurface = nullptr;
-	// SDL_Surface *imageSurface = nullptr;
-	// SDL_Surface *playerSurface = nullptr;
 
-	// //initializing window
-	// SDL_Init(SDL_INIT_VIDEO);
+	// that is init init?
 
-	// window = SDL_CreateWindow("fumo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
-	// //window created
+	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_AUDIO);
+	Mix_Init(MIX_INIT_MP3);
 
-	// //loading images
-	// windowSurface = SDL_GetWindowSurface(window);
+	
+	//window shit
+	Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+	Game::windowSurface = SDL_GetWindowSurface(Game::window);
 
 	Start();
 
@@ -69,12 +70,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		delete BigNgine::Entity::entities[i];
 	}
 
-	// //memory stuff
-	// SDL_FreeSurface(imageSurface);
-	// imageSurface = nullptr;
-	// SDL_FreeSurface(playerSurface);
-	// playerSurface = nullptr;
-	// SDL_DestroyWindow(window);
-	// window = nullptr;
-	// windowSurface = nullptr;
+	SDL_DestroyWindow(Game::window);
+	Game::window = nullptr;
+	Game::windowSurface = nullptr;
 }
