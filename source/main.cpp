@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_image.h>
 #include <math.h>
 #include "global/logger/logger.h"
 #include "global/game/game.h"
@@ -8,6 +9,7 @@
 #include "global/fileSystem/fileSystem.h"
 #include "types/entity/entity.h"
 #include "types/behaviour/behaviour.h"
+#include "behaviours/renderer/renderer.h"
 
 #define FPS 60
 #define SPEED 400
@@ -15,29 +17,31 @@
 #define HEIGHT 480
 
 
-SDL_Rect playerPos;
+
 SDL_Surface *imageSurface = nullptr;
-SDL_Surface *playerSurface = nullptr;
 SDL_Surface *iconSurface = nullptr;
+
+
+BigNgine::Entity* Player;
 
 
 void Start()
 {
+	Player = new BigNgine::Entity();
+	BigNgine::RendererBehaviour* PlayerRenderer = new BigNgine::RendererBehaviour();
+	PlayerRenderer->width = 100;
+	PlayerRenderer->height = 100;
+	PlayerRenderer->file = "assets/marisss.bmp";
+	Player->addBehaviour(PlayerRenderer);
 
-	//player pos init
-	playerPos.w = 100;
-	playerPos.h = 100;
-	playerPos.x = 0;
-	playerPos.y = 0;
+
 
 	
 	//loading images
 	imageSurface = SDL_LoadBMP("assets/background_black.bmp");
-	playerSurface = SDL_LoadBMP("assets/mariss.bmp");
 	iconSurface = SDL_LoadBMP("assets/icon.bmp");
 
-	Uint32 colorkey = SDL_MapRGB(playerSurface->format, 0xFF, 0x00, 0xFF);
-	SDL_SetColorKey(playerSurface, SDL_TRUE, colorkey);
+	Uint32 colorkey = SDL_MapRGB(iconSurface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(iconSurface, SDL_TRUE, colorkey);
 
 	SDL_SetWindowIcon(Game::window, iconSurface);
@@ -55,30 +59,29 @@ void Update(int deltaTime)
 
 	if (magnitude != 0)
 	{
-		playerPos.x += (x_vel / magnitude * SPEED * deltaTime / 1000);
-		playerPos.y += (y_vel / magnitude * SPEED * deltaTime / 1000);
+		Player->position.x += (x_vel / magnitude * SPEED * deltaTime / 1000);
+		Player->position.y += (y_vel / magnitude * SPEED * deltaTime / 1000);
 	}
 
 	//collison stuff(with window border)
-	if (playerPos.x <= 0)
-		playerPos.x = 0;
-	if (playerPos.x >= WIDTH - playerPos.w)
-		playerPos.x = WIDTH - playerPos.w;
-	if (playerPos.y <= 0)
-		playerPos.y = 0;
-	if (playerPos.y >= HEIGHT - playerPos.h)
-		playerPos.y = HEIGHT - playerPos.h;
+	if (Player->position.x <= 0)
+		Player->position.x = 0;
+	if (Player->position.x >= WIDTH - 100)
+		Player->position.x = WIDTH - 100;
+	if (Player->position.y <= 0)
+		Player->position.y = 0;
+	if (Player->position.y >= HEIGHT - 100)
+		Player->position.y = HEIGHT - 100;
 
 	// bliting background to window surface
 	SDL_BlitSurface(imageSurface, NULL, Game::windowSurface, NULL);
 	// bliting player to background @ playerPos
-	SDL_BlitSurface(playerSurface, NULL, Game::windowSurface, &playerPos);
 	SDL_UpdateWindowSurface(Game::window);
 }
 
 int main(int argc, char *args[])
 {
-	Game::Name = "GigNgine";
+	Game::Name = "BigNgine";
 	try
 	{
 		Game::Start(Start, Update);
@@ -91,7 +94,5 @@ int main(int argc, char *args[])
 	//memory stuff
 	SDL_FreeSurface(imageSurface);
 	imageSurface = nullptr;
-	SDL_FreeSurface(playerSurface);
-	playerSurface = nullptr;
 	return 0;
 }
