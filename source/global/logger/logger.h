@@ -1,3 +1,5 @@
+#include <iostream>
+
 namespace Logger
 {
 	void Log(std::string message);
