@@ -43,8 +43,9 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	while(Game::running) {
 		while (SDL_PollEvent(&event) != 0)
 		{
-			if (event.type == SDL_QUIT)
+			if (event.type == SDL_QUIT) {
 				Game::Stop();
+			}
 			
 			Input::Update(event);
 		}

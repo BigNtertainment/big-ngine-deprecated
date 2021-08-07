@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include <math.h>
 #include "global/logger/logger.h"
 #include "global/game/game.h"
@@ -49,12 +50,6 @@ void Start() {
 	//initializing window
 	SDL_Init(SDL_INIT_VIDEO);
 
-	window = SDL_CreateWindow("fumo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
-	//window created
-
-	//loading images
-	windowSurface = SDL_GetWindowSurface(window);
-
 	//player pos init
 	playerPos.w = 100;
 	playerPos.h = 100; 
@@ -64,13 +59,24 @@ void Start() {
 	//initializing window
 	SDL_Init(SDL_INIT_VIDEO);
 
+	if (SDL_Init(SDL_INIT_AUDIO) < 0)
+		Logger::Error("cant load SDL_AUDIO");
+
+	Mix_Init(MIX_INIT_MP3);
+
+	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
+	window = SDL_CreateWindow("fumo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+	//window created
+
+	//loading images
+	windowSurface = SDL_GetWindowSurface(window);
+
 	//loading images
 	windowSurface = SDL_GetWindowSurface(window);
 	imageSurface = SDL_LoadBMP("assets/background_black.bmp");
 	playerSurface = SDL_LoadBMP("assets/mariss.bmp");
-	std::string sds = FileSystem::LoadFile("text.txt");
 
-
+	
 	Uint32 colorkey = SDL_MapRGB(playerSurface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(playerSurface, SDL_TRUE, colorkey);
 
@@ -131,6 +137,8 @@ int main(int argc, char *args[])
 	SDL_DestroyWindow(window);
 	window = nullptr;
 	windowSurface = nullptr;
+	SDL_Quit();
+	Mix_Quit();
 
 	return 0;
 }
