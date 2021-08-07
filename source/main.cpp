@@ -8,6 +8,7 @@
 #include "global/input/input.h"
 #include "global/fileSystem/fileSystem.h"
 #include "types/entity/entity.h"
+#include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
 #include "behaviours/renderer/renderer.h"
 
@@ -21,6 +22,10 @@
 SDL_Surface *imageSurface = nullptr;
 SDL_Surface *iconSurface = nullptr;
 
+BigNgine::Scene* firstScene;
+BigNgine::Scene* secondScene;
+BigNgine::Entity* man;
+BigNgine::Behaviour* funny;
 
 BigNgine::Entity* Player;
 
@@ -44,6 +49,18 @@ void Start()
 	Uint32 colorkey = SDL_MapRGB(iconSurface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(iconSurface, SDL_TRUE, colorkey);
 
+	firstScene = new BigNgine::Scene();
+	secondScene = new BigNgine::Scene();
+
+	man = new BigNgine::Entity();
+
+	funny = new FunnyBehaviour();
+
+	man->AddBehaviour(funny);
+
+	firstScene->AddEntity(man);
+
+	Game::ActiveScene = firstScene;
 	SDL_SetWindowIcon(Game::window, iconSurface);
 
 }
