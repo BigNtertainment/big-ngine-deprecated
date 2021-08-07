@@ -19,18 +19,24 @@ void BigNgine::Entity::AddBehaviour(BigNgine::Behaviour* behaviour) {
 
 void BigNgine::Entity::Start() {
 	for(uint16_t i = 0; i < behaviours.size(); i++) {
-		behaviours[i]->Start();
+		if(behaviours[i]->active) {
+			behaviours[i]->Start();
+		}
 	}
 }
 
 void BigNgine::Entity::Update(int deltaTime) {
 	for(uint16_t i = 0; i < behaviours.size(); i++) {
-		behaviours[i]->Update(deltaTime);
+		if(behaviours[i]->active) {
+			behaviours[i]->Update(deltaTime);
+		}
 	}
 }
 
 BigNgine::Entity::~Entity() {
 	for(uint16_t i = 0; i < behaviours.size(); i++) {
-		behaviours[i]->Destroy();
+		if(behaviours[i]->active) {
+			behaviours[i]->Destroy();
+		}
 	}
 }

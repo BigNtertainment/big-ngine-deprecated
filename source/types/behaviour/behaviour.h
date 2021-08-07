@@ -10,6 +10,7 @@ namespace BigNgine {
 		friend Entity;
 	public:
 		std::string name = "Behaviour";
+		bool active = true;
 
 		virtual void Start() = 0;
 		virtual void Update(int deltaTime) = 0;

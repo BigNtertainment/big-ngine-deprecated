@@ -45,7 +45,8 @@ public:
 		Logger::Log(funnyNumber);
 
 		if(funnyNumber >= 5.0) {
-			Game::ActiveScene = secondScene;
+			this->active = false;
+			// Game::ActiveScene = secondScene;
 		}
 	}
 
