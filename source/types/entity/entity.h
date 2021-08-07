@@ -14,15 +14,14 @@ namespace BigNgine {
 		Entity(BigNgine::Vector2 _position);
 
 		BigNgine::Vector2 position;
+		float rotation;
 
-		void addBehaviour(Behaviour* behaviour);
+		void AddBehaviour(Behaviour* behaviour);
 
 		void Start();
 		void Update(int deltaTime);
 
 		~Entity();
-
-		static std::vector<Entity*> entities;
 
 	private:
 		std::vector<Behaviour*> behaviours;

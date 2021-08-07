@@ -7,6 +7,7 @@
 #include "global/input/input.h"
 #include "global/fileSystem/fileSystem.h"
 #include "types/entity/entity.h"
+#include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
 
 #define FPS 60
@@ -20,6 +21,11 @@ SDL_Surface *imageSurface = nullptr;
 SDL_Surface *playerSurface = nullptr;
 
 SDL_Rect playerPos;
+
+BigNgine::Scene* firstScene;
+BigNgine::Scene* secondScene;
+BigNgine::Entity* man;
+BigNgine::Behaviour* funny;
 
 class FunnyBehaviour : public BigNgine::Behaviour {
 public:
@@ -35,16 +41,19 @@ public:
 	}
 
 	void Update(int deltaTime) {
-		funnyNumber += deltaTime / 1000;
+		funnyNumber += (float)deltaTime / 1000;
+
+		Logger::Log(funnyNumber);
+
+		if(funnyNumber >= 5.0) {
+			Game::ActiveScene = secondScene;
+		}
 	}
 
 	void Destroy() {
 		Logger::Log("Goodbye!");
 	}
 };
-
-BigNgine::Entity man;
-BigNgine::Behaviour* funny;
 
 void Start() {
 	//initializing window
@@ -80,11 +89,18 @@ void Start() {
 	Uint32 colorkey = SDL_MapRGB(playerSurface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(playerSurface, SDL_TRUE, colorkey);
 
-	man = BigNgine::Entity();
+	firstScene = new BigNgine::Scene();
+	secondScene = new BigNgine::Scene();
+
+	man = new BigNgine::Entity();
 
 	funny = new FunnyBehaviour();
 
-	man.addBehaviour(funny);
+	man->AddBehaviour(funny);
+
+	firstScene->AddEntity(man);
+
+	Game::ActiveScene = firstScene;
 }
 
 void Update(int deltaTime) {

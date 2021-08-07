@@ -3,12 +3,14 @@
 #include "../input/input.h"
 #include "../logger/logger.h"
 #include "../../types/entity/entity.h"
+#include "../../types/scene/scene.h"
 
 #define WIDTH 640
 #define HEIGHT 480
 #define FPS 60
 
 bool Game::running = true;
+BigNgine::Scene* Game::ActiveScene = nullptr;
 
 void Game::Stop() {
 	SDL_Quit();
@@ -33,9 +35,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 	Start();
 
-	for(uint16_t i = 0; i < BigNgine::Entity::entities.size(); i++) {
-		BigNgine::Entity::entities[i]->Start();
-	}
+	Game::ActiveScene->Start();
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
@@ -55,9 +55,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 			Update(currentTime - lastTime);
 
-			for(uint16_t i = 0; i < BigNgine::Entity::entities.size(); i++) {
-				BigNgine::Entity::entities[i]->Update(currentTime - lastTime);
-			}
+			Game::ActiveScene->Update(currentTime - lastTime);
 
 			lastTime = SDL_GetTicks();
 
@@ -65,9 +63,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		}
 	}
 
-	for(uint16_t i = 0; i < BigNgine::Entity::entities.size(); i++) {
-		delete BigNgine::Entity::entities[i];
-	}
+	delete Game::ActiveScene;
 
 	// //memory stuff
 	// SDL_FreeSurface(imageSurface);
