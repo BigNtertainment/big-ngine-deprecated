@@ -14,7 +14,9 @@ bool Game::running = true;
 BigNgine::Scene* Game::ActiveScene = nullptr;
 SDL_Window* Game::window = nullptr;
 SDL_Surface* Game::windowSurface = nullptr;
+SDL_Surface* Game::iconSurface = nullptr;
 std::string Game::Name;
+std::string Game::icon;
 
 void Game::Stop() {
 	SDL_Quit();
@@ -35,6 +37,19 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	Game::windowSurface = SDL_GetWindowSurface(Game::window);
 
 	Start();
+
+	iconSurface = SDL_LoadBMP(icon.c_str());
+	if (!iconSurface)
+	{
+		Logger::Error("Couldn`t load icon at: " + icon);
+	}
+	else
+	{
+		Uint32 colorkey = SDL_MapRGB(iconSurface->format, 0xFF, 0x00, 0xFF);
+		SDL_SetColorKey(iconSurface, SDL_TRUE, colorkey);
+
+		SDL_SetWindowIcon(Game::window, iconSurface);
+	}
 
 	Game::ActiveScene->Start();
 
@@ -70,6 +85,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	delete Game::ActiveScene;
 
 	SDL_DestroyWindow(Game::window);
+	SDL_FreeSurface(Game::iconSurface);
+	Game::iconSurface = nullptr;
 	Game::window = nullptr;
 	Game::windowSurface = nullptr;
 }

@@ -17,8 +17,6 @@
 #define WIDTH 640
 #define HEIGHT 480
 
-
-SDL_Surface *imageSurface = nullptr;
 SDL_Surface *iconSurface = nullptr;
 
 BigNgine::Scene* Scene;
@@ -47,16 +45,9 @@ void Start()
 
 	Scene->AddEntity(Player);
 
+	Game::icon = "assets/icon.bmp";
+
 	Game::ActiveScene = Scene;
-
-	//loading images
-	imageSurface = SDL_LoadBMP("assets/background_black.bmp");
-	iconSurface = SDL_LoadBMP("assets/icon.bmp");
-
-	Uint32 colorkey = SDL_MapRGB(iconSurface->format, 0xFF, 0x00, 0xFF);
-	SDL_SetColorKey(iconSurface, SDL_TRUE, colorkey);
-
-	SDL_SetWindowIcon(Game::window, iconSurface);
 }
 
 void Update(int deltaTime)
@@ -97,8 +88,5 @@ int main(int argc, char *args[])
 		Logger::Error(e.what());
 	}
 
-	//memory stuff
-	SDL_FreeSurface(imageSurface);
-	imageSurface = nullptr;
 	return 0;
 }

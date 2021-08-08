@@ -6,7 +6,9 @@
 
 namespace Game
 {
+
 	extern bool running;
+	extern std::string icon;
 
 	void Start(void(*Start)(), void(*Update)(int) );
 	void Stop();
@@ -14,5 +16,6 @@ namespace Game
 	extern BigNgine::Scene* ActiveScene;
 	extern SDL_Window* window;
 	extern SDL_Surface* windowSurface;
+	extern SDL_Surface* iconSurface;
 	extern std::string Name;
 };
