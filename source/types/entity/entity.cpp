@@ -4,27 +4,42 @@
 #include "../../global/logger/logger.h"
 
 BigNgine::Entity::Entity() {
-	defaultPosition = BigNgine::Vector2(0.0, 0.0);
-	defaultRotation = 0;
-	defaultSize = BigNgine::Vector2(1.0, 1.0);
+	SetDefaultPosition(BigNgine::Vector2(0.0, 0.0));
+	SetDefaultRotation(0);
+	SetDefaultSize(BigNgine::Vector2(1.0, 1.0));
 }
 
 BigNgine::Entity::Entity(BigNgine::Vector2 _position) {
-	defaultPosition = _position;
-	defaultRotation = 0;
-	defaultSize = BigNgine::Vector2(1.0, 1.0);
+	SetDefaultPosition(_position);
+	SetDefaultRotation(0);
+	SetDefaultSize(BigNgine::Vector2(1.0, 1.0));
 }
 
 BigNgine::Entity::Entity(BigNgine::Vector2 _position, float _rotation) {
-	defaultPosition = _position;
-	defaultRotation = _rotation;
-	defaultSize = BigNgine::Vector2(1.0, 1.0);
+	SetDefaultPosition(_position);
+	SetDefaultRotation(_rotation);
+	SetDefaultSize(BigNgine::Vector2(1.0, 1.0));
 }
 
 BigNgine::Entity::Entity(BigNgine::Vector2 _position, float _rotation, BigNgine::Vector2 _size) {
+	SetDefaultPosition(_position);
+	SetDefaultRotation(_rotation);
+	SetDefaultSize(_size);
+}
+
+void BigNgine::Entity::SetDefaultPosition(BigNgine::Vector2 _position) {
 	defaultPosition = _position;
+	position = _position;
+}
+
+void BigNgine::Entity::SetDefaultRotation(float _rotation) {
 	defaultRotation = _rotation;
+	rotation = _rotation;
+}
+
+void BigNgine::Entity::SetDefaultSize(BigNgine::Vector2 _size) {
 	defaultSize = _size;
+	size = _size;
 }
 
 void BigNgine::Entity::AddBehaviour(BigNgine::Behaviour* behaviour) {

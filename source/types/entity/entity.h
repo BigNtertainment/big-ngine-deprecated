@@ -22,9 +22,9 @@ namespace BigNgine {
 		float rotation;
 		BigNgine::Vector2 size;
 
-		BigNgine::Vector2 defaultPosition;
-		float defaultRotation;
-		BigNgine::Vector2 defaultSize;
+		void SetDefaultPosition(Vector2 _position);
+		void SetDefaultRotation(float _rotation);
+		void SetDefaultSize(Vector2 _size);
 
 		void AddBehaviour(Behaviour* behaviour);
 
@@ -39,5 +39,9 @@ namespace BigNgine {
 	private:
 		std::vector<Behaviour*> behaviours;
 		Scene* parentScene;
+
+		BigNgine::Vector2 defaultPosition;
+		float defaultRotation;
+		BigNgine::Vector2 defaultSize;
 	};
 }

@@ -57,7 +57,8 @@ BigNgine::Entity* Player;
 void Start()
 {
 	Player = new BigNgine::Entity();
-	Player->size = BigNgine::Vector2(100.0, 100.0);
+
+	Player->SetDefaultSize(BigNgine::Vector2(100.0, 100.0));
 	
 	BigNgine::RendererBehaviour* PlayerRenderer = new BigNgine::RendererBehaviour();
 	BigNgine::RendererBehaviour* BackgroundRenderer = new BigNgine::RendererBehaviour();
@@ -77,8 +78,8 @@ void Start()
 	Scene->AddEntity(Player);
 
 	Game::icon = "assets/icon.bmp";
-	Game::SetActiveScene(Scene);
 
+	Game::SetActiveScene(Scene);
 }
 
 void Update(int deltaTime)
