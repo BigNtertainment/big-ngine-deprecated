@@ -1,10 +1,14 @@
 #include "./scene.h"
 
 BigNgine::Scene::Scene() {
+	Camera = new Entity();
 
+	AddEntity(Camera);
 }
 
 void BigNgine::Scene::AddEntity(Entity* entity) {
+	entity->parentScene = this;
+
 	entities.push_back(entity);
 }
 

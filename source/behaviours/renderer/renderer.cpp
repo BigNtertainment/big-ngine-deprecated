@@ -25,8 +25,8 @@ void BigNgine::RendererBehaviour::Start()
 
 void BigNgine::RendererBehaviour::Update(int deltaTime)
 {
-	Position.x = (int)parent -> position.x;
-	Position.y = (int)parent -> position.y;
+	Position.x = (int)parent -> position.x - (int)parent->GetParentScene()->Camera->position.x;
+	Position.y = (int)parent -> position.y - (int)parent->GetParentScene()->Camera->position.y;
 	SDL_BlitSurface(Surface, NULL, Game::windowSurface, &Position);
 }
 

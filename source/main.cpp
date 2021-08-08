@@ -18,30 +18,37 @@
 #define HEIGHT 480
 
 
-
 SDL_Surface *imageSurface = nullptr;
 SDL_Surface *iconSurface = nullptr;
 
-BigNgine::Scene* firstScene;
-BigNgine::Scene* secondScene;
-BigNgine::Entity* man;
-BigNgine::Behaviour* funny;
+BigNgine::Scene* Scene;
 
 BigNgine::Entity* Player;
-
 
 void Start()
 {
 	Player = new BigNgine::Entity();
+	
 	BigNgine::RendererBehaviour* PlayerRenderer = new BigNgine::RendererBehaviour();
+	BigNgine::RendererBehaviour* BackgroundRenderer = new BigNgine::RendererBehaviour();
+
+	Scene = new BigNgine::Scene();
+
 	PlayerRenderer->width = 100;
 	PlayerRenderer->height = 100;
-	PlayerRenderer->file = "assets/marisss.bmp";
-	Player->addBehaviour(PlayerRenderer);
+	PlayerRenderer->file = "assets/mariss.bmp";
 
+	BackgroundRenderer->width = 640;
+	BackgroundRenderer->height = 480;
+	BackgroundRenderer->file = "assets/background_black.bmp";
 
+	Scene->Camera->AddBehaviour(BackgroundRenderer);
+	Player->AddBehaviour(PlayerRenderer);
 
-	
+	Scene->AddEntity(Player);
+
+	Game::ActiveScene = Scene;
+
 	//loading images
 	imageSurface = SDL_LoadBMP("assets/background_black.bmp");
 	iconSurface = SDL_LoadBMP("assets/icon.bmp");
@@ -49,20 +56,7 @@ void Start()
 	Uint32 colorkey = SDL_MapRGB(iconSurface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(iconSurface, SDL_TRUE, colorkey);
 
-	firstScene = new BigNgine::Scene();
-	secondScene = new BigNgine::Scene();
-
-	man = new BigNgine::Entity();
-
-	funny = new FunnyBehaviour();
-
-	man->AddBehaviour(funny);
-
-	firstScene->AddEntity(man);
-
-	Game::ActiveScene = firstScene;
 	SDL_SetWindowIcon(Game::window, iconSurface);
-
 }
 
 void Update(int deltaTime)
@@ -89,11 +83,6 @@ void Update(int deltaTime)
 		Player->position.y = 0;
 	if (Player->position.y >= HEIGHT - 100)
 		Player->position.y = HEIGHT - 100;
-
-	// bliting background to window surface
-	SDL_BlitSurface(imageSurface, NULL, Game::windowSurface, NULL);
-	// bliting player to background @ playerPos
-	SDL_UpdateWindowSurface(Game::window);
 }
 
 int main(int argc, char *args[])

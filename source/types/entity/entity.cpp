@@ -33,6 +33,10 @@ void BigNgine::Entity::Update(int deltaTime) {
 	}
 }
 
+BigNgine::Scene* BigNgine::Entity::GetParentScene() {
+	return parentScene;
+}
+
 BigNgine::Entity::~Entity() {
 	for(uint16_t i = 0; i < behaviours.size(); i++) {
 		if(behaviours[i]->active) {

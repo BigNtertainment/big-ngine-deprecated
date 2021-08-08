@@ -60,6 +60,9 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 			lastTime = SDL_GetTicks();
 
+			// bliting player to background @ playerPos
+			SDL_UpdateWindowSurface(Game::window);
+
 			SDL_Delay(1000 / FPS);
 		}
 	}
