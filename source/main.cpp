@@ -15,8 +15,6 @@
 
 #define FPS 60
 #define SPEED 400
-#define WIDTH 640
-#define HEIGHT 480
 
 SDL_Surface *iconSurface = nullptr;
 
@@ -39,12 +37,12 @@ class MovementBehaviour : public BigNgine::Behaviour {
 		//collison stuff(with window border)
 		if (parent->position.x <= 0)
 			parent->position.x = 0;
-		if (parent->position.x >= WIDTH - 100)
-			parent->position.x = WIDTH - 100;
+		if (parent->position.x >= Game::width - 100)
+			parent->position.x = Game::width - 100;
 		if (parent->position.y <= 0)
 			parent->position.y = 0;
-		if (parent->position.y >= HEIGHT - 100)
-			parent->position.y = HEIGHT - 100;
+		if (parent->position.y >= Game::height - 100)
+			parent->position.y = Game::height - 100;
 	}
 
 	void Destroy() {
