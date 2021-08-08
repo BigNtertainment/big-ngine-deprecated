@@ -19,6 +19,38 @@
 
 SDL_Surface *iconSurface = nullptr;
 
+class MovementBehaviour : public BigNgine::Behaviour {
+	void Start() {}
+
+	void Update(int deltaTime) {
+		//movment stuff
+		float x_vel = (Input::Get((int)SDLK_d) - Input::Get((int)SDLK_a));
+		float y_vel = (Input::Get((int)SDLK_s) - Input::Get((int)SDLK_w));
+
+		float magnitude = sqrt(pow(x_vel, 2) + pow(y_vel, 2));
+
+		if (magnitude != 0)
+		{
+			parent->position.x += (x_vel / magnitude * SPEED * deltaTime / 1000);
+			parent->position.y += (y_vel / magnitude * SPEED * deltaTime / 1000);
+		}
+
+		//collison stuff(with window border)
+		if (parent->position.x <= 0)
+			parent->position.x = 0;
+		if (parent->position.x >= WIDTH - 100)
+			parent->position.x = WIDTH - 100;
+		if (parent->position.y <= 0)
+			parent->position.y = 0;
+		if (parent->position.y >= HEIGHT - 100)
+			parent->position.y = HEIGHT - 100;
+	}
+
+	void Destroy() {
+
+	}
+};
+
 BigNgine::Scene* Scene;
 
 BigNgine::Entity* Player;
@@ -29,6 +61,8 @@ void Start()
 	
 	BigNgine::RendererBehaviour* PlayerRenderer = new BigNgine::RendererBehaviour();
 	BigNgine::RendererBehaviour* BackgroundRenderer = new BigNgine::RendererBehaviour();
+
+	MovementBehaviour* PlayerMovement = new MovementBehaviour();
 
 	Scene = new BigNgine::Scene();
 
@@ -42,38 +76,18 @@ void Start()
 
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 	Player->AddBehaviour(PlayerRenderer);
+	Player->AddBehaviour(PlayerMovement);
 
 	Scene->AddEntity(Player);
 
 	Game::icon = "assets/icon.bmp";
-
 	Game::ActiveScene = Scene;
+
 }
 
 void Update(int deltaTime)
 {
 
-	//movment stuff
-	float x_vel = (Input::Get((int)SDLK_d) - Input::Get((int)SDLK_a));
-	float y_vel = (Input::Get((int)SDLK_s) - Input::Get((int)SDLK_w));
-
-	float magnitude = sqrt(pow(x_vel, 2) + pow(y_vel, 2));
-
-	if (magnitude != 0)
-	{
-		Player->position.x += (x_vel / magnitude * SPEED * deltaTime / 1000);
-		Player->position.y += (y_vel / magnitude * SPEED * deltaTime / 1000);
-	}
-
-	//collison stuff(with window border)
-	if (Player->position.x <= 0)
-		Player->position.x = 0;
-	if (Player->position.x >= WIDTH - 100)
-		Player->position.x = WIDTH - 100;
-	if (Player->position.y <= 0)
-		Player->position.y = 0;
-	if (Player->position.y >= HEIGHT - 100)
-		Player->position.y = HEIGHT - 100;
 }
 
 int main(int argc, char *args[])
