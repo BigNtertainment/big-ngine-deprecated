@@ -2,12 +2,13 @@ CC := g++
 SRC := source
 BLD := build
 OBJ := obj
-FLAGS := --std=c++17 -I.\source\SDL2\include -L.\source\SDL2\lib -Wall -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer -lSDL2_image
+FLAGS := --std=c++17 -I.\source\SDL2\include -I.\source\Box2D\include -L.\source\SDL2\lib -L.\source\Box2D\lib -Wall -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer -lSDL2_image -lBox2D
 
 SOURCES := $(wildcard $(SRC)/*.cpp)
 SOURCES += $(wildcard $(SRC)/global/*/*.cpp)
 SOURCES += $(wildcard $(SRC)/types/*/*.cpp)
 SOURCES += $(wildcard $(SRC)/behaviours/*/*.cpp)
+SOURCES += $(wildcard $(SRC)/Box2D/*/*.cpp)
 OBJECTS := $(patsubst $(SRC)/%.cpp,$(OBJ)/%.o,$(SOURCES))
 
 output: $(OBJECTS)

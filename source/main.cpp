@@ -3,6 +3,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
 #include <math.h>
+#include <Box2D/Box2D.h>
 #include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"
@@ -77,15 +78,9 @@ void Start()
 
 	Scene->AddEntity(Player);
 
+	Game::icon = "assets/icon.bmp";
 	Game::ActiveScene = Scene;
 
-	//loading images
-	iconSurface = SDL_LoadBMP("assets/icon.bmp");
-
-	Uint32 colorkey = SDL_MapRGB(iconSurface->format, 0xFF, 0x00, 0xFF);
-	SDL_SetColorKey(iconSurface, SDL_TRUE, colorkey);
-
-	SDL_SetWindowIcon(Game::window, iconSurface);
 }
 
 void Update(int deltaTime)
