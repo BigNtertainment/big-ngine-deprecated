@@ -7,6 +7,8 @@
 namespace Game
 {
 	extern bool running;
+	extern int width;
+	extern int height;
 
 	void Start(void(*Start)(), void(*Update)(int) );
 	void Stop();

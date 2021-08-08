@@ -17,16 +17,18 @@ void BigNgine::RendererBehaviour::Start()
 	
 	Uint32 colorkey = SDL_MapRGB(Surface->format, 0xFF, 0x00, 0xFF);
 	SDL_SetColorKey(Surface, SDL_TRUE, colorkey);
-	Position.h = height;
-	Position.w = width;
+	Position.w = 1;
+	Position.h = 1;
 	Position.x = 0;
 	Position.y = 0;
 }
 
 void BigNgine::RendererBehaviour::Update(int deltaTime)
 {
-	Position.x = (int)parent -> position.x - (int)parent->GetParentScene()->Camera->position.x;
-	Position.y = (int)parent -> position.y - (int)parent->GetParentScene()->Camera->position.y;
+	Position.x = (int)parent->position.x - (int)parent->GetParentScene()->Camera->position.x;
+	Position.y = (int)parent->position.y - (int)parent->GetParentScene()->Camera->position.y;
+	Position.w = (int)parent->size.x;
+	Position.h = (int)parent->size.y;
 	SDL_BlitSurface(Surface, NULL, Game::windowSurface, &Position);
 }
 

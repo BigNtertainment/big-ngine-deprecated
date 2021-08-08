@@ -6,11 +6,12 @@
 #include "../../types/entity/entity.h"
 #include "../../types/scene/scene.h"
 
-#define WIDTH 640
-#define HEIGHT 480
 #define FPS 60
 
 bool Game::running = true;
+int Game::width = 640;
+int Game::height = 480;
+
 BigNgine::Scene* Game::ActiveScene = nullptr;
 SDL_Window* Game::window = nullptr;
 SDL_Surface* Game::windowSurface = nullptr;
@@ -31,7 +32,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 	
 	//window shit
-	Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+	Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::width, Game::height, SDL_WINDOW_SHOWN);
 	Game::windowSurface = SDL_GetWindowSurface(Game::window);
 
 	Start();

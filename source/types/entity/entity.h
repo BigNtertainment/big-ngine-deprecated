@@ -15,9 +15,12 @@ namespace BigNgine {
 	public:
 		Entity();
 		Entity(BigNgine::Vector2 _position);
+		Entity(BigNgine::Vector2 _position, float _rotation);
+		Entity(BigNgine::Vector2 _position, float _rotation, BigNgine::Vector2 _size);
 
 		BigNgine::Vector2 position;
 		float rotation;
+		BigNgine::Vector2 size;
 
 		void AddBehaviour(Behaviour* behaviour);
 

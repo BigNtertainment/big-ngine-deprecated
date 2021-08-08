@@ -58,6 +58,7 @@ BigNgine::Entity* Player;
 void Start()
 {
 	Player = new BigNgine::Entity();
+	Player->size = BigNgine::Vector2(100.0, 100.0);
 	
 	BigNgine::RendererBehaviour* PlayerRenderer = new BigNgine::RendererBehaviour();
 	BigNgine::RendererBehaviour* BackgroundRenderer = new BigNgine::RendererBehaviour();
@@ -66,13 +67,9 @@ void Start()
 
 	Scene = new BigNgine::Scene();
 
-	PlayerRenderer->width = 100;
-	PlayerRenderer->height = 100;
 	PlayerRenderer->file = "assets/mariss.bmp";
 
-	BackgroundRenderer->width = 640;
-	BackgroundRenderer->height = 480;
-	BackgroundRenderer->file = "assets/background_black.bmp";
+	BackgroundRenderer->file = "assets/background.bmp";
 
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 	Player->AddBehaviour(PlayerRenderer);

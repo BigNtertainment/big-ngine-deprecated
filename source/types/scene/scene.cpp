@@ -1,7 +1,11 @@
 #include "./scene.h"
+#include "../vector2/vector2.h"
+#include "../../global/game/game.h"
 
 BigNgine::Scene::Scene() {
 	Camera = new Entity();
+
+	Camera->size = Vector2(Game::width, Game::height);
 
 	AddEntity(Camera);
 }

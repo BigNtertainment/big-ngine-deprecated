@@ -8,8 +8,6 @@ namespace BigNgine
 	class RendererBehaviour : public Behaviour
 	{
 	public:
-		int width, height;
-
 		std::string file;
 
 		void Start();
