@@ -3,6 +3,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
 #include <math.h>
+#include <Box2D/Box2D.h>
 #include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"
@@ -72,7 +73,7 @@ void Start()
 
 	BackgroundRenderer->width = 640;
 	BackgroundRenderer->height = 480;
-	BackgroundRenderer->file = "assets/background_black.bmp";
+	BackgroundRenderer->file = "assets/background.bmp";
 
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 	Player->AddBehaviour(PlayerRenderer);
