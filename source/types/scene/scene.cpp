@@ -28,8 +28,12 @@ void BigNgine::Scene::Update(int deltaTime) {
 	}
 }
 
-BigNgine::Scene::~Scene() {
+void BigNgine::Scene::Destroy() {
 	for(uint16_t i = 0; i < entities.size(); i++) {
 		delete entities[i];
 	}
+}
+
+BigNgine::Scene::~Scene() {
+	Destroy();
 }

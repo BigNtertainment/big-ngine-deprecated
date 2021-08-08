@@ -14,18 +14,23 @@ namespace BigNgine {
 		friend Scene;
 	public:
 		Entity();
-		Entity(BigNgine::Vector2 _position);
-		Entity(BigNgine::Vector2 _position, float _rotation);
-		Entity(BigNgine::Vector2 _position, float _rotation, BigNgine::Vector2 _size);
+		Entity(BigNgine::Vector2 _defaultPosition);
+		Entity(BigNgine::Vector2 _defaultPosition, float _defaultRotation);
+		Entity(BigNgine::Vector2 _defaultPosition, float _defaultRotation, BigNgine::Vector2 _defaultSize);
 
 		BigNgine::Vector2 position;
 		float rotation;
 		BigNgine::Vector2 size;
 
+		BigNgine::Vector2 defaultPosition;
+		float defaultRotation;
+		BigNgine::Vector2 defaultSize;
+
 		void AddBehaviour(Behaviour* behaviour);
 
 		void Start();
 		void Update(int deltaTime);
+		void Destroy();
 
 		Scene* GetParentScene();
 

@@ -14,7 +14,8 @@ namespace Game
 	void Start(void(*Start)(), void(*Update)(int) );
 	void Stop();
 
-	extern BigNgine::Scene* ActiveScene;
+	void SetActiveScene(BigNgine::Scene* scene);
+
 	extern SDL_Window* window;
 	extern SDL_Surface* windowSurface;
 	extern SDL_Surface* iconSurface;

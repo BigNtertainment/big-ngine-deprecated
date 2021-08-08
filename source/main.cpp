@@ -77,7 +77,7 @@ void Start()
 	Scene->AddEntity(Player);
 
 	Game::icon = "assets/icon.bmp";
-	Game::ActiveScene = Scene;
+	Game::SetActiveScene(Scene);
 
 }
 

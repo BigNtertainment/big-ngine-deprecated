@@ -12,7 +12,7 @@ bool Game::running = true;
 int Game::width = 640;
 int Game::height = 480;
 
-BigNgine::Scene* Game::ActiveScene = nullptr;
+BigNgine::Scene* ActiveScene = nullptr;
 SDL_Window* Game::window = nullptr;
 SDL_Surface* Game::windowSurface = nullptr;
 SDL_Surface* Game::iconSurface = nullptr;
@@ -52,7 +52,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		SDL_SetWindowIcon(Game::window, iconSurface);
 	}
 
-	Game::ActiveScene->Start();
+	ActiveScene->Start();
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
@@ -72,7 +72,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 			Update(currentTime - lastTime);
 
-			Game::ActiveScene->Update(currentTime - lastTime);
+			ActiveScene->Update(currentTime - lastTime);
 
 			lastTime = SDL_GetTicks();
 
@@ -83,7 +83,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		}
 	}
 
-	delete Game::ActiveScene;
+	delete ActiveScene;
 
 	SDL_DestroyWindow(Game::window);
 	SDL_FreeSurface(Game::iconSurface);
@@ -91,3 +91,11 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	Game::window = nullptr;
 	Game::windowSurface = nullptr;
 }
+
+void Game::SetActiveScene(BigNgine::Scene* scene) {
+	ActiveScene->Destroy();
+
+	ActiveScene = scene;
+
+	ActiveScene->Start();
+} 
