@@ -7,6 +7,7 @@ namespace BigNgine
 {
 	class RendererBehaviour : public Behaviour
 	{
+		friend class AnimationBehaviour;
 	public:
 		std::string file;
 
@@ -18,6 +19,7 @@ namespace BigNgine
 	
 	private:
 		SDL_Rect Position;
+		SDL_Rect* AnimationRect = nullptr;
 
 		SDL_Surface* Surface;
 	};
