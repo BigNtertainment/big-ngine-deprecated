@@ -8,7 +8,6 @@
 void BigNgine::RendererBehaviour::Start()
 {
 	Surface = SDL_LoadBMP( BigNgine::RendererBehaviour::file.c_str() );
-	// TODO: error detection
 	if (!Surface)
 	{
 		Logger::Error("Couldn`t load file: " + file);
@@ -16,7 +15,7 @@ void BigNgine::RendererBehaviour::Start()
 	}
 	
 	Uint32 colorkey = SDL_MapRGB(Surface->format, 0xFF, 0x00, 0xFF);
-	SDL_SetColorKey(Surface, SDL_TRUE, colorkey);
+	// SDL_SetColorKey(Surface, SDL_TRUE, colorkey);
 	Position.w = 1;
 	Position.h = 1;
 	Position.x = 0;

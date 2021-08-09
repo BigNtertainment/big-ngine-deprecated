@@ -37,8 +37,8 @@ namespace BigNgine {
 		~Entity();
 
 	private:
-		std::vector<Behaviour*> behaviours;
 		Scene* parentScene;
+		std::vector<Behaviour*> behaviours;
 
 		BigNgine::Vector2 defaultPosition;
 		float defaultRotation;

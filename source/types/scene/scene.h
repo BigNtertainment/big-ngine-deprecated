@@ -1,14 +1,21 @@
 #pragma once
 
 #include <vector>
+#include <Box2D/box2d.h>
 #include "../entity/entity.h"
 
 namespace BigNgine {
 	class Entity;
-
+	class Behaviour;
+	
 	class Scene {
+		friend Entity;
+		friend Behaviour;
 	public:
 		Entity* Camera;
+
+		b2Vec2* gravity;
+		b2World* world;
 
 		Scene();
 

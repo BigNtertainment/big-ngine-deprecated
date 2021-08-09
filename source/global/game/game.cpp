@@ -68,18 +68,25 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		}
 
 		if(Game::running) {
+			Uint64 start = SDL_GetPerformanceCounter();
 			currentTime = SDL_GetTicks();
 
-			Update(currentTime - lastTime);
+			int deltaTime = currentTime - lastTime;
 
-			ActiveScene->Update(currentTime - lastTime);
+			Update(deltaTime);
+
+			ActiveScene->Update(deltaTime);
 
 			lastTime = SDL_GetTicks();
 
 			// bliting player to background @ playerPos
 			SDL_UpdateWindowSurface(Game::window);
 
-			SDL_Delay(1000 / FPS);
+			Uint64 end = SDL_GetPerformanceCounter();
+
+			float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
+
+			SDL_Delay(floor(16.666f - elapsedMS));
 		}
 	}
 
