@@ -12,6 +12,7 @@
 #include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
 #include "behaviours/renderer/renderer.h"
+#include "behaviours/animation/animation.h"
 
 #define FPS 60
 #define SPEED 400
@@ -53,28 +54,42 @@ class MovementBehaviour : public BigNgine::Behaviour {
 BigNgine::Scene* Scene;
 
 BigNgine::Entity* Player;
+BigNgine::Entity* AnimatedEntity;
 
 void Start()
 {
 	Player = new BigNgine::Entity();
+	AnimatedEntity = new BigNgine::Entity();
 
 	Player->SetDefaultSize(BigNgine::Vector2(100.0, 100.0));
+	AnimatedEntity->SetDefaultPosition(BigNgine::Vector2(Game::width / 2, Game::height / 2));
+	AnimatedEntity->SetDefaultSize(BigNgine::Vector2(100.0, 100.0));
 	
 	BigNgine::RendererBehaviour* PlayerRenderer = new BigNgine::RendererBehaviour();
+	BigNgine::RendererBehaviour* AnimatedEntityRenderer = new BigNgine::RendererBehaviour();
 	BigNgine::RendererBehaviour* BackgroundRenderer = new BigNgine::RendererBehaviour();
+
+	BigNgine::AnimationBehaviour* Animation = new BigNgine::AnimationBehaviour();
 
 	MovementBehaviour* PlayerMovement = new MovementBehaviour();
 
 	Scene = new BigNgine::Scene();
 
-	PlayerRenderer->file = "assets/mariss.bmp";
-
 	BackgroundRenderer->file = "assets/background.bmp";
+	PlayerRenderer->file = "assets/mariss.bmp";
+	AnimatedEntityRenderer->file = "assets/ass.bmp";
+
+	Animation->frameDuration = 1.0;
+
+	Animation->renderer = AnimatedEntityRenderer;
 
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 	Player->AddBehaviour(PlayerRenderer);
 	Player->AddBehaviour(PlayerMovement);
+	AnimatedEntity->AddBehaviour(AnimatedEntityRenderer);
+	AnimatedEntity->AddBehaviour(Animation);
 
+	Scene->AddEntity(AnimatedEntity);
 	Scene->AddEntity(Player);
 
 	Game::icon = "assets/icon.bmp";

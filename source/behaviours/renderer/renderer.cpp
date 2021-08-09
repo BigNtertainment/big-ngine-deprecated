@@ -4,7 +4,6 @@
 #include "../../global/game/game.h"
 #include "../../global/logger/logger.h"
 
-
 void BigNgine::RendererBehaviour::Start()
 {
 	Surface = SDL_LoadBMP( BigNgine::RendererBehaviour::file.c_str() );
@@ -29,7 +28,8 @@ void BigNgine::RendererBehaviour::Update(int deltaTime)
 	Position.y = (int)parent->position.y - (int)parent->GetParentScene()->Camera->position.y;
 	Position.w = (int)parent->size.x;
 	Position.h = (int)parent->size.y;
-	SDL_BlitSurface(Surface, NULL, Game::windowSurface, &Position);
+
+	SDL_BlitSurface(Surface, (AnimationRect == nullptr ? NULL : AnimationRect), Game::windowSurface, &Position);
 }
 
 void BigNgine::RendererBehaviour::Destroy()

@@ -39,6 +39,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 	Start();
 
+	ActiveScene->Start();
+
 	iconSurface = SDL_LoadBMP(icon.c_str());
 	if (!iconSurface)
 	{
@@ -51,8 +53,6 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 		SDL_SetWindowIcon(Game::window, iconSurface);
 	}
-
-	ActiveScene->Start();
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
@@ -93,8 +93,11 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 }
 
 void Game::SetActiveScene(BigNgine::Scene* scene) {
-	if(ActiveScene != nullptr)
-		ActiveScene->Destroy();
+	ActiveScene = scene;
+} 
+
+void Game::ChangeActiveScene(BigNgine::Scene* scene) {
+	ActiveScene->Destroy();
 
 	ActiveScene = scene;
 
