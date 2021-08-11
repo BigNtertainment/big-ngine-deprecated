@@ -86,7 +86,10 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 			float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
 
-			SDL_Delay(floor(16.666f - elapsedMS));
+			if (floor(16.666f - elapsedMS) > 0)
+			{
+				SDL_Delay(floor(16.666f - elapsedMS));
+			}
 		}
 	}
 

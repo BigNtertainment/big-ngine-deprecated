@@ -12,6 +12,10 @@ namespace BigNgine
 		void Update(int deltaTime);
 
 		void Destroy();
+
+		bool constraintX;
+		bool constraintY;
+		bool constraintRotation;
 	
 	private:
 		b2BodyDef bodyDef;

@@ -24,7 +24,8 @@ void BigNgine::PhysicsBehaviour::Start()
 void BigNgine::PhysicsBehaviour::Update(int deltaTime)
 {
 	b2Vec2 position = body->GetPosition();
-	// parent->position.x = position.x * PIXELS_PER_METERS - parent->size.x/2;
+	
+	parent->position.x = position.x * PIXELS_PER_METERS - parent->size.x/2;
 	parent->position.y = position.y * PIXELS_PER_METERS- parent->size.y/2;
 	Logger::Log(position.y * PIXELS_PER_METERS - parent->size.y/2);
 }

@@ -25,5 +25,8 @@ clean:
 run:
 	cd $(BLD) && main.exe
 
+build_and_run:
+	make && make run
+
 penis:
 	@echo "8===>"
