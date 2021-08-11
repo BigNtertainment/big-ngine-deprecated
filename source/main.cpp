@@ -21,17 +21,30 @@
 
 BigNgine::Scene* Scene;
 
+BigNgine::Entity* box;
 
 void Start()
 {
 	Game::icon = "assets/icon.bmp";
-	
+
 	BigNgine::RendererBehaviour* BackgroundRenderer = new BigNgine::RendererBehaviour();
 	Scene = new BigNgine::Scene();
 	BackgroundRenderer->file = "assets/background.bmp";
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 
 
+	box = new BigNgine::Entity;
+	BigNgine::RendererBehaviour* BOXrender = new BigNgine::RendererBehaviour;
+	BigNgine::PhysicsBehaviour* BOXphys = new BigNgine::PhysicsBehaviour;
+
+	BOXrender->file = "assets/mariss.bmp";
+	box->size = BigNgine::Vector2(100.0f, 100.0f);
+	box->position = BigNgine::Vector2(100.0f, 100.0f);
+
+	box->AddBehaviour(BOXphys);
+	box->AddBehaviour(BOXrender);
+
+	Scene->AddEntity(box);
 	Game::SetActiveScene(Scene);
 }
 
