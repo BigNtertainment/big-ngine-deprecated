@@ -1,6 +1,5 @@
 #include "physicsStatic.h"
 
-#include <Box2D/box2d.h>
 
 #define PIXELS_PER_METERS 100
 

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <time.h>
+#include <ctime>
 #include "logger.h"
 
 #define NC "\e[0m%-6s\e[m"
@@ -29,7 +29,6 @@ void Logger::Error(std::string message)
 	std::printf( ERROR, message.c_str());
 }
 
-// float
 
 void Logger::Log(float input)
 {

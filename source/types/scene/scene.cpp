@@ -17,17 +17,17 @@ void BigNgine::Scene::AddEntity(Entity* entity) {
 }
 
 void BigNgine::Scene::Start() {
-	// TODO: make gravity setable
+	// TODO: make gravity settable
 	gravity = new b2Vec2(0.0f, 9.81f);
 	world = new b2World(*gravity);
-	for(uint16_t i = 0; i < entities.size(); i++) {
-		entities[i]->Start();
+	for(auto & entity : entities) {
+		entity->Start();
 	}
 }
 
 void BigNgine::Scene::Update(int deltaTime) {
-	for(uint16_t i = 0; i < entities.size(); i++) {
-		entities[i]->Update(deltaTime);
+	for(auto & entity : entities) {
+		entity->Update(deltaTime);
 	}
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
@@ -36,8 +36,8 @@ void BigNgine::Scene::Update(int deltaTime) {
 }
 
 void BigNgine::Scene::Destroy() {
-	for(uint16_t i = 0; i < entities.size(); i++) {
-		delete entities[i];
+	for(auto & entity : entities) {
+		delete entity;
 	}
 	delete world;
 }

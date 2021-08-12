@@ -1,4 +1,5 @@
 #include "animation.h"
+#include "string"
 
 #include "../../global/logger/logger.h"
 
@@ -14,6 +15,7 @@ void BigNgine::AnimationBehaviour::Start() {
 
 	if(frameDuration == 0.0) {
 		Logger::Error("Frame duration not set or set to zero.");
+		return;
 	}
 
 	renderer->AnimationRect = new SDL_Rect();

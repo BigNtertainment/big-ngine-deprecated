@@ -13,13 +13,13 @@ namespace Logger
 
 
 	void Log(double input);
-	void Warn(double message);
-	void Error(double message);
+	void Warn(double input);
+	void Error(double input);
 
 
 	void Log(int input);
-	void Warn(int message);
-	void Error(int message);
+	void Warn(int input);
+	void Error(int input);
 }
 
 const std::string currentDateTime();

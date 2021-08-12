@@ -30,3 +30,6 @@ build_and_run:
 
 penis:
 	@echo "8===>"
+
+all:
+	$(CC) $(SOURCES) $(FLAGS) -o $(BLD)/main.exe

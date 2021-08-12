@@ -70,6 +70,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		if(Game::running) {
 			Uint64 start = SDL_GetPerformanceCounter();
 			currentTime = SDL_GetTicks();
+			
+			
 
 			int deltaTime = currentTime - lastTime;
 
