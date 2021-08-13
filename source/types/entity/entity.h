@@ -3,6 +3,7 @@
 #include "../vector2/vector2.h"
 #include "../behaviour/behaviour.h"
 #include "../scene/scene.h"
+#include "../../global/logger/logger.h"
 #include <vector>
 
 namespace BigNgine {
@@ -27,11 +28,25 @@ namespace BigNgine {
 		void SetDefaultSize(Vector2 _size);
 
 		void AddBehaviour(Behaviour* behaviour);
+		template<class T>
+		std::vector<T*> GetBehaviours() {
+			std::vector<T*> result;
+
+			for(uint16_t i = 0; i < behaviours.size(); i++) {
+				T* cast = dynamic_cast<T*>(behaviours[i]);
+
+				if(cast != NULL) {
+					result.push_back(cast);
+				}
+			}
+
+			return result;
+		}
 
 		void Start();
 		void Update(int deltaTime);
 		void Destroy();
-
+		
 		Scene* GetParentScene();
 
 		~Entity();

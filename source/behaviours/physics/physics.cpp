@@ -6,10 +6,11 @@
 
 void BigNgine::PhysicsBehaviour::Start()
 {
+	//TODO: tymon zrob w koncu te constrainty
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set((parent->position.x + parent->size.x/2) / PIXELS_PER_METERS,(parent->position.y + parent->size.y/2) / PIXELS_PER_METERS);
 //	rotation constrain
-	if(RotationConstrain)
+	if(constraintRotation)
 		bodyDef.fixedRotation = true;
 
 	body = parent->GetParentScene()->world->CreateBody(&bodyDef);
@@ -30,8 +31,7 @@ void BigNgine::PhysicsBehaviour::Update(int deltaTime)
 	parent->position.y = position.y * PIXELS_PER_METERS - parent->size.y/2;
 }
 
-void BigNgine::PhysicsBehaviour::Destroy()
-{
+void BigNgine::PhysicsBehaviour::Destroy() {
 	body = nullptr;
 }
 

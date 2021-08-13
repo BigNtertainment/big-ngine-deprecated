@@ -14,6 +14,7 @@
 #include "behaviours/physicsStatic/physicsStatic.h"
 #include "behaviours/physics/physics.h"
 #include "behaviours/animation/animation.h"
+// #include "behaviours/platformerMovement/platformerMovement.h"
 
 namespace BigNgine
 {
@@ -86,7 +87,11 @@ void Start()
 
 void Update(int deltaTime)
 {
+	std::vector<BigNgine::PhysicsBehaviour*> physics = box->GetBehaviours<BigNgine::PhysicsBehaviour>();
 
+	if(physics.size() > 0) {
+		Logger::Log(physics[0]->GetNumber());
+	}
 }
 
 int main(int argc, char *args[])

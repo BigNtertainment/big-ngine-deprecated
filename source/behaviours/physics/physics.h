@@ -7,6 +7,14 @@ namespace BigNgine
 	class PhysicsBehaviour : public Behaviour
 	{
 	public:
+		bool constraintX;
+		bool constraintY;
+		bool constraintRotation;
+
+		int GetNumber() {
+			return 5;
+		}
+
 		void Start();
 
 		void Update(int deltaTime);
@@ -16,8 +24,6 @@ namespace BigNgine
 		void MoveTo(const BigNgine::Vector2& _target);
 		
 		void MoveBy(const BigNgine::Vector2& _target);
-		
-		bool RotationConstrain;
 	
 	private:
 		b2BodyDef bodyDef;
