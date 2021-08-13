@@ -10,7 +10,7 @@ void BigNgine::PhysicsBehaviour::Start()
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set((parent->position.x + parent->size.x/2) / PIXELS_PER_METERS,(parent->position.y + parent->size.y/2) / PIXELS_PER_METERS);
 //	rotation constrain
-	if(RotationConstrain)
+	if(constraintRotation)
 		bodyDef.fixedRotation = true;
 
 	body = parent->GetParentScene()->world->CreateBody(&bodyDef);

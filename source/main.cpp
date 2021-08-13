@@ -47,7 +47,7 @@ namespace BigNgine
 
 BigNgine::Scene* Scene;
 
-BigNgine::Entity* Player;
+BigNgine::Entity* box;
 BigNgine::Entity* Floor;
 
 void Start()
@@ -58,8 +58,6 @@ void Start()
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 
 	BackgroundRenderer->file = "assets/background.bmp";
-	PlayerRenderer->file = "assets/mariss.bmp";
-	FloorRenderer->file = "assets/floor.bmp";
 
 	box = new BigNgine::Entity;
 	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
@@ -82,7 +80,7 @@ void Start()
 
 void Update(int deltaTime)
 {	
-	std::vector<BigNgine::PhysicsBehaviour*> physics = Player->GetBehaviours<BigNgine::PhysicsBehaviour>();
+	std::vector<BigNgine::PhysicsBehaviour*> physics = box->GetBehaviours<BigNgine::PhysicsBehaviour>();
 
 	if(physics.size() > 0) {
 		Logger::Log(physics[0]->GetNumber());
