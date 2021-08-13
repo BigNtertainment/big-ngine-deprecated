@@ -1,6 +1,4 @@
 #include "entity.h"
-#include "../vector2/vector2.h"
-#include "../behaviour/behaviour.h"
 #include "../../global/logger/logger.h"
 
 BigNgine::Entity::Entity() {

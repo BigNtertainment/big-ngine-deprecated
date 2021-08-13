@@ -1,6 +1,6 @@
 #pragma once
 #include "../../types/behaviour/behaviour.h"
-#include <Box2D/box2d.h>
+#include <box2d/box2d.h>
 
 namespace BigNgine
 {
@@ -20,7 +20,11 @@ namespace BigNgine
 		void Update(int deltaTime);
 
 		void Destroy();
-
+		
+		void MoveTo(BigNgine::Vector2 _target);
+		
+		void MoveBy(BigNgine::Vector2 _target);
+	
 	private:
 		b2BodyDef bodyDef;
 

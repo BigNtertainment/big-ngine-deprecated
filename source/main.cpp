@@ -1,9 +1,8 @@
-#include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
-#include <math.h>
-#include <Box2D/Box2D.h>
+#include <cmath>
+#include <box2d/box2d.h>
 #include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"
@@ -17,8 +16,34 @@
 #include "behaviours/animation/animation.h"
 // #include "behaviours/platformerMovement/platformerMovement.h"
 
-#define FPS 80
-#define SPEED 200
+namespace BigNgine
+{
+	class Teleport : public Behaviour
+	{
+	public:
+		PhysicsBehaviour* physics;
+		
+		void Start()
+		{
+		
+		}
+		
+		void Update(int deltaTime)
+		{
+			if(parent->position.y > 480 && Input::GetMouse().LeftButton)
+			{
+				physics->MoveTo(BigNgine::Vector2(parent->position.x ,100.0f));
+				physics->MoveBy(BigNgine::Vector2(20.0f, 0.0f));
+			}
+		}
+		
+		void Destroy()
+		{
+		
+		}
+	};
+}
+
 
 BigNgine::Scene* Scene;
 
@@ -27,33 +52,30 @@ BigNgine::Entity* Floor;
 
 void Start()
 {
+	auto* BackgroundRenderer = new BigNgine::RendererBehaviour();
 	Scene = new BigNgine::Scene();
-
-	Player = new BigNgine::Entity(BigNgine::Vector2(Game::width / 2.0f, 10.0f), 0.0f, BigNgine::Vector2(100.0f, 100.0f));
-	Floor = new BigNgine::Entity(BigNgine::Vector2(0.0f, Game::height - 40.0f), 0.0f, BigNgine::Vector2(Game::width, 40.0f));
-
-	BigNgine::RendererBehaviour* BackgroundRenderer = new BigNgine::RendererBehaviour();
-	BigNgine::RendererBehaviour* PlayerRenderer = new BigNgine::RendererBehaviour();
-	BigNgine::PhysicsBehaviour* PlayerPhysics = new BigNgine::PhysicsBehaviour();
-	// BigNgine::PlatformerMovementBehaviour* PlayerMovement = new BigNgine::PlatformerMovementBehaviour(PlayerPhysics);
-	BigNgine::RendererBehaviour* FloorRenderer = new BigNgine::RendererBehaviour();
-	BigNgine::PhysicsStaticBehaviour* FloorPhysics = new BigNgine::PhysicsStaticBehaviour();
+	BackgroundRenderer->file = "assets/background.bmp";
+	Scene->Camera->AddBehaviour(BackgroundRenderer);
 
 	BackgroundRenderer->file = "assets/background.bmp";
 	PlayerRenderer->file = "assets/mariss.bmp";
 	FloorRenderer->file = "assets/floor.bmp";
 
-	Scene->Camera->AddBehaviour(BackgroundRenderer);
-	Player->AddBehaviour(PlayerRenderer);
-	Player->AddBehaviour(PlayerPhysics);
-	// Player->AddBehaviour(PlayerMovement);
-	Floor->AddBehaviour(FloorRenderer);
-	Floor->AddBehaviour(FloorPhysics);
-
-	Scene->AddEntity(Player);
-	Scene->AddEntity(Floor);
-
-	Game::icon = "assets/icon.bmp";
+	box = new BigNgine::Entity;
+	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
+	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
+	auto* pTeleport = new BigNgine::Teleport();
+	
+	pTeleport->physics = pPhysicsBehaviour;
+	
+	pRendererBehaviour->file = "assets/mariss.bmp";
+	box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	
+	
+	box->AddBehaviour(pRendererBehaviour);
+	box->AddBehaviour(pTeleport);
+	box->AddBehaviour(pPhysicsBehaviour);
 
 	Game::SetActiveScene(Scene);
 }
@@ -69,12 +91,15 @@ void Update(int deltaTime)
 
 int main(int argc, char *args[])
 {
+	Game::width *= 2;
+	Game::height *= 2;
 	Game::Name = "BigNgine";
+	Game::icon = "assets/icon.bmp";
 	try
 	{
 		Game::Start(Start, Update);
 	}
-	catch (std::exception e)
+	catch (std::exception& e)
 	{
 		Logger::Error(e.what());
 	}

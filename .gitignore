@@ -1,7 +1,4 @@
 build/main.exe
-build.bat
-project.4coder
-run.bat
 obj/*
 .vscode
 obj
