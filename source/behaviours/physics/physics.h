@@ -7,16 +7,20 @@ namespace BigNgine
 	class PhysicsBehaviour : public Behaviour
 	{
 	public:
+		bool constraintX;
+		bool constraintY;
+		bool constraintRotation;
+
+		int GetNumber() {
+			return 5;
+		}
+
 		void Start();
 
 		void Update(int deltaTime);
 
 		void Destroy();
 
-		bool constraintX;
-		bool constraintY;
-		bool constraintRotation;
-	
 	private:
 		b2BodyDef bodyDef;
 
