@@ -29,10 +29,10 @@ namespace BigNgine
 		
 		void Update(int deltaTime)
 		{
-			if(parent->position.y > 480 && Input::GetMouse().LeftButton)
+			if (Input::Get(SDLK_d))
 			{
-				physics->MoveTo(BigNgine::Vector2(parent->position.x ,100.0f));
-				physics->MoveBy(BigNgine::Vector2(20.0f, 0.0f));
+				physics->MoveBy(BigNgine::Vector2(10.0f, -10.0f));
+				Logger::Log(parent->position.y);
 			}
 		}
 		
@@ -48,6 +48,8 @@ BigNgine::Scene* Scene;
 
 BigNgine::Entity* box;
 
+BigNgine::Entity* Ground;
+
 void Start()
 {
 	auto* BackgroundRenderer = new BigNgine::RendererBehaviour();
@@ -56,23 +58,29 @@ void Start()
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 
 
-	box = new BigNgine::Entity;
+	box = new BigNgine::Entity();
 	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto* pTeleport = new BigNgine::Teleport();
-	
 	pTeleport->physics = pPhysicsBehaviour;
-	
 	pRendererBehaviour->file = "assets/mariss.bmp";
 	box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	
-	
+	box->SetDefaultPosition(BigNgine::Vector2(200.0f, 0.0f));
 	box->AddBehaviour(pRendererBehaviour);
-	box->AddBehaviour(pTeleport);
 	box->AddBehaviour(pPhysicsBehaviour);
+	box->AddBehaviour(pTeleport);
+	
+	Ground = new BigNgine::Entity();
+	auto* GRenderer = new BigNgine::RendererBehaviour();
+	auto* GPhysics = new BigNgine::PhysicsStaticBehaviour();
+	GRenderer->file = "assets/floor.bmp";
+	Ground->SetDefaultSize(BigNgine::Vector2(640.0f, 40.0f));
+	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 440.0f));
+	Ground->AddBehaviour(GRenderer);
+	Ground->AddBehaviour(GPhysics);
 
 	Scene->AddEntity(box);
+	Scene->AddEntity(Ground);
 	Game::SetActiveScene(Scene);
 }
 

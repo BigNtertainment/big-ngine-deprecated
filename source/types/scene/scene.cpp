@@ -17,7 +17,7 @@ void BigNgine::Scene::AddEntity(Entity* entity) {
 }
 
 void BigNgine::Scene::Start() {
-	// TODO: make gravity settable
+	// TODO(Pietrek14): make gravity settable
 	gravity = new b2Vec2(0.0f, 9.81f);
 	world = new b2World(*gravity);
 	for(auto & entity : entities) {

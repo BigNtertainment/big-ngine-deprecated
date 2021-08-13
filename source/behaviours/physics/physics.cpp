@@ -35,20 +35,21 @@ void BigNgine::PhysicsBehaviour::Destroy()
 	body = nullptr;
 }
 
-void BigNgine::PhysicsBehaviour::MoveTo(BigNgine::Vector2 _target)
+//FIXME: those functions sometimes freeze physics for the object
+void BigNgine::PhysicsBehaviour::MoveTo(const BigNgine::Vector2& _target)
 {
-	float x = (_target.x + parent->size.x/2) / PIXELS_PER_METERS;
-	float y = (_target.y + parent->size.y/2) / PIXELS_PER_METERS;
+	float x = (_target.x) / PIXELS_PER_METERS;
+	float y = (_target.y) / PIXELS_PER_METERS;
 	parent->position.x = x * PIXELS_PER_METERS;
 	parent->position.y = y * PIXELS_PER_METERS;
-	body->SetTransform(b2Vec2(x, y), 0.0f);
+	body->SetTransform(b2Vec2(x  + parent->size.x/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), 0.0f);
 }
 
-void BigNgine::PhysicsBehaviour::MoveBy(BigNgine::Vector2 _target)
+void BigNgine::PhysicsBehaviour::MoveBy(const BigNgine::Vector2& _target)
 {
 	float x = (_target.x + parent->position.x) / PIXELS_PER_METERS;
 	float y = (_target.y + parent->position.y) / PIXELS_PER_METERS;
 	parent->position.x = x * PIXELS_PER_METERS;
 	parent->position.y = y * PIXELS_PER_METERS;
-	body->SetTransform(b2Vec2(x, y), 0.0f);
+	body->SetTransform(b2Vec2(x  + parent->size.y/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), 0.0f);
 }

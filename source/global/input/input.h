@@ -8,7 +8,6 @@ namespace Input {
 	void Update(SDL_Event event);
 	
 	
-	//	TODO(tymon): make mouse button handling
 	struct MouseStruct
 	{
 		bool RightButton = false;

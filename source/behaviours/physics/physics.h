@@ -13,9 +13,9 @@ namespace BigNgine
 
 		void Destroy();
 		
-		void MoveTo(BigNgine::Vector2 _target);
+		void MoveTo(const BigNgine::Vector2& _target);
 		
-		void MoveBy(BigNgine::Vector2 _target);
+		void MoveBy(const BigNgine::Vector2& _target);
 		
 		bool RotationConstrain;
 	
