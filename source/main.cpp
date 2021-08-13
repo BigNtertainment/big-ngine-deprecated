@@ -29,9 +29,8 @@ namespace BigNgine
 		
 		void Update(int deltaTime)
 		{
-			if(parent->position.y > 480)
+			if(parent->position.y > 480 && Input::GetMouse().LeftButton)
 			{
-				Logger::Log(parent->position.x);
 				physics->MoveTo(BigNgine::Vector2(parent->position.x ,100.0f));
 				physics->MoveBy(BigNgine::Vector2(20.0f, 0.0f));
 			}
