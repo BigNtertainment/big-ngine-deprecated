@@ -100,7 +100,7 @@ void Update(int deltaTime)
 int main(int argc, char *args[])
 {
 	Game::width *= 2;
-	Game::height *= 2;
+	Game::height *= 1.7;
 	Game::Name = "BigNgine";
 	Game::icon = "assets/icon.bmp";
 	try
