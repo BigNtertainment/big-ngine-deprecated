@@ -33,7 +33,7 @@ namespace BigNgine
 			if (Input::Get(SDLK_d))
 			{
 				physics->MoveBy(BigNgine::Vector2(10.0f, -10.0f));
-				Logger::Log(parent->position.y);
+				Logger::Log(parent->position);
 			}
 		}
 		
@@ -58,7 +58,7 @@ void Start()
 	Scene = new BigNgine::Scene();
 	BackgroundRenderer->file = "assets/background.bmp";
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
-	
+
 //	Player or Marisa stuff
 	box = new BigNgine::Entity();
 	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
@@ -71,7 +71,7 @@ void Start()
 	box->AddBehaviour(pRendererBehaviour);
 	box->AddBehaviour(pPhysicsBehaviour);
 	box->AddBehaviour(pTeleport);
-	
+
 //	Ground stuff
 	Ground = new BigNgine::Entity();
 	auto* GRenderer = new BigNgine::RendererBehaviour();
