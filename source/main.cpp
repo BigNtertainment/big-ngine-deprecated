@@ -14,41 +14,12 @@
 #include "behaviours/physicsStatic/physicsStatic.h"
 #include "behaviours/physics/physics.h"
 #include "behaviours/animation/animation.h"
-// #include "behaviours/platformerMovement/platformerMovement.h"
-
-namespace BigNgine
-{
-	class Teleport : public Behaviour
-	{
-	public:
-		PhysicsBehaviour* physics;
-		
-		void Start()
-		{
-		
-		}
-		
-		void Update(int deltaTime)
-		{
-			if (Input::Get(SDLK_d))
-			{
-				physics->MoveBy(BigNgine::Vector2(10.0f, -10.0f));
-				Logger::Log(parent->position.y);
-			}
-		}
-		
-		void Destroy()
-		{
-		
-		}
-	};
-}
+#include "behaviours/platformerMovement/platformerMovement.h"
 
 
 BigNgine::Scene* Scene;
 
-BigNgine::Entity* box;
-
+BigNgine::Entity* Player;
 BigNgine::Entity* Ground;
 
 void Start()
@@ -60,17 +31,16 @@ void Start()
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 	
 //	Player or Marisa stuff
-	box = new BigNgine::Entity();
+	Player = new BigNgine::Entity();
 	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
-	auto* pTeleport = new BigNgine::Teleport();
-	pTeleport->physics = pPhysicsBehaviour;
+	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
 	pRendererBehaviour->file = "assets/mariss.bmp";
-	box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	box->SetDefaultPosition(BigNgine::Vector2(200.0f, 0.0f));
-	box->AddBehaviour(pRendererBehaviour);
-	box->AddBehaviour(pPhysicsBehaviour);
-	box->AddBehaviour(pTeleport);
+	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	Player->SetDefaultPosition(BigNgine::Vector2(200.0f, 0.0f));
+	Player->AddBehaviour(pRendererBehaviour);
+	Player->AddBehaviour(pPhysicsBehaviour);
+	Player->AddBehaviour(pMovement);
 	
 //	Ground stuff
 	Ground = new BigNgine::Entity();
@@ -83,18 +53,14 @@ void Start()
 	Ground->AddBehaviour(GPhysics);
 
 //	Adding stuff to Scene
-	Scene->AddEntity(box);
+	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
 	Game::SetActiveScene(Scene);
 }
 
 void Update(int deltaTime)
 {
-	std::vector<BigNgine::PhysicsBehaviour*> physics = box->GetBehaviours<BigNgine::PhysicsBehaviour>();
-
-	if(physics.size() > 0) {
-		Logger::Log(physics[0]->GetNumber());
-	}
+	
 }
 
 int main(int argc, char *args[])
