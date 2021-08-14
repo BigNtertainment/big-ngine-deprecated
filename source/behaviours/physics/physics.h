@@ -22,8 +22,8 @@ namespace BigNgine
 		void Destroy();
 		
 		void MoveTo(const BigNgine::Vector2& _target);
-		
 		void MoveBy(const BigNgine::Vector2& _target);
+		void ApplyForce(const BigNgine::Vector2& force);
 	
 	private:
 		b2BodyDef bodyDef;

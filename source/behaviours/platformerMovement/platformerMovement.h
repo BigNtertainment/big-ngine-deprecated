@@ -2,6 +2,7 @@
 
 #include "../../types/behaviour/behaviour.h"
 #include "../physics/physics.h"
+#include <SDL2/SDL.h>
 #include <vector>
 
 namespace BigNgine {
@@ -11,6 +12,10 @@ namespace BigNgine {
 		float jumpForce;
 		int jumpCheckPrecision;
 		float coyoteTime;
+
+		SDL_KeyCode LeftButton = SDLK_a;
+		SDL_KeyCode RightButton = SDLK_d;
+		SDL_KeyCode JumpButton = SDLK_SPACE;
 
 		PlatformerMovementBehaviour();
 		PlatformerMovementBehaviour(float _speed);
@@ -24,5 +29,6 @@ namespace BigNgine {
 
 	private:
 		std::vector<PhysicsBehaviour*> physics;
+		float jumpTimer;
 	};
 }

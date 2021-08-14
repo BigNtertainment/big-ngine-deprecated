@@ -21,6 +21,7 @@ BigNgine::Scene* Scene;
 
 BigNgine::Entity* Player;
 BigNgine::Entity* Ground;
+BigNgine::Entity* Wall;
 
 void Start()
 {
@@ -36,6 +37,7 @@ void Start()
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
 	pRendererBehaviour->file = "assets/mariss.bmp";
+	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(200.0f, 0.0f));
 	Player->AddBehaviour(pRendererBehaviour);
@@ -52,9 +54,20 @@ void Start()
 	Ground->AddBehaviour(GRenderer);
 	Ground->AddBehaviour(GPhysics);
 
+// Wall stuff
+	Wall = new BigNgine::Entity();
+	auto* WRenderer = new BigNgine::RendererBehaviour();
+	auto* WPhysics = new BigNgine::PhysicsStaticBehaviour();
+	WRenderer->file = "assets/mariss.bmp";
+	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	Wall->SetDefaultPosition(BigNgine::Vector2(270.0f, 340.0f));
+	Wall->AddBehaviour(WRenderer);
+	Wall->AddBehaviour(WPhysics);
+
 //	Adding stuff to Scene
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
+	Scene->AddEntity(Wall);
 	Game::SetActiveScene(Scene);
 }
 

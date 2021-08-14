@@ -25,6 +25,8 @@ void BigNgine::PhysicsBehaviour::Start()
 
 void BigNgine::PhysicsBehaviour::Update(int deltaTime)
 {
+	body->SetAwake(true);
+
 	b2Vec2 position = body->GetPosition();
 	
 	parent->position.x = position.x * PIXELS_PER_METERS - parent->size.x/2;
@@ -52,4 +54,8 @@ void BigNgine::PhysicsBehaviour::MoveBy(const BigNgine::Vector2& _target)
 	parent->position.x = x * PIXELS_PER_METERS;
 	parent->position.y = y * PIXELS_PER_METERS;
 	body->SetTransform(b2Vec2(x  + parent->size.y/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), 0.0f);
+}
+
+void BigNgine::PhysicsBehaviour::ApplyForce(const BigNgine::Vector2& force) {
+	body->ApplyForceToCenter(b2Vec2(force.x, -force.y), true);
 }

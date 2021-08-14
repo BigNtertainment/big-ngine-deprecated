@@ -2,9 +2,10 @@
 #include "../../global/input/input.h"
 
 #define DEFAULT_SPEED 150.0f
-#define DEFAULT_JUMP_FORCE 4.0f
+#define DEFAULT_JUMP_FORCE 300.0f
 #define DEFAULT_JUMP_CHECK_PRECISION 5
 #define DEFAULT_COYOTE_TIME 0.25f
+#define JUMP_TIMER 0.5f
 
 BigNgine::PlatformerMovementBehaviour::PlatformerMovementBehaviour() : speed(DEFAULT_SPEED), jumpForce(DEFAULT_JUMP_FORCE), jumpCheckPrecision(DEFAULT_JUMP_CHECK_PRECISION), coyoteTime(DEFAULT_COYOTE_TIME) {}
 
@@ -18,13 +19,27 @@ BigNgine::PlatformerMovementBehaviour::PlatformerMovementBehaviour(float _speed,
 
 void BigNgine::PlatformerMovementBehaviour::Start() {
 	physics = parent->GetBehaviours<PhysicsBehaviour>();
+	jumpTimer = 0.0f;
 }
 
 void BigNgine::PlatformerMovementBehaviour::Update(int deltaTime) {
-	float horizontalMovement = Input::Get(SDLK_d) - Input::Get(SDLK_a);
+	// Moving horizontally
+	float horizontalMovement = Input::Get(RightButton) - Input::Get(LeftButton);
 
-	for(PhysicsBehaviour* physicsBehaviour : physics)
+	// Jumping
+	bool jumping = Input::Get(JumpButton) && jumpTimer <= 0.0f;
+
+	for(PhysicsBehaviour* physicsBehaviour : physics) {
 		physicsBehaviour->MoveBy(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));
+
+		if(jumping) {
+			jumpTimer = JUMP_TIMER;
+			physicsBehaviour->ApplyForce(Vector2(0.0f, jumping * jumpForce));
+		}
+	}
+
+	if(jumpTimer > 0.0f)
+		jumpTimer -= deltaTime / 1000.0f;
 }
 
 void BigNgine::PlatformerMovementBehaviour::Destroy() {
