@@ -53,12 +53,13 @@ BigNgine::Entity* Ground;
 
 void Start()
 {
+//	Scene stuff
 	auto* BackgroundRenderer = new BigNgine::RendererBehaviour();
 	Scene = new BigNgine::Scene();
 	BackgroundRenderer->file = "assets/background.bmp";
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
-
-
+	
+//	Player or Marisa stuff
 	box = new BigNgine::Entity();
 	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
@@ -71,6 +72,7 @@ void Start()
 	box->AddBehaviour(pPhysicsBehaviour);
 	box->AddBehaviour(pTeleport);
 	
+//	Ground stuff
 	Ground = new BigNgine::Entity();
 	auto* GRenderer = new BigNgine::RendererBehaviour();
 	auto* GPhysics = new BigNgine::PhysicsStaticBehaviour();
@@ -80,6 +82,7 @@ void Start()
 	Ground->AddBehaviour(GRenderer);
 	Ground->AddBehaviour(GPhysics);
 
+//	Adding stuff to Scene
 	Scene->AddEntity(box);
 	Scene->AddEntity(Ground);
 	Game::SetActiveScene(Scene);
