@@ -1,8 +1,5 @@
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL.h>
 #include "renderer.h"
-#include "../../global/game/game.h"
-#include "../../global/logger/logger.h"
+
 
 void BigNgine::RendererBehaviour::Start()
 {
@@ -14,7 +11,7 @@ void BigNgine::RendererBehaviour::Start()
 	}
 	
 	Uint32 colorkey = SDL_MapRGB(Surface->format, 0xFF, 0x00, 0xFF);
-	 SDL_SetColorKey(Surface, SDL_TRUE, colorkey);
+	SDL_SetColorKey(Surface, SDL_TRUE, colorkey);
 	Position.w = 1;
 	Position.h = 1;
 	Position.x = 0;
@@ -28,7 +25,7 @@ void BigNgine::RendererBehaviour::Update(int deltaTime)
 	Position.w = (int)parent->size.x;
 	Position.h = (int)parent->size.y;
 
-	SDL_BlitSurface(Surface, (AnimationRect == nullptr ? NULL : AnimationRect), Game::windowSurface, &Position);
+	SDL_BlitSurface(Surface, (AnimationRect == nullptr ? nullptr : AnimationRect), Game::windowSurface, &Position);
 }
 
 void BigNgine::RendererBehaviour::Destroy()

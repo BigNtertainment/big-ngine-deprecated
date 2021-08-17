@@ -1,7 +1,11 @@
 #pragma once
+
 #include "../../types/behaviour/behaviour.h"
 #include <string>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_gpu.h>
+#include "../../global/game/game.h"
+#include "../../global/logger/logger.h"
 
 namespace BigNgine
 {
