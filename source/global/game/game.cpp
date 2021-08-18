@@ -13,6 +13,8 @@ int Game::width = 640;
 int Game::height = 480;
 
 BigNgine::Scene* ActiveScene = nullptr;
+SDL_Renderer* Game::renderer = nullptr;
+SDL_Texture* Game::texture = nullptr;
 SDL_Window* Game::window = nullptr;
 SDL_Surface* Game::windowSurface = nullptr;
 SDL_Surface* Game::iconSurface = nullptr;
@@ -53,6 +55,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 		SDL_SetWindowIcon(Game::window, iconSurface);
 	}
+	//TODO(imustend): do this properly!!!!
+	Game::renderer = SDL_CreateRenderer(Game::window , -1, 0);
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
@@ -81,8 +85,16 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 			lastTime = SDL_GetTicks();
 
-			// bliting player to background @ playerPos
+			// blitzing player to background @ playerPos
 			SDL_UpdateWindowSurface(Game::window);
+
+			Game::texture = SDL_CreateTextureFromSurface(Game::renderer, windowSurface);
+
+			SDL_RenderClear(Game::renderer);
+			SDL_RenderCopy(Game::renderer, Game::texture, nullptr, nullptr);
+			SDL_RenderPresent(Game::renderer);
+
+			SDL_DestroyTexture(Game::texture);
 
 			Uint64 end = SDL_GetPerformanceCounter();
 
@@ -98,6 +110,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	delete ActiveScene;
 
 	SDL_DestroyWindow(Game::window);
+	SDL_DestroyRenderer(Game::renderer);
+	SDL_DestroyTexture(Game::texture);
 	SDL_FreeSurface(Game::iconSurface);
 	Game::iconSurface = nullptr;
 	Game::window = nullptr;
