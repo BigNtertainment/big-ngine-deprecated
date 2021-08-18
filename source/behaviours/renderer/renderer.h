@@ -26,5 +26,6 @@ namespace BigNgine
 		SDL_Rect* AnimationRect = nullptr;
 
 		SDL_Surface* Surface;
+		SDL_Texture* Texture;
 	};
 }

@@ -21,7 +21,6 @@ namespace Game
 	extern SDL_Renderer* renderer;
 	extern SDL_Texture* texture;
 	extern SDL_Window* window;
-	extern SDL_Surface* windowSurface;
 	extern SDL_Surface* iconSurface;
 	extern std::string Name;
 };

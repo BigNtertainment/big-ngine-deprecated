@@ -16,7 +16,6 @@ BigNgine::Scene* ActiveScene = nullptr;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Texture* Game::texture = nullptr;
 SDL_Window* Game::window = nullptr;
-SDL_Surface* Game::windowSurface = nullptr;
 SDL_Surface* Game::iconSurface = nullptr;
 std::string Game::Name = "BigNgine";
 std::string Game::icon = "";
@@ -37,7 +36,11 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	
 	//window shit
 	Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::width, Game::height, SDL_WINDOW_SHOWN);
-	Game::windowSurface = SDL_GetWindowSurface(Game::window);
+	Game::renderer = SDL_CreateRenderer(Game::window , -1, SDL_RENDERER_ACCELERATED);
+	if (Game::renderer)
+	{
+		Logger::Error(SDL_GetError());
+	}
 
 	Start();
 
@@ -56,7 +59,6 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		SDL_SetWindowIcon(Game::window, iconSurface);
 	}
 	//TODO(imustend): do this properly!!!!
-	Game::renderer = SDL_CreateRenderer(Game::window , -1, 0);
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
@@ -74,8 +76,9 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		if(Game::running) {
 			Uint64 start = SDL_GetPerformanceCounter();
 			currentTime = SDL_GetTicks();
-			
-			
+
+			SDL_RenderClear(Game::renderer);
+
 
 			int deltaTime = currentTime - lastTime;
 
@@ -85,16 +88,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 			lastTime = SDL_GetTicks();
 
-			// blitzing player to background @ playerPos
-			SDL_UpdateWindowSurface(Game::window);
 
-			Game::texture = SDL_CreateTextureFromSurface(Game::renderer, windowSurface);
-
-			SDL_RenderClear(Game::renderer);
-			SDL_RenderCopy(Game::renderer, Game::texture, nullptr, nullptr);
 			SDL_RenderPresent(Game::renderer);
-
-			SDL_DestroyTexture(Game::texture);
 
 			Uint64 end = SDL_GetPerformanceCounter();
 
@@ -115,7 +110,6 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	SDL_FreeSurface(Game::iconSurface);
 	Game::iconSurface = nullptr;
 	Game::window = nullptr;
-	Game::windowSurface = nullptr;
 }
 
 void Game::SetActiveScene(BigNgine::Scene* scene) {

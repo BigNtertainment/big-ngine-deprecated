@@ -29,7 +29,7 @@ void Start()
 //	Scene stuff
 	auto* BackgroundRenderer = new BigNgine::RendererBehaviour();
 	Scene = new BigNgine::Scene();
-	BackgroundRenderer->file = "assets/background_black.bmp";
+	BackgroundRenderer->file = "assets/background.bmp";
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 
 //	Player or Marisa stuff
@@ -44,7 +44,7 @@ void Start()
 	Player->AddBehaviour(pRendererBehaviour);
 	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
-	
+
 //	Ground stuff
 	Ground = new BigNgine::Entity();
 	auto* GRenderer = new BigNgine::RendererBehaviour();
