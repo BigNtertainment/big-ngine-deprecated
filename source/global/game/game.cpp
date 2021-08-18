@@ -1,6 +1,8 @@
 #include "game.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_gpu.h>
 #include "../input/input.h"
 #include "../logger/logger.h"
 #include "../../types/entity/entity.h"
@@ -27,14 +29,14 @@ void Game::Stop() {
 
 void Game::Start(void(*Start)(), void(*Update)(int)) {
 
-	// that is init init?
+	// initialization of SDL libraries
 
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Init(SDL_INIT_AUDIO);
 	Mix_Init(MIX_INIT_MP3);
 
 	
-	//window shit
+	//window and renderer
 	Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::width, Game::height, SDL_WINDOW_SHOWN);
 	Game::renderer = SDL_CreateRenderer(Game::window , -1, SDL_RENDERER_ACCELERATED);
 	if (Game::renderer)
@@ -49,16 +51,15 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	iconSurface = SDL_LoadBMP(icon.c_str());
 	if (!iconSurface)
 	{
-		Logger::Error("Couldn`t load icon at: " + icon);
+		Logger::Error("Couldn't load icon at: " + icon);
 	}
 	else
 	{
-		Uint32 colorkey = SDL_MapRGB(iconSurface->format, 0xFF, 0x00, 0xFF);
-		SDL_SetColorKey(iconSurface, SDL_TRUE, colorkey);
+		Uint32 colorKey = SDL_MapRGB(iconSurface->format, 0xFF, 0x00, 0xFF);
+		SDL_SetColorKey(iconSurface, SDL_TRUE, colorKey);
 
 		SDL_SetWindowIcon(Game::window, iconSurface);
 	}
-	//TODO(imustend): do this properly!!!!
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
@@ -110,6 +111,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	SDL_FreeSurface(Game::iconSurface);
 	Game::iconSurface = nullptr;
 	Game::window = nullptr;
+	SDL_Quit();
+//	GPU_Quit();
 }
 
 void Game::SetActiveScene(BigNgine::Scene* scene) {
