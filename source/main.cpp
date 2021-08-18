@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_gpu.h>
 #include <cmath>
 #include <box2d/box2d.h>
 #include "global/logger/logger.h"
@@ -43,7 +44,7 @@ void Start()
 	Player->AddBehaviour(pRendererBehaviour);
 	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
-	
+
 //	Ground stuff
 	Ground = new BigNgine::Entity();
 	auto* GRenderer = new BigNgine::RendererBehaviour();
