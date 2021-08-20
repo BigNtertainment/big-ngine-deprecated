@@ -22,6 +22,8 @@ void BigNgine::RendererBehaviour::Start()
 		Logger::Error(SDL_GetError());
 		return;
 	}
+	SDL_FreeSurface(Surface);
+	Surface = nullptr;
 }
 
 void BigNgine::RendererBehaviour::Update(int deltaTime)
@@ -42,6 +44,4 @@ if(SDL_RenderCopy(Game::renderer, Texture, (AnimationRect == nullptr ? nullptr :
 void BigNgine::RendererBehaviour::Destroy()
 {
 	SDL_DestroyTexture(Texture);
-	SDL_FreeSurface(Surface);
-	Surface = nullptr;
 }

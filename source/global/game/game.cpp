@@ -19,6 +19,7 @@ SDL_Renderer* Game::renderer = nullptr;
 SDL_Texture* Game::texture = nullptr;
 SDL_Window* Game::window = nullptr;
 SDL_Surface* Game::iconSurface = nullptr;
+SDL_RendererInfo Game::rendererInfo;
 std::string Game::Name = "BigNgine";
 std::string Game::icon = "";
 
@@ -31,23 +32,48 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 	// initialization of SDL libraries
 
-	SDL_Init(SDL_INIT_VIDEO);
-	SDL_Init(SDL_INIT_AUDIO);
+	if (SDL_Init(SDL_INIT_EVERYTHING | SDL_VIDEO_OPENGL) != 0){
+		Logger::Error(SDL_GetError());
+		return;
+	}
 	Mix_Init(MIX_INIT_MP3);
 
 	
-	//window and renderer
-	Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::width, Game::height, SDL_WINDOW_SHOWN);
-	Game::renderer = SDL_CreateRenderer(Game::window , -1, SDL_RENDERER_ACCELERATED);
-	if (Game::renderer)
+//	window
+Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::width, Game::height, SDL_WINDOW_SHOWN);
+	
+//	NOTE(tymon): I have no idea what it does
+	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
+//if(SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "opengl", SDL_HINT_OVERRIDE) == SDL_FALSE)
+//	{
+//		Logger::Error("penis");
+//	}
+	
+//	renderer
+	Game::renderer = SDL_CreateRenderer(Game::window , -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+	if (!Game::renderer)
 	{
 		Logger::Error(SDL_GetError());
 	}
+	
 
+	if(SDL_GetRendererInfo(Game::renderer, &Game::rendererInfo) != 0)
+	{
+		Logger::Error(SDL_GetError());
+	}
+	
+	if(!strncmp(rendererInfo.name, "opengl", 6))
+	{
+		Logger::Warn("OPENGL not");
+	}
+	
+	
+//	starting every entity
 	Start();
 
 	ActiveScene->Start();
 
+//	loading icon
 	iconSurface = SDL_LoadBMP(icon.c_str());
 	if (!iconSurface)
 	{
@@ -64,6 +90,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
 
+//	main game loop
 	while(Game::running) {
 		while (SDL_PollEvent(&event) != 0)
 		{
