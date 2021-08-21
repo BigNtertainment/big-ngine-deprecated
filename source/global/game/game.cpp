@@ -1,14 +1,7 @@
 #include "game.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
-#include <SDL2/SDL_gpu.h>
-#include "../input/input.h"
-#include "../logger/logger.h"
-#include "../../types/entity/entity.h"
-#include "../../types/scene/scene.h"
-
 #define FPS 60
+
 
 bool Game::running = true;
 int Game::width = 640;
@@ -19,7 +12,7 @@ SDL_Renderer* Game::renderer = nullptr;
 SDL_Texture* Game::texture = nullptr;
 SDL_Window* Game::window = nullptr;
 SDL_Surface* Game::iconSurface = nullptr;
-SDL_RendererInfo Game::rendererInfo;
+SDL_GLContext Game::context = nullptr;
 std::string Game::Name = "BigNgine";
 std::string Game::icon = "";
 
@@ -29,25 +22,21 @@ void Game::Stop() {
 }
 
 void Game::Start(void(*Start)(), void(*Update)(int)) {
-
+	
 	// initialization of SDL libraries
-
-	if (SDL_Init(SDL_INIT_EVERYTHING | SDL_VIDEO_OPENGL) != 0){
+	
+	
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
 		Logger::Error(SDL_GetError());
 		return;
 	}
 	Mix_Init(MIX_INIT_MP3);
+	
 
 	
 //	window
-Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::width, Game::height, SDL_WINDOW_SHOWN);
-	
-//	NOTE(tymon): I have no idea what it does
-	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
-//if(SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "opengl", SDL_HINT_OVERRIDE) == SDL_FALSE)
-//	{
-//		Logger::Error("penis");
-//	}
+	Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::width, Game::height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+
 	
 //	renderer
 	Game::renderer = SDL_CreateRenderer(Game::window , -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
@@ -56,21 +45,9 @@ Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_
 		Logger::Error(SDL_GetError());
 	}
 	
-
-	if(SDL_GetRendererInfo(Game::renderer, &Game::rendererInfo) != 0)
-	{
-		Logger::Error(SDL_GetError());
-	}
-	
-	if(!strncmp(rendererInfo.name, "opengl", 6))
-	{
-		Logger::Warn("OPENGL not");
-	}
-	
 	
 //	starting every entity
 	Start();
-
 	ActiveScene->Start();
 
 //	loading icon
@@ -86,6 +63,9 @@ Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_
 
 		SDL_SetWindowIcon(Game::window, iconSurface);
 	}
+	
+	Game::context = SDL_GL_CreateContext(Game::window);
+	glewInit();
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
@@ -107,17 +87,25 @@ Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_
 
 			SDL_RenderClear(Game::renderer);
 
-
+			
 			int deltaTime = currentTime - lastTime;
 
 			Update(deltaTime);
+			
+			
+			glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			SDL_GL_SwapWindow(Game::window);
+			
 
 			ActiveScene->Update(deltaTime);
 
-			lastTime = SDL_GetTicks();
-
 
 			SDL_RenderPresent(Game::renderer);
+			
+			
+			
+			lastTime = SDL_GetTicks();
 
 			Uint64 end = SDL_GetPerformanceCounter();
 
@@ -129,17 +117,17 @@ Game::window = SDL_CreateWindow(Game::Name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_
 			}
 		}
 	}
-
+	
 	delete ActiveScene;
 
 	SDL_DestroyWindow(Game::window);
 	SDL_DestroyRenderer(Game::renderer);
 	SDL_DestroyTexture(Game::texture);
 	SDL_FreeSurface(Game::iconSurface);
+	SDL_GL_DeleteContext(Game::context);
 	Game::iconSurface = nullptr;
 	Game::window = nullptr;
 	SDL_Quit();
-//	GPU_Quit();
 }
 
 void Game::SetActiveScene(BigNgine::Scene* scene) {
