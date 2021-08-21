@@ -65,6 +65,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	}
 	
 	Game::context = SDL_GL_CreateContext(Game::window);
+//	TODO(tymon): EVERYTHING THAT USES SDL BEYOND THIS POINT HAVE TO GO
+//	WE DONT WANT THAT FUCKY WACKY STUFF HERE
 	glewInit();
 
 	uint32_t lastTime = 0, currentTime;

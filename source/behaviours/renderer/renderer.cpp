@@ -3,6 +3,9 @@
 
 void BigNgine::RendererBehaviour::Start()
 {
+
+//	TODO(tymon): GET THAT SHIT OUT OF HERE
+// 	WE NEED NEW RENDERER THAT USES OPENGL
 	Surface = SDL_LoadBMP( BigNgine::RendererBehaviour::file.c_str() );
 	if (!Surface)
 	{
