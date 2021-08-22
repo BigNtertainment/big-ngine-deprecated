@@ -2,7 +2,7 @@ CC := g++
 SRC := source
 BLD := build
 OBJ := obj
-FLAGS := --std=c++17 -I.\source\SDL2\include -I.\source\Box2D\include -I.\source\GLEW\include -L.\source\SDL2\lib -L.\source\Box2D\lib -L.\source\GLEW\lib -Wall -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer -lSDL2_image -lBox2D -lglew32 -lopengl32 -lglu32 -lgdi32
+FLAGS := source\GLAD\glad.c --std=c++17 -I.\source\SDL2\include -I.\source\Box2D\include -I.\source\GLFW\include -L.\source\SDL2\lib -L.\source\Box2D\lib -L.\source\GLFW\lib -Wall -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer -lSDL2_image -lBox2D -lglfw3 -lopengl32
 
 SOURCES := $(wildcard $(SRC)/*.cpp)
 SOURCES += $(wildcard $(SRC)/global/*/*.cpp)

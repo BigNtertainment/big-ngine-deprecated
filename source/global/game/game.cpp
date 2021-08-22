@@ -67,7 +67,6 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	Game::context = SDL_GL_CreateContext(Game::window);
 //	TODO(tymon): EVERYTHING THAT USES SDL BEYOND THIS POINT HAVE TO GO
 //	WE DONT WANT THAT FUCKY WACKY STUFF HERE
-	glewInit();
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
@@ -93,12 +92,6 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 			int deltaTime = currentTime - lastTime;
 
 			Update(deltaTime);
-			
-			
-			glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
-			SDL_GL_SwapWindow(Game::window);
-			
 
 			ActiveScene->Update(deltaTime);
 
