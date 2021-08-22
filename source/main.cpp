@@ -139,8 +139,10 @@ int main()
 //	linking vertices
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	
-	
+
+
+
+	double lasttime = glfwGetTime();
 //	main game loop
 	while(!glfwWindowShouldClose(window))
 	{
@@ -167,6 +169,10 @@ int main()
 //		swapping buffers and getting inputs
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		while (glfwGetTime() < lasttime + 1.0/60) {
+			// TODO: Put the thread to sleep, yield, or simply do nothing
+		}
+		lasttime += 1.0/60;
 	}
 	
 	
