@@ -6,6 +6,7 @@ FLAGS := --std=c++17 -I.\source\SDL2\include -I.\source\Box2D\include -I.\source
 
 SOURCES := $(wildcard $(SRC)/*.cpp)
 SOURCES += $(SRC)/GLAD/glad.c
+SOURCES += $(SRC)/STBI/stb.cpp
 SOURCES += $(wildcard $(SRC)/global/*/*.cpp)
 SOURCES += $(wildcard $(SRC)/types/*/*.cpp)
 SOURCES += $(wildcard $(SRC)/behaviours/*/*.cpp)
