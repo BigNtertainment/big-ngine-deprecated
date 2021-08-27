@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../../GLAD/glad.h"
+#include <GLFW/glfw3.h>
 #include "../../types/behaviour/behaviour.h"
 #include <string>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_gpu.h>
 #include "../../global/game/game.h"
 #include "../../global/logger/logger.h"
+#include "../../global/fileSystem/fileSystem.h"
 
 namespace BigNgine
 {
@@ -22,6 +24,7 @@ namespace BigNgine
 		void Destroy();
 	
 	private:
+		unsigned int VBO, VAO, EBO, program;
 		SDL_Rect Position;
 		SDL_Rect* AnimationRect = nullptr;
 

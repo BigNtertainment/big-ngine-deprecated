@@ -7,8 +7,6 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_opengl.h>
-//#include <SDL2/SDL_opengl_glext.h>
 #include <SDL2/SDL_mixer.h>
 #include "../input/input.h"
 #include "../logger/logger.h"
@@ -33,7 +31,5 @@ namespace Game
 	extern SDL_Renderer* renderer;
 	extern SDL_Texture* texture;
 	extern GLFWwindow* window;
-	extern SDL_Surface* iconSurface;
-	extern SDL_GLContext context;
 	extern const char *Name;
 };

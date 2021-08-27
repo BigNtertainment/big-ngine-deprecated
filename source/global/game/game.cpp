@@ -11,8 +11,6 @@ BigNgine::Scene* ActiveScene = nullptr;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Texture* Game::texture = nullptr;
 GLFWwindow* Game::window = nullptr;
-SDL_Surface* Game::iconSurface = nullptr;
-SDL_GLContext Game::context = nullptr;
 const char *Game::Name = "BigNgine";
 const char *Game::icon = "";
 
@@ -29,16 +27,16 @@ void Game::Stop() {
 }
 
 void Game::Start(void(*Start)(), void(*Update)(int)) {
-	
+
 	// initialization of SDL libraries
-	
-	
+
+
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
 		Logger::Error(SDL_GetError());
 		return;
 	}
 	Mix_Init(MIX_INIT_MP3);
-	
+
 //	OpenGL initialization
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -46,7 +44,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-	
+
 //	creating window
 	Game::window = glfwCreateWindow(Game::width, Game::height, Game::Name, nullptr, nullptr);
 	if (Game::window == nullptr)
@@ -54,25 +52,23 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		glfwTerminate();
 		Logger::Error("Failed to create GLFW window");
 	}
-	
+
 	//	making context for opengl
 	glfwMakeContextCurrent(Game::window);
 	//	window resize stuff
 	glfwSetFramebufferSizeCallback(Game::window, framebuffer_size_callback);
-	
-	
-//	starting every entity
-//	Start();
-//	ActiveScene->Start();
-
-;
 
 //	Initialization of GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		Logger::Error("GLAD NOT INITIALIZED");
-		
+
 	}
+
+//	starting every entity
+	Start();
+	ActiveScene->Start();
+	
 	
 	/* tell GL to only draw onto a pixel if the shape is closer to the viewer
 	than anything already drawn at that pixel */
@@ -80,13 +76,13 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 	/* with LESS depth-testing interprets a smaller depth value as meaning "closer" */
 	glDepthFunc(GL_LESS);
-	
+
 	//	VIEWPORT!!
 	glViewport(0, 0, Game::width, Game::height);
 
 	uint32_t lastTime = 0, currentTime;
 	SDL_Event event;
-	
+
 //	icon
 	GLFWimage images[1];
 	images[0].pixels = stbi_load(Game::icon, &images[0].width, &images[0].height, nullptr, 4);
@@ -106,18 +102,17 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		if(Game::running) {
 			Uint64 start = SDL_GetPerformanceCounter();
 			currentTime = SDL_GetTicks();
-			
+
 			int deltaTime = currentTime - lastTime;
-			
+
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
-//			TODO(tymon):
 
-//			Update(deltaTime);
-//
-//			ActiveScene->Update(deltaTime);
-			
+			Update(deltaTime);
+
+			ActiveScene->Update(deltaTime);
+
 			glfwSwapBuffers(Game::window);
 			lastTime = SDL_GetTicks();
 
@@ -131,14 +126,11 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 			}
 		}
 	}
-	
+
 	delete ActiveScene;
-	
+
 	SDL_DestroyRenderer(Game::renderer);
 	SDL_DestroyTexture(Game::texture);
-	SDL_FreeSurface(Game::iconSurface);
-	SDL_GL_DeleteContext(Game::context);
-	Game::iconSurface = nullptr;
 	Game::window = nullptr;
 	SDL_Quit();
 	glfwTerminate();
@@ -146,7 +138,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 void Game::SetActiveScene(BigNgine::Scene* scene) {
 	ActiveScene = scene;
-} 
+}
 
 void Game::ChangeActiveScene(BigNgine::Scene* scene) {
 	ActiveScene->Destroy();
@@ -154,4 +146,4 @@ void Game::ChangeActiveScene(BigNgine::Scene* scene) {
 	ActiveScene = scene;
 
 	ActiveScene->Start();
-} 
+}

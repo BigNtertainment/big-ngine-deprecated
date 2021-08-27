@@ -1,11 +1,11 @@
 #version 330 core
-out vec4 FragColor;
+out vec4 glFragColor;
 
 
 
 
 void main(){
 
-    gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+    glFragColor = vec4(1.0, 0.0, 1.0, 1.0);
 }
 
