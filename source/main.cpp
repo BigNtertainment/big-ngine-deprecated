@@ -34,40 +34,46 @@ void Start()
 	Scene = new BigNgine::Scene();
 //	BackgroundRenderer->file = "assets/img/background.bmp";
 //	Scene->Camera->AddBehaviour(BackgroundRenderer);
-//
-////	Player or Marisa stuff
-//	Player = new BigNgine::Entity();
-//	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
-//	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
-//	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
-//	pRendererBehaviour->file = "assets/img/mariss.bmp";
-//	pPhysicsBehaviour->constraintRotation = true;
-//	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-//	Player->SetDefaultPosition(BigNgine::Vector2(200.0f, 0.0f));
-//	Player->AddBehaviour(pRendererBehaviour);
-//	Player->AddBehaviour(pPhysicsBehaviour);
-//	Player->AddBehaviour(pMovement);
-//
-////	Ground stuff
-//	Ground = new BigNgine::Entity();
-//	auto* GRenderer = new BigNgine::RendererBehaviour();
-//	auto* GPhysics = new BigNgine::PhysicsStaticBehaviour();
-//	GRenderer->file = "assets/img/floor.bmp";
-//	Ground->SetDefaultSize(BigNgine::Vector2(640.0f, 40.0f));
-//	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 440.0f));
-//	Ground->AddBehaviour(GRenderer);
-//	Ground->AddBehaviour(GPhysics);
-//
-//// Wall stuff
-//	Wall = new BigNgine::Entity();
-//	auto* WRenderer = new BigNgine::RendererBehaviour();
-//	auto* WPhysics = new BigNgine::PhysicsStaticBehaviour();
-//	WRenderer->file = "assets/img/mariss.bmp";
-//	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-//	Wall->SetDefaultPosition(BigNgine::Vector2(270.0f, 340.0f));
-//	Wall->AddBehaviour(WRenderer);
-//	Wall->AddBehaviour(WPhysics);
 
+
+//	Player or Marisa stuff
+	Player = new BigNgine::Entity();
+	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
+	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
+	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
+	pRendererBehaviour->file = "assets/img/mariss.bmp";
+	pPhysicsBehaviour->constraintRotation = true;
+	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	Player->SetDefaultPosition(BigNgine::Vector2(200.0f, 0.0f));
+	Player->AddBehaviour(pRendererBehaviour);
+	Player->AddBehaviour(pPhysicsBehaviour);
+	Player->AddBehaviour(pMovement);
+
+//	Ground stuff
+	Ground = new BigNgine::Entity();
+	auto* GRenderer = new BigNgine::RendererBehaviour();
+	auto* GPhysics = new BigNgine::PhysicsStaticBehaviour();
+	GRenderer->file = "assets/img/floor.bmp";
+	Ground->SetDefaultSize(BigNgine::Vector2(640.0f, 40.0f));
+	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 1440.0f));
+	Ground->AddBehaviour(GRenderer);
+	Ground->AddBehaviour(GPhysics);
+
+// Wall stuff
+	Wall = new BigNgine::Entity();
+	auto* WRenderer = new BigNgine::RendererBehaviour();
+	auto* WPhysics = new BigNgine::PhysicsStaticBehaviour();
+	WRenderer->file = "assets/img/mariss.bmp";
+	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	Wall->SetDefaultPosition(BigNgine::Vector2(270.0f, 340.0f));
+	Wall->AddBehaviour(WRenderer);
+	Wall->AddBehaviour(WPhysics);
+
+	
+	
+//	====================================
+	
+	
 	Box = new BigNgine::Entity();
 	auto* renderer = new BigNgine::RendererBehaviour();
 	Box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
@@ -76,13 +82,13 @@ void Start()
 	
 	Box2 = new BigNgine::Entity();
 	auto* renderer2 = new BigNgine::RendererBehaviour();
-	Box2->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Box2->SetDefaultPosition(BigNgine::Vector2(500.0f, 100.0f));
+	Box2->SetDefaultSize(BigNgine::Vector2(200.0f, 300.0f));
+	Box2->SetDefaultPosition(BigNgine::Vector2(1280.0f, 100.0f));
 	Box2->AddBehaviour(renderer2);
 	
 	Box3 = new BigNgine::Entity();
 	auto* renderer3 = new BigNgine::RendererBehaviour();
-	Box3->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	Box3->SetDefaultSize(BigNgine::Vector2(100.0f, 200.0f));
 	Box3->SetDefaultPosition(BigNgine::Vector2(200.0f, 300.0f));
 	Box3->AddBehaviour(renderer3);
 

@@ -2,18 +2,17 @@
 layout (location = 0) in vec3 aPos;
 
 uniform vec2 u_resolution;
+uniform vec2 u_position;
 
 void main()
 {
-    vec4 position = vec4(0.0, 0.0, 0.0, 1.0);
-//    2D projection matrix
-    position.x = aPos.x / u_resolution.x;
-//    fliping Y axis because thats how our enigne works
-    position.y = -(aPos.y / u_resolution.y);
-    position.z = aPos.z;
+//  transormation math
+//    FIXME(tymon): the units are still way off
+    gl_Position.x = ((aPos.x + u_position.x) / u_resolution.x) - 1;
 
-//    vec4 position = vec4(aPos.xyz, 1.0);
+    gl_Position.y =((-aPos.y - u_position.y) / u_resolution.y) + 1;
 
+    gl_Position.z = aPos.z;
 
-    gl_Position = position;
+    gl_Position.w = 1.0;
 }

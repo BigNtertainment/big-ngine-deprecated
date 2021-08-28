@@ -4,10 +4,10 @@
 void BigNgine::RendererBehaviour::Start()
 {
 	float vertices[] = {
-			parent->position.x + parent->size.x,  parent->position.y, 0.0f,  // top right
-			parent->position.x + parent->size.x, parent->position.y + parent->size.y, 0.0f,  // bottom right
-			parent->position.x, parent->position.y + parent->size.y, 0.0f,  // bottom left
-			parent->position.x, parent->position.y, 0.0f   // top left
+			parent->size.x,  0.0f, 0.0f,  // top right
+			parent->size.x, parent->size.y, 0.0f,  // bottom right
+			0.0f, parent->size.y, 0.0f,  // bottom left
+			0.0f, 0.0f, 0.0f   // top left
 	};
 	unsigned int indices_square[] = {  // note that we start from 0!
 			0, 1, 3,   // first triangle
@@ -88,8 +88,12 @@ void BigNgine::RendererBehaviour::Start()
 void BigNgine::RendererBehaviour::Update(int deltaTime)
 {
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
+	int u_position = glGetUniformLocation(program, "u_position");
+	int u_size = glGetUniformLocation(program, "u_size");
 	glUseProgram(program);
 	glUniform2f(u_resolution, Game::width, Game::height);
+	glUniform2f(u_position, parent->position.x, parent->position.y);
+	glUniform2f(u_size, parent->size.x, parent->size.x);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
