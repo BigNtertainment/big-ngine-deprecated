@@ -16,6 +16,8 @@ namespace BigNgine
 		friend class AnimationBehaviour;
 	public:
 		std::string file;
+		std::string vertShader;
+		std::string fragShader;
 
 		void Start();
 

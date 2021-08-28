@@ -16,14 +16,14 @@ void BigNgine::RendererBehaviour::Start()
 	
 	
 	//	shaders
-	const char* vertex_shader_source = FileSystem::LoadFile("assets/shaders/vert.glsl").c_str();
-	const char* fragment_shader_source = FileSystem::LoadFile("assets/shaders/frag.glsl").c_str();
+	const char* vertex_shader_source = FileSystem::LoadFile(vertShader).c_str();
+	const char* fragment_shader_source = FileSystem::LoadFile(fragShader).c_str();
 	
 	
 	// build and compile our shader program
 	// ------------------------------------
 	// vertex shader
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertex_shader_source, nullptr);
 	glCompileShader(vertexShader);
 	// check for shader compile errors
