@@ -4,10 +4,10 @@
 void BigNgine::RendererBehaviour::Start()
 {
 	float vertices[] = {
-			parent->size.x,  0.0f, 0.0f,  // top right
-			parent->size.x, parent->size.y, 0.0f,  // bottom right
-			0.0f, parent->size.y, 0.0f,  // bottom left
-			0.0f, 0.0f, 0.0f   // top left
+			parent->size.x,  0.0f, depth,  // top right
+			parent->size.x, parent->size.y, depth,  // bottom right
+			0.0f, parent->size.y, depth,  // bottom left
+			0.0f, 0.0f, depth   // top left
 	};
 	unsigned int indices_square[] = {  // note that we start from 0!
 			0, 1, 3,   // first triangle
@@ -16,8 +16,8 @@ void BigNgine::RendererBehaviour::Start()
 	
 	
 	//	shaders
-	const char* vertex_shader_source = FileSystem::LoadFile(vertShader).c_str();
-	const char* fragment_shader_source = FileSystem::LoadFile(fragShader).c_str();
+	const char* vertex_shader_source = vertShader.c_str();
+	const char* fragment_shader_source = fragShader.c_str();
 	
 	
 	// build and compile our shader program

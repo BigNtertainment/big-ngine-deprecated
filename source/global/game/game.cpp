@@ -69,6 +69,10 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	Start();
 	ActiveScene->Start();
 	
+//	so we can use alpha values in fragment shaders
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable( GL_BLEND );
+	
 	
 	/* tell GL to only draw onto a pixel if the shape is closer to the viewer
 	than anything already drawn at that pixel */
@@ -88,6 +92,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	images[0].pixels = stbi_load(Game::icon, &images[0].width, &images[0].height, nullptr, 4);
 	glfwSetWindowIcon(window, 1, images);
 	stbi_image_free(images[0].pixels);
+	
 
 //	main game loop
 	while(Game::running and !glfwWindowShouldClose(window)) {

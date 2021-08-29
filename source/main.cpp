@@ -76,24 +76,27 @@ void Start()
 	
 	Box = new BigNgine::Entity();
 	auto* renderer = new BigNgine::RendererBehaviour();
-	renderer->vertShader = "assets/shaders/vert/standard.glsl";
-	renderer->fragShader = "assets/shaders/frag/standard.glsl";
+	renderer->vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
+	renderer->fragShader = FileSystem::LoadFile("assets/shaders/frag/standard.glsl");
+	renderer->depth = 2.0f;
 	Box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Box->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
 	Box->AddBehaviour(renderer);
 	
 	Box2 = new BigNgine::Entity();
 	auto* renderer2 = new BigNgine::RendererBehaviour();
-	renderer2->vertShader = "assets/shaders/vert/standard.glsl";
-	renderer2->fragShader = "assets/shaders/frag/standard.glsl";
+	renderer2->vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
+	renderer2->fragShader = FileSystem::LoadFile("assets/shaders/frag/standard.glsl");
+	renderer2->depth = 0.5f;
 	Box2->SetDefaultSize(BigNgine::Vector2(200.0f, 300.0f));
-	Box2->SetDefaultPosition(BigNgine::Vector2(1280.0f, 100.0f));
+	Box2->SetDefaultPosition(BigNgine::Vector2(980.0f, 100.0f));
 	Box2->AddBehaviour(renderer2);
 	
 	Box3 = new BigNgine::Entity();
 	auto* renderer3 = new BigNgine::RendererBehaviour();
-	renderer3->vertShader = "assets/shaders/vert/standard.glsl";
-	renderer3->fragShader = "assets/shaders/frag/grid.glsl";
+	renderer3->vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
+	renderer3->fragShader = FileSystem::LoadFile("assets/shaders/frag/grid.glsl");
+	renderer3->depth = 0.0f;
 	Box3->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
 	Box3->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
 	Box3->AddBehaviour(renderer3);
@@ -103,7 +106,7 @@ void Start()
 //	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
 //	Scene->AddEntity(Box);
-//	Scene->AddEntity(Box2);
+	Scene->AddEntity(Box2);
 	Scene->AddEntity(Box3);
 	Game::SetActiveScene(Scene);
 }

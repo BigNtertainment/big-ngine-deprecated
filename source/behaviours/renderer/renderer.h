@@ -18,6 +18,7 @@ namespace BigNgine
 		std::string file;
 		std::string vertShader;
 		std::string fragShader;
+		float depth;
 
 		void Start();
 
