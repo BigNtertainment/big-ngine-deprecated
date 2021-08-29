@@ -1,8 +1,5 @@
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL.h>
 #include "renderer.h"
-#include "../../global/game/game.h"
-#include "../../global/logger/logger.h"
+
 
 void BigNgine::RendererBehaviour::Start()
 {
@@ -14,11 +11,17 @@ void BigNgine::RendererBehaviour::Start()
 	}
 	
 	Uint32 colorkey = SDL_MapRGB(Surface->format, 0xFF, 0x00, 0xFF);
-	 SDL_SetColorKey(Surface, SDL_TRUE, colorkey);
+	SDL_SetColorKey(Surface, SDL_TRUE, colorkey);
 	Position.w = 1;
 	Position.h = 1;
 	Position.x = 0;
 	Position.y = 0;
+	Texture = SDL_CreateTextureFromSurface(Game::renderer, Surface);
+	if(Texture == nullptr)
+	{
+		Logger::Error(SDL_GetError());
+		return;
+	}
 }
 
 void BigNgine::RendererBehaviour::Update(int deltaTime)
@@ -28,11 +31,17 @@ void BigNgine::RendererBehaviour::Update(int deltaTime)
 	Position.w = (int)parent->size.x;
 	Position.h = (int)parent->size.y;
 
-	SDL_BlitSurface(Surface, (AnimationRect == nullptr ? NULL : AnimationRect), Game::windowSurface, &Position);
+//	SDL_BlitSurface(Surface, (AnimationRect == nullptr ? nullptr : AnimationRect), Game::windowSurface, &Position);
+if(SDL_RenderCopy(Game::renderer, Texture, (AnimationRect == nullptr ? nullptr : AnimationRect), &Position))
+	{
+		Logger::Error(SDL_GetError());
+		return;
+	}
 }
 
 void BigNgine::RendererBehaviour::Destroy()
 {
+	SDL_DestroyTexture(Texture);
 	SDL_FreeSurface(Surface);
 	Surface = nullptr;
 }

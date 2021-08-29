@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <SDL2/SDL.h>
 
@@ -17,8 +18,9 @@ namespace Game
 	void SetActiveScene(BigNgine::Scene* scene);
 	void ChangeActiveScene(BigNgine::Scene* scene);
 
+	extern SDL_Renderer* renderer;
+	extern SDL_Texture* texture;
 	extern SDL_Window* window;
-	extern SDL_Surface* windowSurface;
 	extern SDL_Surface* iconSurface;
 	extern std::string Name;
 };
