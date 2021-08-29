@@ -25,6 +25,8 @@ namespace BigNgine
 		void MoveBy(const BigNgine::Vector2& _target);
 		void ApplyForce(const BigNgine::Vector2& force);
 	
+		bool IsGrounded();
+
 	private:
 		b2BodyDef bodyDef;
 
@@ -33,5 +35,7 @@ namespace BigNgine
 		b2PolygonShape dynamicBox;
 
 		b2FixtureDef fixtureDef;
+
+		bool isGrounded;
 	};
 }

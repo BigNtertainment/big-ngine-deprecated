@@ -1,7 +1,6 @@
 #include "physics.h"
 #include"../../global/logger/logger.h"
 
-
 #define PIXELS_PER_METERS 100
 
 void BigNgine::PhysicsBehaviour::Start()
@@ -59,3 +58,7 @@ void BigNgine::PhysicsBehaviour::MoveBy(const BigNgine::Vector2& _target)
 void BigNgine::PhysicsBehaviour::ApplyForce(const BigNgine::Vector2& force) {
 	body->ApplyForceToCenter(b2Vec2(force.x, -force.y), true);
 }
+
+bool BigNgine::PhysicsBehaviour::IsGrounded() {
+	return true;
+} 
