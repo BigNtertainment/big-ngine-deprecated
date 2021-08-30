@@ -16,11 +16,13 @@
 #include "behaviours/physics/physics.h"
 #include "behaviours/animation/animation.h"
 #include "behaviours/platformerMovement/platformerMovement.h"
+#include "behaviours/follow/follow.h"
 
 
 BigNgine::Scene* Scene;
 
 BigNgine::Entity* Player;
+BigNgine::Entity* PlayerFollower;
 BigNgine::Entity* Ground;
 BigNgine::Entity* Wall;
 
@@ -45,6 +47,14 @@ void Start()
 	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
 
+	PlayerFollower = new BigNgine::Entity();
+	auto* PlayerFollowerRenderer = new BigNgine::RendererBehaviour();
+	auto* PlayerFollowerFollow = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(25, 100));
+	PlayerFollowerRenderer->file = "assets/mariss.bmp";
+	PlayerFollower->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	PlayerFollower->AddBehaviour(PlayerFollowerRenderer);
+	PlayerFollower->AddBehaviour(PlayerFollowerFollow);
+
 //	Ground stuff
 	Ground = new BigNgine::Entity();
 	auto* GRenderer = new BigNgine::RendererBehaviour();
@@ -67,6 +77,7 @@ void Start()
 
 //	Adding stuff to Scene
 	Scene->AddEntity(Player);
+	Scene->AddEntity(PlayerFollower);
 	Scene->AddEntity(Ground);
 	Scene->AddEntity(Wall);
 	Game::SetActiveScene(Scene);
