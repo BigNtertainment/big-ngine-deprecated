@@ -101,7 +101,7 @@ void Start()
 	Box3->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
 	Box3->AddBehaviour(renderer3);
 
-////	Adding stuff to Scene
+///	Adding stuff to Scene
 //	Scene->AddEntity(Player);
 //	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
