@@ -9,7 +9,7 @@ void main()
 //  transormation math
     gl_Position.x = ((aPos.x + u_position.x) / u_resolution.x*2) - 1;
 
-    gl_Position.y =((-aPos.y - u_position.y) / u_resolution.y*2) + 1;
+    gl_Position.y = ((-aPos.y - u_position.y) / u_resolution.y*2) + 1;
 
     gl_Position.z = aPos.z;
 

@@ -1,5 +1,7 @@
 #include "renderer.h"
 
+#include <utility>
+
 
 void BigNgine::RendererBehaviour::Start()
 {
@@ -87,13 +89,14 @@ void BigNgine::RendererBehaviour::Start()
 
 void BigNgine::RendererBehaviour::Update(int deltaTime)
 {
+//	TODO(tymon): add dynamic depth to vertex shader
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
 	int u_position = glGetUniformLocation(program, "u_position");
 	int u_size = glGetUniformLocation(program, "u_size");
 	glUseProgram(program);
 	glUniform2f(u_resolution, Game::width, Game::height);
 	glUniform2f(u_position, parent->position.x, parent->position.y);
-	glUniform2f(u_size, parent->size.x, parent->size.x);
+	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
@@ -106,4 +109,24 @@ void BigNgine::RendererBehaviour::Destroy()
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(program);
+}
+
+void BigNgine::RendererBehaviour::SetDefaultTexture(std::string path)
+{
+	BigNgine::RendererBehaviour::file = std::move(path);
+}
+
+void BigNgine::RendererBehaviour::SetVertShader(std::string vertexShader)
+{
+	BigNgine::RendererBehaviour::vertShader = std::move(vertexShader);
+}
+
+void BigNgine::RendererBehaviour::SetFragShader(std::string fragmentShader)
+{
+	BigNgine::RendererBehaviour::fragShader = std::move(fragmentShader);
+}
+
+void BigNgine::RendererBehaviour::SetDefaultDepth(float _depth)
+{
+	BigNgine::RendererBehaviour::depth = _depth;
 }

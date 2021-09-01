@@ -6,5 +6,5 @@ uniform vec2 u_resolution;
 void main(){
     vec2 st = gl_FragCoord.xy/u_resolution;
     float modaa = mod(st.x, 0.2);
-    glFragColor = vec4(1.0, 1.0, 1.0, modaa);
+    glFragColor = vec4(st.y, st.x, 0.0, 1.0);
 }

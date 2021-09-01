@@ -14,7 +14,6 @@
 #include "behaviours/renderer/renderer.h"
 #include "behaviours/physicsStatic/physicsStatic.h"
 #include "behaviours/physics/physics.h"
-#include "behaviours/animation/animation.h"
 #include "behaviours/platformerMovement/platformerMovement.h"
 
 
@@ -72,31 +71,31 @@ void Start()
 //
 	
 //	====================================
-	
+
 	
 	Box = new BigNgine::Entity();
 	auto* renderer = new BigNgine::RendererBehaviour();
-	renderer->vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
-	renderer->fragShader = FileSystem::LoadFile("assets/shaders/frag/standard.glsl");
-	renderer->depth = 2.0f;
+	renderer->SetDefaultDepth(2.0f);
+	renderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
+	renderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Box->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
 	Box->AddBehaviour(renderer);
 	
 	Box2 = new BigNgine::Entity();
 	auto* renderer2 = new BigNgine::RendererBehaviour();
-	renderer2->vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
-	renderer2->fragShader = FileSystem::LoadFile("assets/shaders/frag/standard.glsl");
-	renderer2->depth = 0.5f;
-	Box2->SetDefaultSize(BigNgine::Vector2(200.0f, 300.0f));
-	Box2->SetDefaultPosition(BigNgine::Vector2(980.0f, 100.0f));
+	renderer2->SetDefaultDepth(0.0f);
+	renderer2->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
+	renderer2->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
+	Box2->SetDefaultSize(BigNgine::Vector2(300.0f, 300.0f));
+	Box2->SetDefaultPosition(BigNgine::Vector2(532.0, 321.0f));
 	Box2->AddBehaviour(renderer2);
 	
 	Box3 = new BigNgine::Entity();
 	auto* renderer3 = new BigNgine::RendererBehaviour();
-	renderer3->vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
-	renderer3->fragShader = FileSystem::LoadFile("assets/shaders/frag/grid.glsl");
-	renderer3->depth = 0.0f;
+	renderer3->SetDefaultDepth(0.1f);
+	renderer3->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
+	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
 	Box3->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
 	Box3->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
 	Box3->AddBehaviour(renderer3);
