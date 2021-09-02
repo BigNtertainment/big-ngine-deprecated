@@ -34,7 +34,7 @@ void BigNgine::Entity::SetDefaultRotation(float _rotation) {
 	defaultRotation = _rotation;
 	rotation = _rotation;
 }
-
+///Setting Default Size of an Entity
 void BigNgine::Entity::SetDefaultSize(BigNgine::Vector2 _size) {
 	defaultSize = _size;
 	size = _size;
