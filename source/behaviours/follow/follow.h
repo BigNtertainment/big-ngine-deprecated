@@ -12,6 +12,8 @@ namespace BigNgine
 		Entity* followed;
 		Vector2 pivot;
 
+		bool lockRotation = false;
+
 		FollowBehaviour(Entity* _followed);
 		FollowBehaviour(Entity* _followed, Vector2 _pivot);
 

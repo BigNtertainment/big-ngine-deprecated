@@ -26,30 +26,40 @@ BigNgine::Entity* PlayerFollower;
 BigNgine::Entity* Ground;
 BigNgine::Entity* Wall;
 
+class Speen : public BigNgine::Behaviour {
+	float speenSpeed = 0.1f;
+
+	void Update(int deltaTime) {
+		parent->rotation += speenSpeed * deltaTime;
+	}
+};
+
 void Start()
 {
-//	Scene stuff
+	//	Scene stuff
 	auto* BackgroundRenderer = new BigNgine::RendererBehaviour();
 	Scene = new BigNgine::Scene();
 	BackgroundRenderer->file = "assets/background.bmp";
 	Scene->Camera->AddBehaviour(BackgroundRenderer);
 
-//	Player or Marisa stuff
+	//	Player or Marisa stuff
 	Player = new BigNgine::Entity();
 	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
+	auto* pSpeen = new Speen();
 	pRendererBehaviour->file = "assets/mariss.bmp";
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Player->SetDefaultPosition(BigNgine::Vector2(200.0f, 0.0f));
+	Player->SetDefaultPosition(BigNgine::Vector2(350.0f, 250.0f));
 	Player->AddBehaviour(pRendererBehaviour);
-	Player->AddBehaviour(pPhysicsBehaviour);
+	// Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
+	Player->AddBehaviour(pSpeen);
 
 	PlayerFollower = new BigNgine::Entity();
 	auto* PlayerFollowerRenderer = new BigNgine::RendererBehaviour();
-	auto* PlayerFollowerFollow = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(25, 100));
+	auto* PlayerFollowerFollow = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(0, 100));
 	PlayerFollowerRenderer->file = "assets/mariss.bmp";
 	PlayerFollower->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	PlayerFollower->AddBehaviour(PlayerFollowerRenderer);

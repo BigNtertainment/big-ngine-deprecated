@@ -31,8 +31,8 @@ void BigNgine::RendererBehaviour::Update(int deltaTime)
 	Position.w = (int)parent->size.x;
 	Position.h = (int)parent->size.y;
 
-//	SDL_BlitSurface(Surface, (AnimationRect == nullptr ? nullptr : AnimationRect), Game::windowSurface, &Position);
-if(SDL_RenderCopy(Game::renderer, Texture, (AnimationRect == nullptr ? nullptr : AnimationRect), &Position))
+	//	SDL_BlitSurface(Surface, (AnimationRect == nullptr ? nullptr : AnimationRect), Game::windowSurface, &Position);
+	if(SDL_RenderCopy(Game::renderer, Texture, (AnimationRect == nullptr ? nullptr : AnimationRect), &Position))
 	{
 		Logger::Error(SDL_GetError());
 		return;
