@@ -33,6 +33,33 @@ BigNgine::Vector2 BigNgine::operator-(BigNgine::Vector2 left, const BigNgine::Ve
 	return result;
 }
 
+BigNgine::Vector2 BigNgine::operator*(BigNgine::Vector2 left, const BigNgine::Vector2& right) {
+	BigNgine::Vector2 result;
+
+	result.x = left.x * right.x;
+	result.y = left.y * right.y;
+
+	return result;
+}
+
+BigNgine::Vector2 BigNgine::operator/(BigNgine::Vector2 left, const BigNgine::Vector2& right) {
+	BigNgine::Vector2 result;
+
+	result.x = left.x * right.x;
+	result.y = left.y * right.y;
+
+	return result;
+}
+
+BigNgine::Vector2 BigNgine::operator*(BigNgine::Vector2 left, const int& right) {
+	BigNgine::Vector2 result;
+
+	result.x = left.x * right;
+	result.y = left.y * right;
+
+	return result;
+}
+
 BigNgine::Vector2 BigNgine::operator/(BigNgine::Vector2 left, const int& right) {
 	BigNgine::Vector2 result;
 

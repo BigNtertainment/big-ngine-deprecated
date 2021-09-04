@@ -12,5 +12,8 @@ namespace BigNgine {
 
 	Vector2 operator+(Vector2 left, const Vector2& right);
 	Vector2 operator-(Vector2 left, const Vector2& right);
+	Vector2 operator*(Vector2 left, const Vector2& right);
+	Vector2 operator/(Vector2 left, const Vector2& right);
+	Vector2 operator*(Vector2 left, const int& right);
 	Vector2 operator/(Vector2 left, const int& right);
 }
