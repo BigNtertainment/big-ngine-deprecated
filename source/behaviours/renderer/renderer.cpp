@@ -6,10 +6,10 @@
 void BigNgine::RendererBehaviour::Start()
 {
 	float vertices[] = {
-			parent->size.x,  0.0f, depth,  // top right
-			parent->size.x, parent->size.y, depth,  // bottom right
-			0.0f, parent->size.y, depth,  // bottom left
-			0.0f, 0.0f, depth   // top left
+			parent->size.x,  0.0f, 0.0f,  // top right
+			parent->size.x, parent->size.y, 0.0f,  // bottom right
+			0.0f, parent->size.y, 0.0f,  // bottom left
+			0.0f, 0.0f, 0.0f   // top left
 	};
 	unsigned int indices_square[] = {  // note that we start from 0!
 			0, 1, 3,   // first triangle
@@ -89,14 +89,17 @@ void BigNgine::RendererBehaviour::Start()
 
 void BigNgine::RendererBehaviour::Update(int deltaTime)
 {
-//	TODO(tymon): add dynamic depth to vertex shader
+//	FIXME(tymon): dynamic depth sometimes crashes the whole app??
+///	but i cant find out why
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
 	int u_position = glGetUniformLocation(program, "u_position");
 	int u_size = glGetUniformLocation(program, "u_size");
+	int u_depth = glGetUniformLocation(program, "u_depth");
 	glUseProgram(program);
 	glUniform2f(u_resolution, Game::width, Game::height);
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
+	glUniform1f(u_depth, parent->depth);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
@@ -124,9 +127,4 @@ void BigNgine::RendererBehaviour::SetVertShader(std::string vertexShader)
 void BigNgine::RendererBehaviour::SetFragShader(std::string fragmentShader)
 {
 	BigNgine::RendererBehaviour::fragShader = std::move(fragmentShader);
-}
-
-void BigNgine::RendererBehaviour::SetDefaultDepth(float _depth)
-{
-	BigNgine::RendererBehaviour::depth = _depth;
 }

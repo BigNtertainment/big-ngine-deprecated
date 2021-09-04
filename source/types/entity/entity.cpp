@@ -40,6 +40,11 @@ void BigNgine::Entity::SetDefaultSize(BigNgine::Vector2 _size) {
 	size = _size;
 }
 
+void BigNgine::Entity::SetDepth(float _depth)
+{
+	depth = _depth;
+}
+
 void BigNgine::Entity::AddBehaviour(BigNgine::Behaviour* behaviour) {
 	behaviour->parent = this;
 

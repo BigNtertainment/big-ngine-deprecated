@@ -17,7 +17,6 @@ namespace BigNgine
 		std::string file;
 		std::string vertShader;
 		std::string fragShader;
-		float depth;
 
 		void Start();
 
@@ -37,10 +36,6 @@ namespace BigNgine
 		///Set fragment shader
 		///@param fragmentShader code in string
 		void SetFragShader(std::string fragmentShader);
-		
-		///Set default depth
-		///@info the bigger the number the further the shit away
-		void SetDefaultDepth(float _depth);
 	
 	private:
 		unsigned int VBO, VAO, EBO, program;
