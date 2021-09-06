@@ -12,9 +12,9 @@ namespace BigNgine {
 		std::string name = "Behaviour";
 		bool active = true;
 
-		virtual void Start() = 0;
-		virtual void Update(int deltaTime) = 0;
-		virtual void Destroy() = 0;
+		virtual void Start();
+		virtual void Update(int deltaTime);
+		virtual void Destroy();
 
 		Behaviour();
 		~Behaviour();
