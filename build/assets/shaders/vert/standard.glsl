@@ -7,22 +7,30 @@ uniform float u_depth;
 
 void main()
 {
-//  transormation math
-    mat4 transformationMatrix = mat4(
-    1/(2*u_resolution.x), 0.0, 0.0, u_position.x,
-    0.0, 1/(2*u_resolution.y), 0.0, u_position.y,
+//  ranslation matrix
+    mat4 translationMatrix = mat4(
+    1.0, 0.0, 0.0, u_position.x + aPos.x,
+    0.0, 1.0, 0.0, (u_position.y + aPos.y),
     0.0, 0.0, 1.0, u_depth,
     0.0, 0.0, 0.0, 1.0
     );
-    vec4 basePos = vec4(aPos, 1.0);
 
-    gl_Position.x = ((aPos.x + u_position.x) / u_resolution.x*2) - 1;
+    //  scaling matrinx
+    mat4 scalingMatrix = mat4(
+    1/(0.5*u_resolution.x), 0.0, 0.0, -1.0,
+    0.0, -1/(0.5*u_resolution.y), 0.0, 1.0,
+    0.0, 0.0, 1.0, 0.0,
+    0.0, 0.0, 0.0, 1.0
+    );
 
-    gl_Position.y = ((-aPos.y - u_position.y) / u_resolution.y*2) + 1;
+    vec4 pointMatrix = vec4(
+    1.0,1.0,1.0,1.0
+    );
 
-    gl_Position.z = u_depth;
 
-    gl_Position.w = 1.0;
-
-//    gl_Position = transformationMatrix * basePos;
+    mat4 tranformationMatrix = (translationMatrix * scalingMatrix);
+    gl_Position.x = tranformationMatrix[0][3];
+    gl_Position.y = tranformationMatrix[1][3];
+    gl_Position.z = tranformationMatrix[2][3];
+    gl_Position.w = tranformationMatrix[3][3];
 }

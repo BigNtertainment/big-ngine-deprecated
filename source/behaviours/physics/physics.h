@@ -25,7 +25,7 @@ namespace BigNgine
 		void MoveBy(const BigNgine::Vector2& _target);
 		void ApplyForce(const BigNgine::Vector2& force);
 		
-		/// returns true
+		/// it does not check if entity is on the ground it just returns true
 		///@param NONE
 		///@returns true
 		bool IsGrounded();

@@ -1,23 +1,24 @@
 #include "renderer.h"
 
-#include <utility>
-
 
 void BigNgine::RendererBehaviour::Start()
 {
+//	setting up all the relations between points in one entity-square
 	float vertices[] = {
-			parent->size.x,  0.0f, 0.0f,  // top right
+			parent->size.x, 0.0f, 0.0f,  		   // top right
 			parent->size.x, parent->size.y, 0.0f,  // bottom right
-			0.0f, parent->size.y, 0.0f,  // bottom left
-			0.0f, 0.0f, 0.0f   // top left
+			0.0f, parent->size.y, 0.0f,  		   // bottom left
+			0.0f, 0.0f, 0.0f   					   // top left
 	};
-	unsigned int indices_square[] = {  // note that we start from 0!
+	
+//	setting up how the points form triangles
+	unsigned int indices_square[] = {
 			0, 1, 3,   // first triangle
 			1, 2, 3    // second triangle
 	};
 	
 	
-	//	shaders
+//	loading shaders into char*
 	const char* vertex_shader_source = vertShader.c_str();
 	const char* fragment_shader_source = fragShader.c_str();
 	
@@ -66,7 +67,7 @@ void BigNgine::RendererBehaviour::Start()
 	
 	
 	
-//	binding all the shit arrays
+//	binding all the arrays
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -91,15 +92,22 @@ void BigNgine::RendererBehaviour::Update(int deltaTime)
 {
 //	FIXME(tymon): dynamic depth sometimes crashes the whole app??
 ///	but i cant find out why
+
+//	getting all uniform IDs
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
 	int u_position = glGetUniformLocation(program, "u_position");
 	int u_size = glGetUniformLocation(program, "u_size");
 	int u_depth = glGetUniformLocation(program, "u_depth");
+	
 	glUseProgram(program);
+	
+//	setting all uniforms
 	glUniform2f(u_resolution, Game::width, Game::height);
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
+	
+//	all the opengl binding and actually rendering the points
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
@@ -116,15 +124,15 @@ void BigNgine::RendererBehaviour::Destroy()
 
 void BigNgine::RendererBehaviour::SetDefaultTexture(std::string path)
 {
-	BigNgine::RendererBehaviour::file = std::move(path);
+	file = std::move(path);
 }
 
 void BigNgine::RendererBehaviour::SetVertShader(std::string vertexShader)
 {
-	BigNgine::RendererBehaviour::vertShader = std::move(vertexShader);
+	vertShader = std::move(vertexShader);
 }
 
 void BigNgine::RendererBehaviour::SetFragShader(std::string fragmentShader)
 {
-	BigNgine::RendererBehaviour::fragShader = std::move(fragmentShader);
+	fragShader = std::move(fragmentShader);
 }
