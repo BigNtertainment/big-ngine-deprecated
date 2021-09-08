@@ -44,10 +44,10 @@ void Start()
   	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Player->SetDefaultPosition(BigNgine::Vector2(200.0f, 0.0f));
+	Player->SetDefaultPosition(BigNgine::Vector2(600.0f, 0.0f));
 	Player->SetDepth(0.0f);
 	Player->AddBehaviour(pRendererBehaviour);
-	Player->AddBehaviour(pPhysicsBehaviour);
+//	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
 
 //	Ground stuff
@@ -106,7 +106,7 @@ void Start()
 	Box3->SetDepth(0.1f);
 	Box3->AddBehaviour(renderer3);
 
-///	Adding stuff to Scenev
+///	Adding stuff to Scene
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
@@ -118,7 +118,7 @@ void Start()
 
 void Update(int deltaTime)
 {
-	
+	Player->size.x = 200.0;
 }
 
 int main(int argc, char *args[])

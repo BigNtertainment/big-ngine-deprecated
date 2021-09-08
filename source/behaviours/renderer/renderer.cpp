@@ -5,10 +5,10 @@ void BigNgine::RendererBehaviour::Start()
 {
 //	setting up all the relations between points in one entity-square
 	float vertices[] = {
-			parent->size.x, 0.0f, 0.0f,  		   // top right
-			parent->size.x, parent->size.y, 0.0f,  // bottom right
-			0.0f, parent->size.y, 0.0f,  		   // bottom left
-			0.0f, 0.0f, 0.0f   					   // top left
+			1.0f, 0.0f, 0.0f,	// top right
+			1.0f, 1.0f, 0.0f,	// bottom right
+			0.0f, 1.0f, 0.0f,	// bottom left
+			0.0f, 0.0f, 0.0f 	// top left
 	};
 	
 //	setting up how the points form triangles
