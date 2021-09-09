@@ -6,10 +6,11 @@ void BigNgine::RendererBehaviour::Start()
 //	setting up all the relations between points in one entity-square
 	float vertices[] = {
 //			if position			colours				texture coords
-			1.0f, 0.0f, 0.0f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,	// top right
-			1.0f, 1.0f, 0.0f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,	// bottom right
-			0.0f, 1.0f, 0.0f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,	// bottom left
-			0.0f, 0.0f, 0.0f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f	// top left
+//													Y axis is flipped
+			1.0f, 0.0f, 0.0f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,	// top right
+			1.0f, 1.0f, 0.0f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,	// bottom right
+			0.0f, 1.0f, 0.0f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,	// bottom left
+			0.0f, 0.0f, 0.0f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f	// top left
 	};
 	
 //	setting up how the points form triangles
@@ -107,6 +108,8 @@ void BigNgine::RendererBehaviour::Start()
 	
 //	texture filtering
 //	NOTE: decide which to use
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	

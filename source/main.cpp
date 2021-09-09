@@ -61,7 +61,7 @@ void Start()
 	Ground->SetDefaultSize(BigNgine::Vector2(640.0f, 40.0f));
 	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 800.0f));
 	Ground->SetDepth(0.0f);
-	Ground->AddBehaviour(GRenderer);
+//	Ground->AddBehaviour(GRenderer);
 	Ground->AddBehaviour(GPhysics);
 
 // Wall stuff
@@ -110,7 +110,7 @@ void Start()
 
 ///	Adding stuff to Scene
 	Scene->AddEntity(Player);
-//	Scene->AddEntity(Ground);
+	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
 //	Scene->AddEntity(Box);
 //	Scene->AddEntity(Box2);
