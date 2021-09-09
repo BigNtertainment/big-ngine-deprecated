@@ -5,10 +5,11 @@ void BigNgine::RendererBehaviour::Start()
 {
 //	setting up all the relations between points in one entity-square
 	float vertices[] = {
-			1.0f, 0.0f, 0.0f,	// top right
-			1.0f, 1.0f, 0.0f,	// bottom right
-			0.0f, 1.0f, 0.0f,	// bottom left
-			0.0f, 0.0f, 0.0f 	// top left
+//			if position			colours				texture coords
+			1.0f, 0.0f, 0.0f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,	// top right
+			1.0f, 1.0f, 0.0f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,	// bottom right
+			0.0f, 1.0f, 0.0f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,	// bottom left
+			0.0f, 0.0f, 0.0f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f	// top left
 	};
 	
 //	setting up how the points form triangles
@@ -80,18 +81,52 @@ void BigNgine::RendererBehaviour::Start()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_square), indices_square, GL_STATIC_DRAW);
 	
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr);
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)nullptr);
 	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	glBindVertexArray(0);
+	
+//	TEXTURES
+//==============================================================
+
+//	binding textures
+	glBindTexture(GL_TEXTURE_2D ,texture);
+
+//	texture wrapping
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	
+//	texture filtering
+//	NOTE: decide which to use
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	
+//	texture loading
+	int textureWidth, textureHeight, textureChannels;
+	unsigned char *textureData = stbi_load(file, &textureWidth, &textureHeight, &textureChannels, 0);
+	
+//	checking for errors and generating GL texture
+	if (textureData)
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
+	else
+		Logger::Error(std::string("could not load texture at: ") + file);
+	
+	stbi_image_free(textureData);
 }
 
 void BigNgine::RendererBehaviour::Update(int deltaTime)
 {
-//	FIXME(tymon): dynamic depth sometimes crashes the whole app??
-///	but i cant find out why
+
+//	TODO(tymon): https://learnopengl.com/Getting-started/Textures textures units
 
 //	getting all uniform IDs
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
@@ -108,6 +143,8 @@ void BigNgine::RendererBehaviour::Update(int deltaTime)
 	glUniform1f(u_depth, parent->depth);
 	
 //	all the opengl binding and actually rendering the points
+	
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
@@ -122,9 +159,9 @@ void BigNgine::RendererBehaviour::Destroy()
 	glDeleteProgram(program);
 }
 
-void BigNgine::RendererBehaviour::SetDefaultTexture(std::string path)
+void BigNgine::RendererBehaviour::SetDefaultTexture(const std::string& path)
 {
-	file = std::move(path);
+	file = path.c_str();
 }
 
 void BigNgine::RendererBehaviour::SetVertShader(std::string vertexShader)

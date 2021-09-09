@@ -33,9 +33,6 @@ BigNgine::Vector2 BigNgine::operator-(BigNgine::Vector2 left, const BigNgine::Ve
 	return result;
 }
 
-
-//FIXME: this is shit
-///@info what the actual fuck
 BigNgine::Vector2 BigNgine::operator*(BigNgine::Vector2 left, const BigNgine::Vector2& right) {
 	BigNgine::Vector2 result;
 

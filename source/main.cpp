@@ -41,13 +41,15 @@ void Start()
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
 	pRendererBehaviour->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
-  	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
+  	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/textureStandard.glsl"));
+//	pRendererBehaviour->SetDefaultTexture("./assets/img/mariss.png");
+	pRendererBehaviour->file = "./assets/img/mariss.png";
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(600.0f, 0.0f));
 	Player->SetDepth(0.0f);
 	Player->AddBehaviour(pRendererBehaviour);
-//	Player->AddBehaviour(pPhysicsBehaviour);
+	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
 
 //	Ground stuff
@@ -108,17 +110,16 @@ void Start()
 
 ///	Adding stuff to Scene
 	Scene->AddEntity(Player);
-	Scene->AddEntity(Ground);
+//	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
 //	Scene->AddEntity(Box);
 //	Scene->AddEntity(Box2);
-	Scene->AddEntity(Box3);
+//	Scene->AddEntity(Box3);
 	Game::SetActiveScene(Scene);
 }
 
 void Update(int deltaTime)
 {
-	Player->size.x = 200.0;
 }
 
 int main(int argc, char *args[])

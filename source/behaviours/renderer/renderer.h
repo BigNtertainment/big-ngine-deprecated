@@ -7,6 +7,7 @@
 #include "../../global/game/game.h"
 #include "../../global/logger/logger.h"
 #include "../../global/fileSystem/fileSystem.h"
+#include "../../STBI/stb_image.h"
 
 namespace BigNgine
 {
@@ -14,7 +15,7 @@ namespace BigNgine
 	{
 		friend class AnimationBehaviour;
 	public:
-		std::string file;
+		const char *file = "./assets/img/nothing.png";
 		std::string vertShader;
 		std::string fragShader;
 
@@ -27,7 +28,7 @@ namespace BigNgine
 		
 		///Set texture for sprite
 		///@param path to png, bmp, whatever
-		void SetDefaultTexture(std::string path);
+		void SetDefaultTexture(const std::string& path);
 		
 		///Set vertex shader
 		///@param vertexShader code in string
@@ -38,6 +39,6 @@ namespace BigNgine
 		void SetFragShader(std::string fragmentShader);
 	
 	private:
-		unsigned int VBO, VAO, EBO, program;
+		unsigned int VBO, VAO, EBO, program, texture;
 	};
 }
