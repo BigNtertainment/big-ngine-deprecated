@@ -30,8 +30,17 @@ void main()
     0.0, 0.0, 0.0, 1.0
     );
 
+//    FIXME(tymon): this shiet
+//  rotation matrix
+    mat4 rotationMatrix = mat4(
+    cos(90), -sin(90), 0.0, 0.0,
+    sin(90), cos(90), 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0,
+    0.0, 0.0, 0.0, 1.0
+    );
+
 //  outputing point position
-    mat4 tranformationMatrix = (translationMatrix * scalingMatrix);
+    mat4 tranformationMatrix = rotationMatrix * translationMatrix * scalingMatrix;
     gl_Position.x = tranformationMatrix[0][3];
     gl_Position.y = tranformationMatrix[1][3];
     gl_Position.z = tranformationMatrix[2][3];

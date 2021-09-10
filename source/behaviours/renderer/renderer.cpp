@@ -116,6 +116,9 @@ void BigNgine::RendererBehaviour::Start()
 //	texture loading
 	int textureWidth, textureHeight, textureChannels;
 	unsigned char *textureData = stbi_load(file, &textureWidth, &textureHeight, &textureChannels, 0);
+	if (textureChannels != 4)
+		Logger::Warn(std::string("texture at: ") + file + std::string(" has ")
+					+ std::to_string(textureChannels) + std::string(" channels and expected 4"));
 	
 //	checking for errors and generating GL texture
 	if (textureData)
