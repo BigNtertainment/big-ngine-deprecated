@@ -37,10 +37,9 @@ void Start()
 
 ////	Player or Marisa stuff
 	Player = new BigNgine::Entity();
-	auto* pRendererBehaviour = new BigNgine::RendererBehaviour();
+	auto* pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
-	pRendererBehaviour->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
   	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
@@ -52,9 +51,8 @@ void Start()
 
 //	Ground stuff
 	Ground = new BigNgine::Entity();
-	auto* GRenderer = new BigNgine::RendererBehaviour();
+	auto* GRenderer = new BigNgine::ShaderRendererBehaviour();
 	auto* GPhysics = new BigNgine::PhysicsStaticBehaviour();
-	GRenderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
 	GRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Ground->SetDefaultSize(BigNgine::Vector2(640.0f, 40.0f));
 	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 800.0f));
@@ -64,9 +62,8 @@ void Start()
 
 // Wall stuff
 	Wall = new BigNgine::Entity();
-	auto* WRenderer = new BigNgine::RendererBehaviour();
+	auto* WRenderer = new BigNgine::ShaderRendererBehaviour();
 	auto* WPhysics = new BigNgine::PhysicsStaticBehaviour();
-	WRenderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
 	WRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Wall->SetDefaultPosition(BigNgine::Vector2(270.0f, 340.0f));
@@ -80,8 +77,7 @@ void Start()
 
 	
 	Box = new BigNgine::Entity();
-	auto* renderer = new BigNgine::RendererBehaviour();
-	renderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
+	auto* renderer = new BigNgine::ShaderRendererBehaviour();
 	renderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Box->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
@@ -89,8 +85,7 @@ void Start()
 	Box->AddBehaviour(renderer);
 
 	Box2 = new BigNgine::Entity();
-	auto* renderer2 = new BigNgine::RendererBehaviour();
-	renderer2->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
+	auto* renderer2 = new BigNgine::ShaderRendererBehaviour();
 	renderer2->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Box2->SetDefaultSize(BigNgine::Vector2(300.0f, 300.0f));
 	Box2->SetDefaultPosition(BigNgine::Vector2(532.0, 321.0f));
@@ -98,8 +93,7 @@ void Start()
 	Box2->AddBehaviour(renderer2);
 
 	Box3 = new BigNgine::Entity();
-	auto* renderer3 = new BigNgine::RendererBehaviour();
-	renderer3->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/standard.glsl"));
+	auto* renderer3 = new BigNgine::ShaderRendererBehaviour();
 	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
 	Box3->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
 	Box3->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));

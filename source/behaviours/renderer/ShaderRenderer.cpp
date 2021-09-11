@@ -1,7 +1,7 @@
 #include "renderer.h"
 
 
-void BigNgine::RendererBehaviour::Start()
+void BigNgine::ShaderRendererBehaviour::Start()
 {
 //	setting up all the relations between points in one entity-square
 	float vertices[] = {
@@ -88,7 +88,7 @@ void BigNgine::RendererBehaviour::Start()
 	glBindVertexArray(0);
 }
 
-void BigNgine::RendererBehaviour::Update(int deltaTime)
+void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 {
 //	FIXME(tymon): dynamic depth sometimes crashes the whole app??
 ///	but i cant find out why
@@ -114,7 +114,7 @@ void BigNgine::RendererBehaviour::Update(int deltaTime)
 	
 }
 
-void BigNgine::RendererBehaviour::Destroy()
+void BigNgine::ShaderRendererBehaviour::Destroy()
 {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -122,17 +122,12 @@ void BigNgine::RendererBehaviour::Destroy()
 	glDeleteProgram(program);
 }
 
-void BigNgine::RendererBehaviour::SetDefaultTexture(std::string path)
-{
-	file = std::move(path);
-}
-
-void BigNgine::RendererBehaviour::SetVertShader(std::string vertexShader)
+void BigNgine::ShaderRendererBehaviour::SetVertShader(std::string vertexShader)
 {
 	vertShader = std::move(vertexShader);
 }
 
-void BigNgine::RendererBehaviour::SetFragShader(std::string fragmentShader)
+void BigNgine::ShaderRendererBehaviour::SetFragShader(std::string fragmentShader)
 {
 	fragShader = std::move(fragmentShader);
 }
