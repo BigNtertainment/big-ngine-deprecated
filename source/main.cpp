@@ -40,11 +40,11 @@ void Start()
 	auto* pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
-  	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/textureStandard.glsl"));
+	pRendererBehaviour->setFile("assets/img/mariss.png");
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(600.0f, 0.0f));
-	Player->SetDepth(0.0f);
+	Player->SetDepth(-0.5f);
 	Player->AddBehaviour(pRendererBehaviour);
 	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
@@ -81,13 +81,14 @@ void Start()
 	renderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Box->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
-	Box->SetDepth(0.0f);
+	Box->SetDepth(-0.5f);
 	Box->AddBehaviour(renderer);
 
 	Box2 = new BigNgine::Entity();
 	auto* renderer2 = new BigNgine::TextureRendererBehaviour();
 	Box2->SetDefaultSize(BigNgine::Vector2(300.0f, 300.0f));
 	Box2->SetDefaultPosition(BigNgine::Vector2(532.0, 321.0f));
+	renderer2->setFile("assets/img/szutka.png");
 	Box2->SetDepth(0.0f);
 	Box2->AddBehaviour(renderer2);
 	
@@ -96,16 +97,16 @@ void Start()
 	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
 	Background->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
 	Background->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
-	Background->SetDepth(0.1f);
+	Background->SetDepth(0.5f);
 	Background->AddBehaviour(renderer3);
 
 ///	Adding stuff to Scene
+	Scene->AddEntity(Background);
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
 	Scene->AddEntity(Box);
-	Scene->AddEntity(Box2);
-	Scene->AddEntity(Background);
+//	Scene->AddEntity(Box2);
 	Game::SetActiveScene(Scene);
 }
 

@@ -43,9 +43,9 @@ namespace BigNgine
 //	====================================================================================================================
 	class TextureRendererBehaviour : public Behaviour
 	{
+	private:
 		friend class AnimationBehaviour;
 	public:
-//		TODO(tymon): cant load file form this string
 		std::string file;
 		std::string vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
 		std::string fragShader = FileSystem::LoadFile("assets/shaders/frag/textureStandard.glsl");
@@ -65,6 +65,8 @@ namespace BigNgine
 		///@param fragmentShader code in string
 		///@default Default set to standard BigNgine fragment texture shader
 		void SetFragShader(std::string fragmentShader);
+		
+		void setFile(const std::string &file);
 		
 	
 	private:

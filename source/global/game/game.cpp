@@ -64,21 +64,21 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		Logger::Error("GLAD NOT INITIALIZED");
 
 	}
-
-//	starting every entity
-	Start();
-	ActiveScene->Start();
-	
-//	so we can use alpha values in fragment shaders
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable( GL_BLEND );
-	
 	
 	/* tell GL to only draw onto a pixel if the shape is closer to the viewer
 	than anything already drawn at that pixel */
 	glEnable(GL_DEPTH_TEST); /* enable depth-testing */
 
+	
+	//	so we can use alpha values in fragment shaders
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+	
+
 	/* with LESS depth-testing interprets a smaller depth value as meaning "closer" */
+//	TODO(tymon): make it GL_GREATER
+//	 and write disclaimer
 	glDepthFunc(GL_LESS);
 
 	//	VIEWPORT!!
@@ -93,8 +93,16 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	glfwSetWindowIcon(window, 1, images);
 	stbi_image_free(images[0].pixels);
 	
-
-//	main game loop
+	
+//	TODO(pietrek14): sort entities array before activating them,
+//	 from biggest depth to smallest
+//	starting every entity
+	Start();
+	ActiveScene->Start();
+	
+	
+	
+	//	main game loop
 	while(Game::running and !glfwWindowShouldClose(window)) {
 		while (SDL_PollEvent(&event) != 0)
 		{
@@ -110,7 +118,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 			int deltaTime = currentTime - lastTime;
 
-			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
 

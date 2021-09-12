@@ -1,6 +1,5 @@
 #version 330 core
 layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aColor;
 layout (location = 2) in vec2 aTexCoord;
 
 out vec2 TexCoord;
@@ -29,11 +28,13 @@ void main()
     0.0, 0.0, 0.0, 1.0
     );
 
+//    TODO(tymon): ROTATION
+
 
 //  outputing point position
     mat4 tranformationMatrix = translationMatrix * scalingMatrix;
-    gl_Position.x = tranformationMatrix[0][3];
-    gl_Position.y = tranformationMatrix[1][3];
+    gl_Position.x = floor(tranformationMatrix[0][3] * u_resolution.x) / u_resolution.x;
+    gl_Position.y = floor(tranformationMatrix[1][3] * u_resolution.y) / u_resolution.y;
     gl_Position.z = tranformationMatrix[2][3];
     gl_Position.w = tranformationMatrix[3][3];
 

@@ -100,9 +100,6 @@ void BigNgine::TextureRendererBehaviour::Start()
 	
 //	textures
 
-//TODO(tymon): most of the stuff is pretty much still hardcoded and should be moved to variables,
-// also alpha channel still inst working but that might be shaders fault
-
 //	generating texture buffers
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -116,7 +113,7 @@ void BigNgine::TextureRendererBehaviour::Start()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	// load image, create texture and generate mipmaps
 	int width, height;
-	unsigned char *data = stbi_load("assets/img/mariss.png", &width, &height, nullptr, 4);
+	unsigned char *data = stbi_load(file.c_str(), &width, &height, nullptr, 4);
 	if (data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -124,9 +121,10 @@ void BigNgine::TextureRendererBehaviour::Start()
 	}
 	else
 	{
-		Logger::Error("Could not generate texture");
+		Logger::Error("Could not load texture");
 	}
 	stbi_image_free(data);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	
 	
 }
@@ -163,6 +161,7 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
+	glDeleteTextures(1, &texture);
 	glDeleteProgram(program);
 }
 
@@ -174,4 +173,9 @@ void BigNgine::TextureRendererBehaviour::SetVertShader(std::string vertexShader)
 void BigNgine::TextureRendererBehaviour::SetFragShader(std::string fragmentShader)
 {
 	fragShader = std::move(fragmentShader);
+}
+
+void BigNgine::TextureRendererBehaviour::setFile(const std::string &file)
+{
+	TextureRendererBehaviour::file = file;
 }
