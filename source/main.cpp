@@ -24,7 +24,7 @@ BigNgine::Entity* Ground;
 BigNgine::Entity* Wall;
 BigNgine::Entity* Box;
 BigNgine::Entity* Box2;
-BigNgine::Entity* Box3;
+BigNgine::Entity* Background;
 
 void Start()
 {
@@ -40,13 +40,13 @@ void Start()
 	auto* pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
-  	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
+  	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/textureStandard.glsl"));
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(600.0f, 0.0f));
 	Player->SetDepth(0.0f);
 	Player->AddBehaviour(pRendererBehaviour);
-//	Player->AddBehaviour(pPhysicsBehaviour);
+	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
 
 //	Ground stuff
@@ -55,7 +55,7 @@ void Start()
 	auto* GPhysics = new BigNgine::PhysicsStaticBehaviour();
 	GRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Ground->SetDefaultSize(BigNgine::Vector2(640.0f, 40.0f));
-	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 800.0f));
+	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 700.0f));
 	Ground->SetDepth(0.0f);
 	Ground->AddBehaviour(GRenderer);
 	Ground->AddBehaviour(GPhysics);
@@ -85,34 +85,34 @@ void Start()
 	Box->AddBehaviour(renderer);
 
 	Box2 = new BigNgine::Entity();
-	auto* renderer2 = new BigNgine::ShaderRendererBehaviour();
-	renderer2->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
+	auto* renderer2 = new BigNgine::TextureRendererBehaviour();
 	Box2->SetDefaultSize(BigNgine::Vector2(300.0f, 300.0f));
 	Box2->SetDefaultPosition(BigNgine::Vector2(532.0, 321.0f));
 	Box2->SetDepth(0.0f);
 	Box2->AddBehaviour(renderer2);
-
-	Box3 = new BigNgine::Entity();
+	
+	Background = new BigNgine::Entity();
 	auto* renderer3 = new BigNgine::ShaderRendererBehaviour();
 	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
-	Box3->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
-	Box3->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
-	Box3->SetDepth(0.1f);
-	Box3->AddBehaviour(renderer3);
+	Background->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
+	Background->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
+	Background->SetDepth(0.1f);
+	Background->AddBehaviour(renderer3);
 
 ///	Adding stuff to Scene
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
-//	Scene->AddEntity(Box);
-//	Scene->AddEntity(Box2);
-	Scene->AddEntity(Box3);
+	Scene->AddEntity(Box);
+	Scene->AddEntity(Box2);
+	Scene->AddEntity(Background);
 	Game::SetActiveScene(Scene);
 }
 
 void Update(int deltaTime)
 {
-	Player->size.x = 200.0;
+	Background->size.x = Game::width;
+	Background->size.y = Game::height;
 }
 
 int main(int argc, char *args[])

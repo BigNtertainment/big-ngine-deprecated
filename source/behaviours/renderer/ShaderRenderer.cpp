@@ -90,9 +90,6 @@ void BigNgine::ShaderRendererBehaviour::Start()
 
 void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 {
-//	FIXME(tymon): dynamic depth sometimes crashes the whole app??
-///	but i cant find out why
-
 //	getting all uniform IDs
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
 	int u_position = glGetUniformLocation(program, "u_position");

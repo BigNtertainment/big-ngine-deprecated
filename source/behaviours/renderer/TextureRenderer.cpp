@@ -1,15 +1,15 @@
 #include "renderer.h"
 
-//TODO(tymon): get this done
 
 void BigNgine::TextureRendererBehaviour::Start()
 {
 	//	setting up all the relations between points in one entity-square
 	float vertices[] = {
-			1.0f, 0.0f, 0.0f,	// top right
-			1.0f, 1.0f, 0.0f,	// bottom right
-			0.0f, 1.0f, 0.0f,	// bottom left
-			0.0f, 0.0f, 0.0f 	// top left
+//			positions			useless 			texture coords
+			1.0f, 0.0f, 0.0f,	0.0f, 0.0f, 0.0f,	1.0f, 0.0f,	// top right
+			1.0f, 1.0f, 0.0f,	0.0f, 0.0f, 0.0f,	1.0f, 1.0f,	// bottom right
+			0.0f, 1.0f, 0.0f,	0.0f, 0.0f, 0.0f,	0.0f, 1.0f,	// bottom left
+			0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 0.0f,	0.0f, 0.0f 	// top left
 	};
 	
 	//	setting up how the points form triangles
@@ -81,24 +81,66 @@ void BigNgine::TextureRendererBehaviour::Start()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_square), indices_square, GL_STATIC_DRAW);
 	
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr);
+//	position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)nullptr);
 	glEnableVertexAttribArray(0);
+//	useless
+//	TODO: get rid of this
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+//	texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	glBindVertexArray(0);
+	
+	
+	
+//	textures
+
+//TODO(tymon): most of the stuff is pretty much still hardcoded and should be moved to variables,
+// also alpha channel still inst working but that might be shaders fault
+
+//	generating texture buffers
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	
+//	setting wrapping method
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	
+//	setting rasterisation method
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	// load image, create texture and generate mipmaps
+	int width, height;
+	unsigned char *data = stbi_load("assets/img/mariss.png", &width, &height, nullptr, 4);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		Logger::Error("Could not generate texture");
+	}
+	stbi_image_free(data);
+	
+	
 }
 
 void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 {
-	//	FIXME(tymon): dynamic depth sometimes crashes the whole app??
-	///	but i cant find out why
-	
 	//	getting all uniform IDs
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
 	int u_position = glGetUniformLocation(program, "u_position");
 	int u_size = glGetUniformLocation(program, "u_size");
 	int u_depth = glGetUniformLocation(program, "u_depth");
+	
+	
+	glBindTexture(GL_TEXTURE_2D, texture);
 	
 	glUseProgram(program);
 	
@@ -112,6 +154,7 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	
 }
 

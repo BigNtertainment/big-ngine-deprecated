@@ -1,11 +1,13 @@
 #pragma once
 #include "../../GLAD/glad.h"
 #include <GLFW/glfw3.h>
+#include "../../STBI/stb_image.h"
 #include "../../types/behaviour/behaviour.h"
-#include <string>
 #include "../../global/game/game.h"
 #include "../../global/logger/logger.h"
 #include "../../global/fileSystem/fileSystem.h"
+#include <string>
+#include "iostream"
 
 namespace BigNgine
 {
@@ -43,9 +45,10 @@ namespace BigNgine
 	{
 		friend class AnimationBehaviour;
 	public:
+//		TODO(tymon): cant load file form this string
 		std::string file;
 		std::string vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
-		std::string fragShader;
+		std::string fragShader = FileSystem::LoadFile("assets/shaders/frag/textureStandard.glsl");
 		
 		void Start();
 		
@@ -60,9 +63,11 @@ namespace BigNgine
 		
 		///Set fragment shader
 		///@param fragmentShader code in string
+		///@default Default set to standard BigNgine fragment texture shader
 		void SetFragShader(std::string fragmentShader);
+		
 	
 	private:
-		unsigned int VBO, VAO, EBO, program;
+		unsigned int VBO, VAO, EBO, program, texture;
 	};
 }
