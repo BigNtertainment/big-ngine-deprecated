@@ -1,10 +1,7 @@
-#include <fstream>
-#include <string>
-
 #include "fileSystem.h"
 #include "../logger/logger.h"
 
-std::string FileSystem::LoadFile(std::string path)
+std::string FileSystem::LoadFile(const std::string& path)
 {
 	std::string result, temp;
 	std::fstream file;
@@ -30,7 +27,7 @@ std::string FileSystem::LoadFile(std::string path)
 
 
 
-void FileSystem::SaveFile(std::string path, std::string contents)
+void FileSystem::SaveFile(const std::string& path, const std::string& contents)
 {
 	std::fstream file;
 
@@ -47,7 +44,7 @@ void FileSystem::SaveFile(std::string path, std::string contents)
 }
 
 
-void FileSystem::AppendFile(std::string path, std::string contents)
+void FileSystem::AppendFile(const std::string& path, const std::string& contents)
 {
 	std::fstream file;
 	std::fstream ifile;

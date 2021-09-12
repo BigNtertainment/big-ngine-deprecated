@@ -1,11 +1,9 @@
 #include "physics.h"
-#include"../../global/logger/logger.h"
 
 #define PIXELS_PER_METERS 100
 
 void BigNgine::PhysicsBehaviour::Start()
 {
-	//TODO: tymon zrob w koncu te constrainty
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set((parent->position.x + parent->size.x/2) / PIXELS_PER_METERS,(parent->position.y + parent->size.y/2) / PIXELS_PER_METERS);
 //	rotation constrain
@@ -36,7 +34,6 @@ void BigNgine::PhysicsBehaviour::Destroy() {
 	body = nullptr;
 }
 
-//FIXME: those functions sometimes freeze physics for the object
 void BigNgine::PhysicsBehaviour::MoveTo(const BigNgine::Vector2& _target)
 {
 	float x = (_target.x) / PIXELS_PER_METERS;

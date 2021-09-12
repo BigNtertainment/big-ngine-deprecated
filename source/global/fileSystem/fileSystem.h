@@ -1,8 +1,11 @@
+#include <fstream>
+#include <string>
+
 namespace FileSystem
 {
-	std::string LoadFile(std::string path);
+	std::string LoadFile(const std::string& path);
 
-	void SaveFile(std::string path, std::string contents);
+	void SaveFile(const std::string& path, const std::string& contents);
 
-	void AppendFile(std::string path, std::string contents);
+	void AppendFile(const std::string& path, const std::string& contents);
 }

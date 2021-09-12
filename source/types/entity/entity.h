@@ -22,10 +22,17 @@ namespace BigNgine {
 		BigNgine::Vector2 position;
 		float rotation;
 		BigNgine::Vector2 size;
+		float depth;
 
 		void SetDefaultPosition(Vector2 _position);
 		void SetDefaultRotation(float _rotation);
 		void SetDefaultSize(Vector2 _size);
+		
+		///Set entities depth
+		///@info the bigger the number the further the shit away
+		///@param _depth float, SHOULD be between 0.0 and 1.0, it wont crash but
+		/// it will be easier to implement in fragment shader
+		void SetDepth(float _depth);
 
 		void AddBehaviour(Behaviour* behaviour);
 		template<class T>
