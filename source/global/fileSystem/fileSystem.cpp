@@ -1,31 +1,19 @@
 #include "fileSystem.h"
-#include "../logger/logger.h"
 
 std::string FileSystem::LoadFile(const std::string& path)
 {
-	std::string result, temp;
-	std::fstream file;
-	file.open(path, std::ios::in);
-	if (!file.good())
-	{
-		Logger::Error("Could not open file: " + path);
-		return "";
-	}
-	while (file)
-	{
-		temp = "";
-		getline(file, temp);
-		if (file)
-		{
-			result += temp + "\n";
-		}
-	}
+	std::ifstream file(path);
+	std::string result;
 
-	file.close();
+	file.seekg(0, std::ios::end);   
+	result.reserve(file.tellg());
+	file.seekg(0, std::ios::beg);
+
+	result.assign((std::istreambuf_iterator<char>(file)),
+				std::istreambuf_iterator<char>());
+
 	return result;
 }
-
-
 
 void FileSystem::SaveFile(const std::string& path, const std::string& contents)
 {

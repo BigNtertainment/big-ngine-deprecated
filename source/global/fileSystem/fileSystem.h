@@ -1,5 +1,7 @@
-#include <fstream>
 #include <string>
+#include <fstream>
+#include <streambuf>
+#include "../logger/logger.h"
 
 namespace FileSystem
 {
