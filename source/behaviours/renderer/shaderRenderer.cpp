@@ -95,6 +95,7 @@ void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 	int u_position = glGetUniformLocation(program, "u_position");
 	int u_size = glGetUniformLocation(program, "u_size");
 	int u_depth = glGetUniformLocation(program, "u_depth");
+	int u_time = glGetUniformLocation(program, "u_time");
 	
 	glUseProgram(program);
 	
@@ -103,6 +104,7 @@ void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
+	glUniform1f(u_time, parent->TIME);
 	
 //	all the opengl binding and actually rendering the points
 	glBindVertexArray(VAO);

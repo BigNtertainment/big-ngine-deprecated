@@ -94,7 +94,7 @@ void Start()
 	
 	Background = new BigNgine::Entity();
 	auto* renderer3 = new BigNgine::ShaderRendererBehaviour();
-	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
+	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/sky.glsl"));
 	Background->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
 	Background->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
 	Background->SetDepth(0.5f);
@@ -105,7 +105,7 @@ void Start()
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
-	Scene->AddEntity(Box);
+//	Scene->AddEntity(Box);
 //	Scene->AddEntity(Box2);
 	Game::SetActiveScene(Scene);
 }
@@ -114,6 +114,7 @@ void Update(int deltaTime)
 {
 	Background->size.x = Game::width;
 	Background->size.y = Game::height;
+	Background->TIME += 10;
 }
 
 int main(int argc, char *args[])
