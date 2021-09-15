@@ -77,7 +77,9 @@ void Start()
 
 	
 	Box = new BigNgine::Entity();
+	
 	auto* renderer = new BigNgine::ShaderRendererBehaviour();
+
 	renderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Box->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));

@@ -62,7 +62,6 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		Logger::Error("GLAD NOT INITIALIZED");
-
 	}
 	
 	/* tell GL to only draw onto a pixel if the shape is closer to the viewer
@@ -100,10 +99,8 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	Start();
 	ActiveScene->Start();
 	
-	
-	
 	//	main game loop
-	while(Game::running and !glfwWindowShouldClose(window)) {
+	while(Game::running && !glfwWindowShouldClose(window)) {
 		while (SDL_PollEvent(&event) != 0)
 		{
 			if (event.type == SDL_QUIT) {
