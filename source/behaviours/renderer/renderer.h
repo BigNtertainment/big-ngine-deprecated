@@ -66,7 +66,7 @@ namespace BigNgine
 		///@default Default set to standard BigNgine fragment texture shader
 		void SetFragShader(std::string fragmentShader);
 		
-		void setFile(const std::string &file);
+		void setFile(const std::string &_file);
 		
 	
 	private:

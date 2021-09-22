@@ -37,13 +37,14 @@ void Start()
 
 ////	Player or Marisa stuff
 	Player = new BigNgine::Entity();
-	auto* pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
+	auto* pRendererBehaviour = new BigNgine::ShaderRendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
-	pRendererBehaviour->setFile("assets/img/mariss.png");
-	pPhysicsBehaviour->constraintRotation = true;
+	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
+//	pRendererBehaviour->setFile("assets/img/mariss.png");
+	pPhysicsBehaviour->constraintRotation = false;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Player->SetDefaultPosition(BigNgine::Vector2(600.0f, 0.0f));
+	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDepth(-0.5f);
 	Player->AddBehaviour(pRendererBehaviour);
 	Player->AddBehaviour(pPhysicsBehaviour);
@@ -66,7 +67,7 @@ void Start()
 	auto* WPhysics = new BigNgine::PhysicsStaticBehaviour();
 	WRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Wall->SetDefaultPosition(BigNgine::Vector2(270.0f, 340.0f));
+	Wall->SetDefaultPosition(BigNgine::Vector2(170.0f, 540.0f));
 	Wall->SetDepth(0.0f);
 	Wall->AddBehaviour(WRenderer);
 	Wall->AddBehaviour(WPhysics);
@@ -96,7 +97,7 @@ void Start()
 	
 	Background = new BigNgine::Entity();
 	auto* renderer3 = new BigNgine::ShaderRendererBehaviour();
-	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/sky.glsl"));
+	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
 	Background->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
 	Background->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
 	Background->SetDepth(0.5f);
@@ -106,7 +107,7 @@ void Start()
 	Scene->AddEntity(Background);
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
-//	Scene->AddEntity(Wall);
+	Scene->AddEntity(Wall);
 //	Scene->AddEntity(Box);
 //	Scene->AddEntity(Box2);
 	Game::SetActiveScene(Scene);
@@ -117,12 +118,13 @@ void Update(int deltaTime)
 	Background->size.x = Game::width;
 	Background->size.y = Game::height;
 	Background->TIME += 10;
+//	Player->rotation += 1;
 }
 
 int main(int argc, char *args[])
 {
-	Game::width *= 2;
-	Game::height *= 1.7;
+	Game::width = 1200;
+	Game::height = 800;
 	Game::Name = "BigNgine";
 	Game::icon = "assets/icon/icon.png";
 	try

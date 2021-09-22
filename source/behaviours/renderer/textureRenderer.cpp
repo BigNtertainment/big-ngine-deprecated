@@ -136,6 +136,8 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	int u_position = glGetUniformLocation(program, "u_position");
 	int u_size = glGetUniformLocation(program, "u_size");
 	int u_depth = glGetUniformLocation(program, "u_depth");
+	int u_time = glGetUniformLocation(program, "u_time");
+	int u_rotation = glGetUniformLocation(program, "u_rotation");
 	
 	
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -147,6 +149,8 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
+	glUniform1f(u_time, parent->TIME);
+	glUniform1f(u_rotation, parent->rotation);
 	
 	//	all the opengl binding and actually rendering the points
 	glBindVertexArray(VAO);
@@ -175,7 +179,7 @@ void BigNgine::TextureRendererBehaviour::SetFragShader(std::string fragmentShade
 	fragShader = std::move(fragmentShader);
 }
 
-void BigNgine::TextureRendererBehaviour::setFile(const std::string &file)
+void BigNgine::TextureRendererBehaviour::setFile(const std::string &_file)
 {
-	TextureRendererBehaviour::file = file;
+	TextureRendererBehaviour::file = _file;
 }

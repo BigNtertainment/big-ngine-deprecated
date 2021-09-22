@@ -1,5 +1,7 @@
 #include "physics.h"
 
+#define PI 3.14159265359
+
 #define PIXELS_PER_METERS 100
 
 void BigNgine::PhysicsBehaviour::Start()
@@ -7,8 +9,7 @@ void BigNgine::PhysicsBehaviour::Start()
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set((parent->position.x + parent->size.x/2) / PIXELS_PER_METERS,(parent->position.y + parent->size.y/2) / PIXELS_PER_METERS);
 //	rotation constrain
-	if(constraintRotation)
-		bodyDef.fixedRotation = true;
+	bodyDef.fixedRotation = constraintRotation;
 
 	body = parent->GetParentScene()->world->CreateBody(&bodyDef);
 
@@ -26,6 +27,9 @@ void BigNgine::PhysicsBehaviour::Update(int deltaTime)
 
 	b2Vec2 position = body->GetPosition();
 	
+//	TODO(tymon): get rotation from physics engine and apply it to the entity correctly
+//	parent->rotation = body->GetAngle() * 180 / PI;
+//	Logger::Log(body->GetAngle() * 180 / PI);
 	parent->position.x = position.x * PIXELS_PER_METERS - parent->size.x/2;
 	parent->position.y = position.y * PIXELS_PER_METERS - parent->size.y/2;
 }
