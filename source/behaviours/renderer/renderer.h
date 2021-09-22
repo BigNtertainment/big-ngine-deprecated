@@ -1,13 +1,13 @@
 #pragma once
-#include "../../GLAD/glad.h"
-#include <GLFW/glfw3.h>
-#include "../../STBI/stb_image.h"
+#include "glad.h"
+#include "GLFW/glfw3.h"
+#include "stb_image.h"
 #include "../../types/behaviour/behaviour.h"
 #include "../../global/game/game.h"
 #include "../../global/logger/logger.h"
 #include "../../global/fileSystem/fileSystem.h"
 #include <string>
-#include "iostream"
+#include <iostream>
 
 namespace BigNgine
 {

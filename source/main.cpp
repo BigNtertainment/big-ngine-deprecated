@@ -1,9 +1,5 @@
-#include <SDL2/SDL.h>
-
-#include <SDL2/SDL_mixer.h>
-#include <SDL2/SDL_image.h>
 #include <cmath>
-#include <box2d/box2d.h>
+#include "external/Box2D/include/box2d/box2d.h"
 #include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"

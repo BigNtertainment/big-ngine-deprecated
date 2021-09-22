@@ -8,8 +8,6 @@ int Game::width = 640;
 int Game::height = 480;
 
 BigNgine::Scene* ActiveScene = nullptr;
-SDL_Renderer* Game::renderer = nullptr;
-SDL_Texture* Game::texture = nullptr;
 GLFWwindow* Game::window = nullptr;
 const char *Game::Name = "BigNgine";
 const char *Game::icon = "";
@@ -27,15 +25,13 @@ void Game::Stop() {
 }
 
 void Game::Start(void(*Start)(), void(*Update)(int)) {
-
 	// initialization of SDL libraries
 
-
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
-		Logger::Error(SDL_GetError());
-		return;
-	}
-	Mix_Init(MIX_INIT_MP3);
+	// if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
+	// 	Logger::Error(SDL_GetError());
+	// 	return;
+	// }
+	// Mix_Init(MIX_INIT_MP3);
 
 //	OpenGL initialization
 	glfwInit();
@@ -83,8 +79,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	//	VIEWPORT!!
 	glViewport(0, 0, Game::width, Game::height);
 
-	uint32_t lastTime = 0, currentTime;
-	SDL_Event event;
+	clock_t lastTime = 0, currentTime;
 
 //	icon
 	GLFWimage images[1];
@@ -101,48 +96,36 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	
 	//	main game loop
 	while(Game::running && !glfwWindowShouldClose(window)) {
-		while (SDL_PollEvent(&event) != 0)
+		Input::Update();
+
+		currentTime = clock();
+
+		int deltaTime = currentTime - lastTime;
+
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+
+		Update(deltaTime);
+
+		ActiveScene->Update(deltaTime);
+
+		glfwSwapBuffers(Game::window);
+		glfwPollEvents();
+		lastTime = clock();
+
+		if (floor(16.666f - deltaTime) > 0)
 		{
-			if (event.type == SDL_QUIT) {
-				Game::Stop();
-			}
-			Input::Update(event);
+			std::chrono::milliseconds timespan((int)(16.666f - deltaTime));
+			std::this_thread::sleep_for(std::chrono::milliseconds(timespan));
 		}
 
-		if(Game::running) {
-			Uint64 start = SDL_GetPerformanceCounter();
-			currentTime = SDL_GetTicks();
-
-			int deltaTime = currentTime - lastTime;
-
-			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			
-
-			Update(deltaTime);
-
-			ActiveScene->Update(deltaTime);
-
-			glfwSwapBuffers(Game::window);
-			lastTime = SDL_GetTicks();
-
-			Uint64 end = SDL_GetPerformanceCounter();
-
-			float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
-
-			if (floor(16.666f - elapsedMS) > 0)
-			{
-				SDL_Delay(floor(16.666f - elapsedMS));
-			}
-		}
+		glfwSetWindowSize(window, Game::width, Game::height);
 	}
 
 	delete ActiveScene;
 
-	SDL_DestroyRenderer(Game::renderer);
-	SDL_DestroyTexture(Game::texture);
 	Game::window = nullptr;
-	SDL_Quit();
 	glfwTerminate();
 }
 

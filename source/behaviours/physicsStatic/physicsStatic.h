@@ -1,6 +1,6 @@
 #pragma once
 #include "../../types/behaviour/behaviour.h"
-#include <Box2D/box2d.h>
+#include "box2d/box2d.h"
 
 namespace BigNgine
 {

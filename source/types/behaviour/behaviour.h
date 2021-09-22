@@ -2,6 +2,7 @@
 
 #include "../entity/entity.h"
 #include <string>
+#include <algorithm>
 
 namespace BigNgine {
 	class Entity;

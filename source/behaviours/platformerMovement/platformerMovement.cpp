@@ -1,5 +1,4 @@
 #include "platformerMovement.h"
-#include "../../global/input/input.h"
 
 #define DEFAULT_SPEED 150.0f
 #define DEFAULT_JUMP_FORCE 300.0f
@@ -24,10 +23,10 @@ void BigNgine::PlatformerMovementBehaviour::Start() {
 
 void BigNgine::PlatformerMovementBehaviour::Update(int deltaTime) {
 	// Moving horizontally
-	float horizontalMovement = Input::Get(RightButton) - Input::Get(LeftButton);
+	float horizontalMovement = 0; // Input::Get(RightButton) - Input::Get(LeftButton);
 
 	// Jumping
-	bool jumping = Input::Get(JumpButton) && jumpTimer <= 0.0f;
+	bool jumping = false; // Input::Get(JumpButton) && jumpTimer <= 0.0f;
 
 	for(PhysicsBehaviour* physicsBehaviour : physics) {
 		physicsBehaviour->MoveBy(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));
