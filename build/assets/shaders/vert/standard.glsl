@@ -32,7 +32,6 @@ void main()
     0.0, 0.0, 0.0, 1.0
     );
 
-//    TODO(tymon): check if it works fine
     mat4 rotationMatrix = mat4(
     cos(u_rotation * PI / 180), -sin(u_rotation * PI / 180), 0.0, 0.0,
     sin(u_rotation * PI / 180), cos(u_rotation * PI / 180), 0.0, 0.0,
