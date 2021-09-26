@@ -27,9 +27,7 @@ void BigNgine::PhysicsBehaviour::Update(int deltaTime)
 
 	b2Vec2 position = body->GetPosition();
 	
-//	TODO(tymon): get rotation from physics engine and apply it to the entity correctly
-//	parent->rotation = body->GetAngle() * 180 / PI;
-//	Logger::Log(body->GetAngle() * 180 / PI);
+	parent->rotation = body->GetAngle() * 180 / PI;
 	parent->position.x = position.x * PIXELS_PER_METERS - parent->size.x/2;
 	parent->position.y = position.y * PIXELS_PER_METERS - parent->size.y/2;
 }

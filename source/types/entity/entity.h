@@ -25,7 +25,6 @@ namespace BigNgine {
 		float depth;
 		
 //		TODO: this is shit
-		float TIME;
 
 		void SetDefaultPosition(Vector2 _position);
 		void SetDefaultRotation(float _rotation);
