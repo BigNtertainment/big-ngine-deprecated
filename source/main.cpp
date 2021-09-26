@@ -33,25 +33,22 @@ void Start()
 
 ////	Player or Marisa stuff
 	Player = new BigNgine::Entity();
-	auto* pRendererBehaviour = new BigNgine::ShaderRendererBehaviour();
+	auto* pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
-	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
-	pRendererBehaviour->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-//	pRendererBehaviour->setFile("assets/img/mariss.png");
+	pRendererBehaviour->setFile("assets/img/mariss.png");
 	pPhysicsBehaviour->constraintRotation = false;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDepth(-0.5f);
 	Player->AddBehaviour(pRendererBehaviour);
 	Player->AddBehaviour(pPhysicsBehaviour);
-	Player->AddBehaviour(pMovement);
 
 //	Ground stuff
 	Ground = new BigNgine::Entity();
 	auto* GRenderer = new BigNgine::ShaderRendererBehaviour();
 	auto* GPhysics = new BigNgine::PhysicsStaticBehaviour();
 	GRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-	Ground->SetDefaultSize(BigNgine::Vector2(640.0f, 40.0f));
+	Ground->SetDefaultSize(BigNgine::Vector2(800.0f, 40.0f));
 	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 700.0f));
 	Ground->SetDepth(0.0f);
 	Ground->AddBehaviour(GRenderer);
@@ -101,8 +98,8 @@ void Start()
 
 ///	Adding stuff to Scene
 	Scene->AddEntity(Background);
-//	Scene->AddEntity(Player);
-//	Scene->AddEntity(Ground);
+	Scene->AddEntity(Player);
+	Scene->AddEntity(Ground);
 //	Scene->AddEntity(Wall);
 //	Scene->AddEntity(Box);
 //	Scene->AddEntity(Box2);

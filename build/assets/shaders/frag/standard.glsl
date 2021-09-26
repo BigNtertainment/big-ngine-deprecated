@@ -6,14 +6,14 @@ uniform vec2 u_size;
 uniform vec2 u_position;
 
 vec2 sp;
-int pixelSize = 10;
+int pixelSize = 5;
 
 void main(){
     sp.x = int(gl_FragCoord.x) % pixelSize;
     sp.y = int(gl_FragCoord.y) % pixelSize;
 
-    sp.x = floor(pixelSize / 2.0) - sp.x;
-    sp.y = floor(pixelSize / 2.0) - sp.y;
+    sp.x = floor(pixelSize / 2.) - sp.x;
+    sp.y = floor(pixelSize / 2.) - sp.y;
 
     sp.x = gl_FragCoord.x + sp.x;
     sp.y = gl_FragCoord.y + sp.y;

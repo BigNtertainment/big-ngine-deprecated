@@ -26,6 +26,8 @@ namespace BigNgine {
 		void Destroy();
 
 		~Scene();
+		
+		unsigned int upTime = 0;
 
 	private:
 		std::vector<Entity*> entities;

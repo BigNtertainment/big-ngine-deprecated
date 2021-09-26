@@ -1,5 +1,3 @@
-//FIXME(FUCK): FUCK
-
 #version 330 core
 
 #define PI 3.14159265359
@@ -7,13 +5,18 @@
 out vec4 glFragColor;
 
 uniform vec2 u_resolution;
-uniform float u_time;
+uniform vec2 u_size;
+uniform vec2 u_position;
+uniform int u_time;
 
 vec3 color1 = vec3(0, 0, 0);
 vec3 color2 = vec3(171, 235, 255);
 vec3 color3 = vec3(61, 101, 145);
 vec3 color4 = vec3(90, 128, 151);
 vec2 sp;
+
+float noiseSpeed = 10000 * 2;
+float fbmSpeed = 30000 * 4;
 
 float RGBRange = 255.0;
 int pixelSize = 5;
@@ -81,13 +84,16 @@ void main() {
     sp.x = gl_FragCoord.x + sp.x;
     sp.y = gl_FragCoord.y + sp.y;
 
-    vec2 st = sp.xy/u_resolution;
+    vec2 st = vec2(
+    ((sp.x/ u_size.x) - 1/(u_size.x / u_position.x)) / 4.,
+    (sp.y/ u_size.y) - ((u_resolution.y / u_size.y) - 1. - (u_position.y / u_size.y))
+    );
 
     //  THE PART THAT REALLY MATTERS
     float clouds = smoothstep(0.4, 1.0, st.y) * 0.8;
-    vec2 cp = st + vec2(u_time / 10000, 0.0);
+    vec2 cp = st + vec2(u_time / noiseSpeed, 0.0);
     float rnd = noise(cp * 7.5);
-    float fbm = fbm((st + vec2(u_time / 30000, 0.0)) * 6);
+    float fbm = fbm((st + vec2(u_time / fbmSpeed, 0.0)) * 6);
 
 
     vec3 color = (vec3(rnd) * clouds * fbm) + mix(color3 / RGBRange, color4 / RGBRange, st.y);
