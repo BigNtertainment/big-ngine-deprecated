@@ -1,24 +1,26 @@
-CC := g++
+CC := clang++
 SRC := source
 BLD := build
 OBJ := obj
-FLAGS := --std=c++17 -I.\source\SDL2\include -I.\source\Box2D\include -I.\source\GLFW\include -L.\source\SDL2\lib -L.\source\Box2D\lib -L.\source\GLFW\lib -Wall -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer -lSDL2_image -lBox2D -lglfw3 -lopengl32
+
+CFLAGS := --std=c++17 -Wall -I./$(SRC)/external/Box2D/include -I./$(SRC)/external/Box2D/src -I./$(SRC)/external/GLFW/include -I./$(SRC)/external/GLAD -I./$(SRC)/external/STBI
+LDFLAGS := -L./$(SRC)/external/GLFW/lib -lglfw3dll
 
 SOURCES := $(wildcard $(SRC)/*.cpp)
-SOURCES += $(SRC)/GLAD/glad.c
-SOURCES += $(SRC)/STBI/stb.cpp
 SOURCES += $(wildcard $(SRC)/global/*/*.cpp)
 SOURCES += $(wildcard $(SRC)/types/*/*.cpp)
 SOURCES += $(wildcard $(SRC)/behaviours/*/*.cpp)
-SOURCES += $(wildcard $(SRC)/Box2D/*/*.cpp)
+SOURCES += $(SRC)/external/GLAD/glad.c
+SOURCES += $(SRC)/external/STBI/stb.cpp
+SOURCES += $(wildcard $(SRC)/external/Box2D/*/*/*.cpp)
 OBJECTS := $(patsubst $(SRC)/%.cpp,$(OBJ)/%.o,$(SOURCES))
 
 output: $(OBJECTS)
-	$(CC) $^ $(FLAGS) -o $(BLD)/main.exe
+	$(CC) $^ -o $(BLD)/main.exe $(LDFLAGS)
 
 $(OBJ)/%.o: $(SRC)/%.cpp
 	@if not exist "$(subst /,\,$(dir $@))" mkdir $(subst /,\,$(dir $@))
-	$(CC) $(FLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 clean:
 	rd /s /q "$(OBJ)/" && mkdir $(OBJ)
@@ -34,4 +36,4 @@ penis:
 	@echo "8===>"
 
 all:
-	$(CC) $(SOURCES) $(FLAGS) -o $(BLD)/main.exe
+	$(CC) $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $(BLD)/main.exe

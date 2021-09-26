@@ -1,5 +1,4 @@
 #include "behaviour.h"
-#include <algorithm>
 
 BigNgine::Behaviour::Behaviour() = default;
 

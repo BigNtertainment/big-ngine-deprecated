@@ -1,4 +1,7 @@
 #include <iostream>
+#include <iostream>
+#include <string>
+#include <ctime>
 #include "../../types/vector2/vector2.h"
 
 namespace Logger

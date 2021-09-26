@@ -1,6 +1,8 @@
 #pragma once
 #include "../../types/behaviour/behaviour.h"
 #include "../../types/vector2/vector2.h"
+#include <math.h>
+#include "../../global/logger/logger.h"
 
 namespace BigNgine
 {

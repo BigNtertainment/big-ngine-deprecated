@@ -1,6 +1,4 @@
 #include "follow.h"
-#include <math.h>
-#include "../../global/logger/logger.h"
 
 #define PI 3.14159265
 

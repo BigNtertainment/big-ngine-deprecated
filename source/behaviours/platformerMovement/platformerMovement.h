@@ -2,7 +2,7 @@
 
 #include "../../types/behaviour/behaviour.h"
 #include "../physics/physics.h"
-#include <SDL2/SDL.h>
+#include "../../global/input/input.h"
 #include <vector>
 
 namespace BigNgine {
@@ -13,9 +13,9 @@ namespace BigNgine {
 		int jumpCheckPrecision;
 		float coyoteTime;
 
-		SDL_KeyCode LeftButton = SDLK_a;
-		SDL_KeyCode RightButton = SDLK_d;
-		SDL_KeyCode JumpButton = SDLK_SPACE;
+		// SDL_KeyCode LeftButton = SDLK_a;
+		// SDL_KeyCode RightButton = SDLK_d;
+		// SDL_KeyCode JumpButton = SDLK_SPACE;
 
 		PlatformerMovementBehaviour();
 		PlatformerMovementBehaviour(float _speed);

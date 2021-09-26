@@ -1,6 +1,5 @@
 #include "physicsStatic.h"
 
-
 #define PIXELS_PER_METERS 100
 
 void BigNgine::PhysicsStaticBehaviour::Start()

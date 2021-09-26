@@ -1,12 +1,10 @@
 #pragma once
-#include <SDL2/SDL.h>
 #include "../../types/vector2/vector2.h"
 
 namespace Input {
 	bool Get(long long key);
 
-	void Update(SDL_Event event);
-	
+	void Update();
 	
 	struct MouseStruct
 	{
