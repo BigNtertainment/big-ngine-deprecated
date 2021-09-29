@@ -104,7 +104,7 @@ void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
-	glUniform1i(u_time, parent->GetParentScene()->upTime);
+	glUniform1i(u_time, parent->GetParentScene()->activeTime);
 	
 //	all the opengl binding and actually rendering the points
 	glBindVertexArray(VAO);

@@ -22,7 +22,7 @@ void BigNgine::Scene::Start() {
 	for(auto & entity : entities) {
 		entity->Start();
 	}
-	upTime = 0;
+	activeTime = 0;
 }
 
 void BigNgine::Scene::Update(int deltaTime) {
@@ -33,7 +33,7 @@ void BigNgine::Scene::Update(int deltaTime) {
 	int32 positionIterations = 2;
 
 	world->Step(deltaTime / 1000.0, velocityIterations, positionIterations);
-	upTime += deltaTime;
+	activeTime += deltaTime;
 }
 
 void BigNgine::Scene::Destroy() {

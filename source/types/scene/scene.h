@@ -27,7 +27,7 @@ namespace BigNgine {
 
 		~Scene();
 		
-		unsigned int upTime = 0;
+		unsigned int activeTime = 0;
 
 	private:
 		std::vector<Entity*> entities;
