@@ -4,6 +4,7 @@
 
 BigNgine::Scene::Scene() {
 	Camera = new BigNgine::Camera();
+	Camera->zoom = 1.0f;
 }
 
 void BigNgine::Scene::AddEntity(Entity* entity) {
