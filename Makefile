@@ -1,4 +1,4 @@
-CC := clang
+CC := clang++
 SRC := source
 BLD := build
 OBJ := obj
@@ -36,4 +36,4 @@ penis:
 	@echo "8===>"
 
 all:
-	$(CC) $(SOURCES) $(FLAGS) -o $(BLD)/main.exe
+	$(CC) $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $(BLD)/main.exe
