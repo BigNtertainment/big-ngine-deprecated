@@ -4,9 +4,11 @@ inline bool Input::Get(int key) {
 	return glfwGetKey(Game::window, key) == GLFW_PRESS;
 }
 
+std::vector<Input::Callback*> callbacks;
+
 int AutoIncrement = 0;
 
-Input::Callback::Callback(void(*_callback)(int, int, int, int)) {
+Input::Callback::Callback(void(*_callback)(int, int, int)) {
 	callback = _callback;
 	ID = AutoIncrement;
 	AutoIncrement++;
@@ -22,7 +24,7 @@ Input::Callback::~Callback() {
 		std::remove_if(
 			callbacks.begin(),
 			callbacks.end(),
-			[searchID](const Callback& callback) { return callback.ID == searchID; }
+			[searchID](Callback* callback) { return callback->ID == searchID; }
 		),
 		callbacks.end()
 	);
@@ -30,6 +32,7 @@ Input::Callback::~Callback() {
 
 void Input::Callback::ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	for(Callback* callback : callbacks) {
-		callback->callback(key, scancode, action, mods);
+		if(callback->active && callback->event == action)
+			callback->callback(key, scancode, mods);
 	}
 }

@@ -5,7 +5,7 @@
 
 namespace Cursor {
 	BigNgine::Vector2 GetPosition();
-	BigNgine::Vector2 SetPosition(BigNgine::Vector2 position);
+	void SetPosition(BigNgine::Vector2 position);
 
 	void SetNormal();
 	void SetInvisible();

@@ -1,5 +1,6 @@
 #pragma once
 #include "../game/game.h"
+#include "glad.h"
 #include <GLFW/glfw3.h>
 #include <vector>
 
@@ -126,26 +127,25 @@
 #define 	BIGNGINE_KEY_MENU   348
 #define 	BIGNGINE_KEY_LAST   BIGNGINE_KEY_MENU
 
+#define		BIGNGINE_PRESS GLFW_PRESS
+#define		BIGNGINE_RELEASE GLFW_RELEASE
+
 namespace Input {
 	/// Check if a key is pressed
 	inline bool Get(int key);
 
 	class Callback {
 	public:
-		Callback(void(*_callback)(int, int, int, int));
+		Callback(void(*_callback)(int, int, int));
 		~Callback();
+
+		bool active = true;
+		int event = BIGNGINE_PRESS;
 
 		static void ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods);
 	private:
 		int ID;
 
-		void(*callback)(int, int, int, int);
-
-		static std::vector<Callback*> callbacks;
-	};
-
-	class OnKeyPress : public Callback {
-	public:
-		OnKeyPress(void(*_callback)(int, int, int, int));
+		void(*callback)(int, int, int);
 	};
 }

@@ -22,6 +22,16 @@ BigNgine::Entity* Box;
 BigNgine::Entity* Box2;
 BigNgine::Entity* Background;
 
+Input::Callback* coolCallback;
+
+void coolCallbackFunc(int key, int scancode, int mods) {
+	if(key == BIGNGINE_KEY_W) {
+		Logger::Log("hello :)");
+	} else if(key == BIGNGINE_KEY_Q) {
+		coolCallback->active = false;
+	}
+}
+
 void Start()
 {
 //	Scene stuff
@@ -97,6 +107,16 @@ void Start()
 	Background->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
 	Background->SetDepth(0.5f);
 	Background->AddBehaviour(renderer3);
+
+	// Input::Callback* coolCallback = new Input::Callback(
+	// 	[](int key, int scancode, int mods) {
+	// 		if(key == BIGNGINE_KEY_W) {
+	// 			Logger::Log("hello :)");
+	// 		}
+	// 	}
+	// );
+
+	coolCallback = new Input::Callback(coolCallbackFunc);
 
 ///	Adding stuff to Scene
 	Scene->AddEntity(Background);
