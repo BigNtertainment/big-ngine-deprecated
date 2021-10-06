@@ -34,7 +34,7 @@ void Start()
 	pRendererBehaviour->setFile("assets/img/mariss.png");
 	pPhysicsBehaviour->constraintRotation = false;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
+	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, -100.0f));
 	Player->SetDepth(0.0f);
 	Player->AddBehaviour(pRendererBehaviour);
 	Player->AddBehaviour(pPhysicsBehaviour);
@@ -85,8 +85,9 @@ void Start()
 	GRID = new BigNgine::Entity();
 	auto* GRIDrenderer = new BigNgine::ShaderRendererBehaviour();
 	GRIDrenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
-	GRID->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
-	GRID->SetDefaultPosition(BigNgine::Vector2(-Game::width/2, -Game::height/2));
+	GRIDrenderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/debugBackground.glsl"));
+	GRID->SetDefaultSize(BigNgine::Vector2((float)Game::width, (float)Game::height));
+	GRID->SetDefaultPosition(BigNgine::Vector2(-600, -400));
 	GRID->SetDepth(-0.5f);
 	GRID->AddBehaviour(GRIDrenderer);
 
@@ -98,15 +99,15 @@ void Start()
 	Game::SetActiveScene(Scene);
 }
 
-void Update(int deltaTime)
+void Update([[maybe_unused]]int deltaTime)
 {
-	GRID->size.x = Game::width;
-	GRID->size.y = Game::height;
-	GRID->position.x = -Game::width/2;
-	GRID->position.y = -Game::height/2;
+	GRID->size.x = (float)Game::width;
+	GRID->size.y = (float)Game::height;
+	GRID->position.x = (float)-Game::width / 2;
+	GRID->position.y = (float)-Game::height / 2;
 }
 
-int main(int argc, char *args[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
 {
 	Game::width = 1200;
 	Game::height = 800;

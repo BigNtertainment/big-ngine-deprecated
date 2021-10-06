@@ -103,11 +103,11 @@ void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 	glUseProgram(program);
 	
 //	setting all uniforms
-	glUniform2f(u_resolution, Game::width, Game::height);
+	glUniform2f(u_resolution, (float)Game::width, (float)Game::height);
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
-	glUniform1i(u_time, parent->GetParentScene()->activeTime);
+	glUniform1i(u_time, (int)parent->GetParentScene()->activeTime);
 	glUniform1f(u_rotation, parent->rotation);
 	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x, parent->GetParentScene()->Camera->position.y);
 	glUniform1f(u_camera_zoom, parent->GetParentScene()->Camera->zoom);

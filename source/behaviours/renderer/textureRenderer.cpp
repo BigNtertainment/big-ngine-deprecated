@@ -147,12 +147,12 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	glUseProgram(program);
 	
 	//	setting all uniforms
-	glUniform2f(u_resolution, Game::width, Game::height);
+	glUniform2f(u_resolution, (float)Game::width, (float)Game::height);
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
 	glUniform1f(u_rotation, parent->rotation);
-	glUniform1f(u_time, parent->GetParentScene()->activeTime);
+	glUniform1i(u_time, (int)parent->GetParentScene()->activeTime);
 	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x, parent->GetParentScene()->Camera->position.y);
 	glUniform1f(u_camera_zoom, parent->GetParentScene()->Camera->zoom);
 	
@@ -174,12 +174,12 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	glDeleteProgram(program);
 }
 
-void BigNgine::TextureRendererBehaviour::SetVertShader(std::string vertexShader)
+[[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetVertShader(std::string vertexShader)
 {
 	vertShader = std::move(vertexShader);
 }
 
-void BigNgine::TextureRendererBehaviour::SetFragShader(std::string fragmentShader)
+[[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetFragShader(std::string fragmentShader)
 {
 	fragShader = std::move(fragmentShader);
 }
