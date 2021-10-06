@@ -86,25 +86,27 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	images[0].pixels = stbi_load(Game::icon, &images[0].width, &images[0].height, nullptr, 4);
 	glfwSetWindowIcon(window, 1, images);
 	stbi_image_free(images[0].pixels);
-	
-	
+
+	// Activate callbacks on key events
+	glfwSetKeyCallback(Game::window, Input::Callback::ExecuteCallbacks);
+
 //	TODO(pietrek14): sort entities array before activating them,
 //	 from biggest depth to smallest
 //	starting every entity
+
+//	pietrek14: no
+
 	Start();
 	ActiveScene->Start();
 	
 	//	main game loop
 	while(Game::running && !glfwWindowShouldClose(window)) {
-		Input::Update();
-
 		currentTime = clock();
 
 		int deltaTime = currentTime - lastTime;
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
 
 		Update(deltaTime);
 

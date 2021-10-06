@@ -1,20 +1,151 @@
 #pragma once
-#include "../../types/vector2/vector2.h"
+#include "../game/game.h"
+#include "glad.h"
+#include <GLFW/glfw3.h>
+#include <vector>
+
+#define 	BIGNGINE_KEY_UNKNOWN   -1
+#define 	BIGNGINE_KEY_SPACE   32
+#define 	BIGNGINE_KEY_APOSTROPHE   39 /* ' */
+#define 	BIGNGINE_KEY_COMMA   44 /* , */
+#define 	BIGNGINE_KEY_MINUS   45 /* - */
+#define 	BIGNGINE_KEY_PERIOD   46 /* . */
+#define 	BIGNGINE_KEY_SLASH   47 /* / */
+#define 	BIGNGINE_KEY_0   48
+#define 	BIGNGINE_KEY_1   49
+#define 	BIGNGINE_KEY_2   50
+#define 	BIGNGINE_KEY_3   51
+#define 	BIGNGINE_KEY_4   52
+#define 	BIGNGINE_KEY_5   53
+#define 	BIGNGINE_KEY_6   54
+#define 	BIGNGINE_KEY_7   55
+#define 	BIGNGINE_KEY_8   56
+#define 	BIGNGINE_KEY_9   57
+#define 	BIGNGINE_KEY_SEMICOLON   59 /* ; */
+#define 	BIGNGINE_KEY_EQUAL   61 /* = */
+#define 	BIGNGINE_KEY_A   65
+#define 	BIGNGINE_KEY_B   66
+#define 	BIGNGINE_KEY_C   67
+#define 	BIGNGINE_KEY_D   68
+#define 	BIGNGINE_KEY_E   69
+#define 	BIGNGINE_KEY_F   70
+#define 	BIGNGINE_KEY_G   71
+#define 	BIGNGINE_KEY_H   72
+#define 	BIGNGINE_KEY_I   73
+#define 	BIGNGINE_KEY_J   74
+#define 	BIGNGINE_KEY_K   75
+#define 	BIGNGINE_KEY_L   76
+#define 	BIGNGINE_KEY_M   77
+#define 	BIGNGINE_KEY_N   78
+#define 	BIGNGINE_KEY_O   79
+#define 	BIGNGINE_KEY_P   80
+#define 	BIGNGINE_KEY_Q   81
+#define 	BIGNGINE_KEY_R   82
+#define 	BIGNGINE_KEY_S   83
+#define 	BIGNGINE_KEY_T   84
+#define 	BIGNGINE_KEY_U   85
+#define 	BIGNGINE_KEY_V   86
+#define 	BIGNGINE_KEY_W   87
+#define 	BIGNGINE_KEY_X   88
+#define 	BIGNGINE_KEY_Y   89
+#define 	BIGNGINE_KEY_Z   90
+#define 	BIGNGINE_KEY_LEFT_BRACKET   91 /* [ */
+#define 	BIGNGINE_KEY_BACKSLASH   92 /* \ */
+#define 	BIGNGINE_KEY_RIGHT_BRACKET   93 /* ] */
+#define 	BIGNGINE_KEY_GRAVE_ACCENT   96 /* ` */
+#define 	BIGNGINE_KEY_WORLD_1   161 /* non-US #1 */
+#define 	BIGNGINE_KEY_WORLD_2   162 /* non-US #2 */
+#define 	BIGNGINE_KEY_ESCAPE   256
+#define 	BIGNGINE_KEY_ENTER   257
+#define 	BIGNGINE_KEY_TAB   258
+#define 	BIGNGINE_KEY_BACKSPACE   259
+#define 	BIGNGINE_KEY_INSERT   260
+#define 	BIGNGINE_KEY_DELETE   261
+#define 	BIGNGINE_KEY_RIGHT   262
+#define 	BIGNGINE_KEY_LEFT   263
+#define 	BIGNGINE_KEY_DOWN   264
+#define 	BIGNGINE_KEY_UP   265
+#define 	BIGNGINE_KEY_PAGE_UP   266
+#define 	BIGNGINE_KEY_PAGE_DOWN   267
+#define 	BIGNGINE_KEY_HOME   268
+#define 	BIGNGINE_KEY_END   269
+#define 	BIGNGINE_KEY_CAPS_LOCK   280
+#define 	BIGNGINE_KEY_SCROLL_LOCK   281
+#define 	BIGNGINE_KEY_NUM_LOCK   282
+#define 	BIGNGINE_KEY_PRINT_SCREEN   283
+#define 	BIGNGINE_KEY_PAUSE   284
+#define 	BIGNGINE_KEY_F1   290
+#define 	BIGNGINE_KEY_F2   291
+#define 	BIGNGINE_KEY_F3   292
+#define 	BIGNGINE_KEY_F4   293
+#define 	BIGNGINE_KEY_F5   294
+#define 	BIGNGINE_KEY_F6   295
+#define 	BIGNGINE_KEY_F7   296
+#define 	BIGNGINE_KEY_F8   297
+#define 	BIGNGINE_KEY_F9   298
+#define 	BIGNGINE_KEY_F10   299
+#define 	BIGNGINE_KEY_F11   300
+#define 	BIGNGINE_KEY_F12   301
+#define 	BIGNGINE_KEY_F13   302
+#define 	BIGNGINE_KEY_F14   303
+#define 	BIGNGINE_KEY_F15   304
+#define 	BIGNGINE_KEY_F16   305
+#define 	BIGNGINE_KEY_F17   306
+#define 	BIGNGINE_KEY_F18   307
+#define 	BIGNGINE_KEY_F19   308
+#define 	BIGNGINE_KEY_F20   309
+#define 	BIGNGINE_KEY_F21   310
+#define 	BIGNGINE_KEY_F22   311
+#define 	BIGNGINE_KEY_F23   312
+#define 	BIGNGINE_KEY_F24   313
+#define 	BIGNGINE_KEY_F25   314
+#define 	BIGNGINE_KEY_KP_0   320
+#define 	BIGNGINE_KEY_KP_1   321
+#define 	BIGNGINE_KEY_KP_2   322
+#define 	BIGNGINE_KEY_KP_3   323
+#define 	BIGNGINE_KEY_KP_4   324
+#define 	BIGNGINE_KEY_KP_5   325
+#define 	BIGNGINE_KEY_KP_6   326
+#define 	BIGNGINE_KEY_KP_7   327
+#define 	BIGNGINE_KEY_KP_8   328
+#define 	BIGNGINE_KEY_KP_9   329
+#define 	BIGNGINE_KEY_KP_DECIMAL   330
+#define 	BIGNGINE_KEY_KP_DIVIDE   331
+#define 	BIGNGINE_KEY_KP_MULTIPLY   332
+#define 	BIGNGINE_KEY_KP_SUBTRACT   333
+#define 	BIGNGINE_KEY_KP_ADD   334
+#define 	BIGNGINE_KEY_KP_ENTER   335
+#define 	BIGNGINE_KEY_KP_EQUAL   336
+#define 	BIGNGINE_KEY_LEFT_SHIFT   340
+#define 	BIGNGINE_KEY_LEFT_CONTROL   341
+#define 	BIGNGINE_KEY_LEFT_ALT   342
+#define 	BIGNGINE_KEY_LEFT_SUPER   343
+#define 	BIGNGINE_KEY_RIGHT_SHIFT   344
+#define 	BIGNGINE_KEY_RIGHT_CONTROL   345
+#define 	BIGNGINE_KEY_RIGHT_ALT   346
+#define 	BIGNGINE_KEY_RIGHT_SUPER   347
+#define 	BIGNGINE_KEY_MENU   348
+#define 	BIGNGINE_KEY_LAST   BIGNGINE_KEY_MENU
+
+#define		BIGNGINE_PRESS GLFW_PRESS
+#define		BIGNGINE_RELEASE GLFW_RELEASE
 
 namespace Input {
-	bool Get(long long key);
+	/// Check if a key is pressed
+	inline bool Get(int key);
 
-	void Update();
-	
-	struct MouseStruct
-	{
-		bool RightButton = false;
-		bool LeftButton = false;
-		bool MiddleButton = false;
-		bool SideButton1 = false;
-		bool SideButton2 = false;
-		BigNgine::Vector2 MousePosition = BigNgine::Vector2(0.0f, 0.0f);
+	class Callback {
+	public:
+		Callback(void(*_callback)(int, int, int));
+		~Callback();
+
+		bool active = true;
+		int event = BIGNGINE_PRESS;
+
+		static void ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods);
+	private:
+		int ID;
+
+		void(*callback)(int, int, int);
 	};
-	
-	MouseStruct GetMouse();
 }

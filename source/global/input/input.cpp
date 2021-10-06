@@ -1,123 +1,38 @@
 #include "input.h"
 
-static bool* initKeys() {
-	bool* keys = new bool[256];
-
-	for(int i = 0; i < 256; i++)
-		keys[i] = false;
-	
-	return keys;
+inline bool Input::Get(int key) {
+	return glfwGetKey(Game::window, key) == GLFW_PRESS;
 }
 
-static bool* keys = initKeys();
-Input::MouseStruct Mouse;
+std::vector<Input::Callback*> callbacks;
 
-bool Input::Get(long long key) {
-	if(key > 127)
-	{
-		key -= 0x40000000 + 127;
+int AutoIncrement = 0;
+
+Input::Callback::Callback(void(*_callback)(int, int, int)) {
+	callback = _callback;
+	ID = AutoIncrement;
+	AutoIncrement++;
+
+	callbacks.push_back(this);
+}
+
+Input::Callback::~Callback() {
+	const int searchID = ID;
+
+	// https://stackoverflow.com/questions/7958216/c-remove-if-on-a-vector-of-objects
+	callbacks.erase(
+		std::remove_if(
+			callbacks.begin(),
+			callbacks.end(),
+			[searchID](Callback* callback) { return callback->ID == searchID; }
+		),
+		callbacks.end()
+	);
+}
+
+void Input::Callback::ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	for(Callback* callback : callbacks) {
+		if(callback->active && callback->event == action)
+			callback->callback(key, scancode, mods);
 	}
-
-	return keys[(int)key];
-}
-
-Input::MouseStruct Input::GetMouse()
-{
-	return Mouse;
-}
-
-void Input::Update() {
-// 	int key;
-// 	if (event.key.keysym.sym > 127)
-// 	{
-// 		key = event.key.keysym.sym - 0x40000000 + 127;
-// 	}
-// 	else
-// 	{
-// 		key = event.key.keysym.sym;
-// 	}
-
-// 	if (event.type == SDL_KEYDOWN)
-// 	{
-// 		keys[key] = true;
-// 	}
-// 	else if (event.type == SDL_KEYUP)
-// 	{
-// 		keys[key] = false;
-// 	}
-// 	else if (event.type == SDL_MOUSEMOTION)
-// 	{
-// 		Mouse.MousePosition.x = event.button.x;
-// 		Mouse.MousePosition.y = event.button.y;
-// 	}
-// 	else if (event.type == SDL_MOUSEBUTTONDOWN)
-// 	{
-// 		switch (event.button.button)
-// 		{
-// 			case SDL_BUTTON_LEFT:
-// 			{
-// 				Mouse.LeftButton = true;
-// 				break;
-// 			}
-			
-// 			case SDL_BUTTON_RIGHT:
-// 			{
-// 				Mouse.RightButton = true;
-// 				break;
-// 			}
-			
-// 			case SDL_BUTTON_MIDDLE:
-// 			{
-// 				Mouse.MiddleButton = true;
-// 				break;
-// 			}
-			
-// 			case SDL_BUTTON_X1:
-// 			{
-// 				Mouse.SideButton2 = true;
-// 				break;
-// 			}
-			
-// 			case SDL_BUTTON_X2:
-// 			{
-// 				Mouse.SideButton1 = true;
-// 				break;
-// 			}
-// 		}
-// 	}
-// 	else if (event.type == SDL_MOUSEBUTTONUP)
-// 	{
-// 		switch (event.button.button)
-// 		{
-// 			case SDL_BUTTON_LEFT:
-// 			{
-// 				Mouse.LeftButton = false;
-// 				break;
-// 			}
-			
-// 			case SDL_BUTTON_RIGHT:
-// 			{
-// 				Mouse.RightButton = false;
-// 				break;
-// 			}
-			
-// 			case SDL_BUTTON_MIDDLE:
-// 			{
-// 				Mouse.MiddleButton = false;
-// 				break;
-// 			}
-			
-// 			case SDL_BUTTON_X1:
-// 			{
-// 				Mouse.SideButton2 = false;
-// 				break;
-// 			}
-			
-// 			case SDL_BUTTON_X2:
-// 			{
-// 				Mouse.SideButton1 = false;
-// 				break;
-// 			}
-// 		}
-// 	}
 }

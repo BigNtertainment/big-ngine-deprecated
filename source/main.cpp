@@ -22,6 +22,16 @@ BigNgine::Entity* Box;
 BigNgine::Entity* Box2;
 BigNgine::Entity* GRID;
 
+Input::Callback* coolCallback;
+
+void coolCallbackFunc(int key, int scancode, int mods) {
+	if(key == BIGNGINE_KEY_W) {
+		Logger::Log("hello :)");
+	} else if(key == BIGNGINE_KEY_Q) {
+		coolCallback->active = false;
+	}
+}
+
 void Start()
 {
 //	Scene stuff
@@ -90,6 +100,16 @@ void Start()
 	GRID->SetDefaultPosition(BigNgine::Vector2(-600, -400));
 	GRID->SetDepth(-0.5f);
 	GRID->AddBehaviour(GRIDrenderer);
+
+	// Input::Callback* coolCallback = new Input::Callback(
+	// 	[](int key, int scancode, int mods) {
+	// 		if(key == BIGNGINE_KEY_W) {
+	// 			Logger::Log("hello :)");
+	// 		}
+	// 	}
+	// );
+
+	coolCallback = new Input::Callback(coolCallbackFunc);
 
 ///	Adding stuff to Scene
 	Scene->AddEntity(Player);
