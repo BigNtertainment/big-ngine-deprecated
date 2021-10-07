@@ -84,10 +84,12 @@ void main() {
     sp.x = gl_FragCoord.x + sp.x;
     sp.y = gl_FragCoord.y + sp.y;
 
-    vec2 st = vec2(
-    ((sp.x/ u_size.x) - 1/(u_size.x / u_position.x)) / 4.,
-    (sp.y/ u_size.y) - ((u_resolution.y / u_size.y) - 1. - (u_position.y / u_size.y))
-    );
+//    FIXME(tymon): this does not work... again...
+//    vec2 st = vec2(
+//    ((sp.x/ u_size.x) - 1/(u_size.x / u_position.x)) / 4.,
+//    (sp.y/ u_size.y) - ((u_resolution.y / u_size.y) - 1. - (u_position.y / u_size.y))
+//    );
+    vec2 st = sp.xy/u_resolution;
 
     //  THE PART THAT REALLY MATTERS
     float clouds = smoothstep(0.4, 1.0, st.y) * 0.8;
