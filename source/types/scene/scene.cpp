@@ -3,8 +3,9 @@
 #include "../../global/game/game.h"
 
 BigNgine::Scene::Scene() {
-	Camera = new BigNgine::Camera();
-	Camera->zoom = 1.0f;
+	Camera = new BigNgine::Entity();
+	CameraZoom = 1.0f;
+	AddEntity(Camera);
 }
 
 void BigNgine::Scene::AddEntity(Entity* entity) {

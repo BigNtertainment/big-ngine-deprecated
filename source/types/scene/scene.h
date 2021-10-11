@@ -8,19 +8,16 @@ namespace BigNgine {
 	class Entity;
 	class Behaviour;
 	
-	struct Camera {
-		BigNgine::Vector2 position;
-		float zoom;
-	};
-	
 	class Scene {
 		friend Entity;
 		friend Behaviour;
 	public:
-		Camera* Camera;
+		Entity* Camera;
 
 		b2Vec2* gravity;
 		b2World* world;
+		
+		float CameraZoom;
 
 		Scene();
 

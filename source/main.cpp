@@ -7,10 +7,12 @@
 #include "types/entity/entity.h"
 #include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
+#include "behaviours/follow/follow.h"
 #include "behaviours/renderer/renderer.h"
 #include "behaviours/physicsStatic/physicsStatic.h"
 #include "behaviours/physics/physics.h"
 #include "behaviours/platformerMovement/platformerMovement.h"
+#include "behaviours/follow/follow.h"
 
 
 BigNgine::Scene *Scene;
@@ -47,12 +49,17 @@ void Start()
 	pRendererBehaviour->setFile("assets/img/mariss.png");
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, -100.0f));
+	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDepth(0.0f);
 	Player->AddBehaviour(pRendererBehaviour);
 	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
 	
+	auto* FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
+	FollowPlayer->lockRotation = true;
+
+	Scene->Camera->AddBehaviour(FollowPlayer);
+
 	//	Ground stuff
 	Ground = new BigNgine::Entity();
 	auto *GRenderer = new BigNgine::ShaderRendererBehaviour();
@@ -69,8 +76,8 @@ void Start()
 	auto *WRenderer = new BigNgine::ShaderRendererBehaviour();
 	auto *WPhysics = new BigNgine::PhysicsStaticBehaviour();
 	WRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-	Wall->SetDefaultSize(BigNgine::Vector2(10.0f, 100.0f));
-	Wall->SetDefaultPosition(BigNgine::Vector2(-170.0f, 0.0));
+	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	Wall->SetDefaultPosition(BigNgine::Vector2(.0f, .0f));
 	Wall->SetDepth(0.0f);
 	Wall->AddBehaviour(WRenderer);
 	Wall->AddBehaviour(WPhysics);
@@ -103,7 +110,7 @@ void Start()
 	coolCallback = new Input::Callback(coolCallbackFunc);
 	
 	///	Adding stuff to Scene
-	Scene->AddEntity(sky);
+//	Scene->AddEntity(sky);
 	Scene->AddEntity(Wall);
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
@@ -113,10 +120,12 @@ void Start()
 
 void Update([[maybe_unused]]int deltaTime)
 {
-	GRID->size.x = (float) Game::width;
-	GRID->size.y = (float) Game::height;
-	GRID->position.x = (float) -Game::width / 2;
-	GRID->position.y = (float) -Game::height / 2;
+//	GRID->size.x = (float) Game::width;
+//	GRID->size.y = (float) Game::height;
+//	GRID->position.x = (float) -Game::width / 2;
+//	GRID->position.y = (float) -Game::height / 2;
+//	Scene->Camera->position = BigNgine::Vector2(100.0,100.0);
+
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])

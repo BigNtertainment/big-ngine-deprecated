@@ -27,7 +27,7 @@ void BigNgine::PhysicsBehaviour::Update(int deltaTime)
 
 	b2Vec2 position = body->GetPosition();
 	
-	parent->rotation = body->GetAngle() * 180 / PI;
+	parent->rotation = body->GetAngle() * 180.0 / PI;
 	parent->position.x = position.x * PIXELS_PER_METERS - parent->size.x/2;
 	parent->position.y = position.y * PIXELS_PER_METERS - parent->size.y/2;
 }
@@ -42,7 +42,7 @@ void BigNgine::PhysicsBehaviour::MoveTo(const BigNgine::Vector2& _target)
 	float y = (_target.y) / PIXELS_PER_METERS;
 	parent->position.x = x * PIXELS_PER_METERS;
 	parent->position.y = y * PIXELS_PER_METERS;
-	body->SetTransform(b2Vec2(x  + parent->size.x/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), 0.0f);
+	body->SetTransform(b2Vec2(x  + parent->size.x/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), body->GetAngle());
 }
 
 void BigNgine::PhysicsBehaviour::MoveBy(const BigNgine::Vector2& _target)
@@ -51,7 +51,7 @@ void BigNgine::PhysicsBehaviour::MoveBy(const BigNgine::Vector2& _target)
 	float y = (_target.y + parent->position.y) / PIXELS_PER_METERS;
 	parent->position.x = x * PIXELS_PER_METERS;
 	parent->position.y = y * PIXELS_PER_METERS;
-	body->SetTransform(b2Vec2(x  + parent->size.y/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), 0.0f);
+	body->SetTransform(b2Vec2(x  + parent->size.y/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), body->GetAngle());
 }
 
 void BigNgine::PhysicsBehaviour::ApplyForce(const BigNgine::Vector2& force) {

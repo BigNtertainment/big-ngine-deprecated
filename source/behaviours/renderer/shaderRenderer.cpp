@@ -110,7 +110,7 @@ void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 	glUniform1i(u_time, (int)parent->GetParentScene()->activeTime);
 	glUniform1f(u_rotation, parent->rotation);
 	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x, parent->GetParentScene()->Camera->position.y);
-	glUniform1f(u_camera_zoom, parent->GetParentScene()->Camera->zoom);
+	glUniform1f(u_camera_zoom, parent->GetParentScene()->CameraZoom);
 	
 //	all the opengl binding and actually rendering the points
 	glBindVertexArray(VAO);
