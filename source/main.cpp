@@ -1,4 +1,5 @@
 #include <cmath>
+#include "external/Box2D/include/box2d/box2d.h"
 #include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"
@@ -15,12 +16,11 @@
 
 
 BigNgine::Scene *Scene;
-BigNgine::Scene *Scene2;
 
 BigNgine::Entity *Player;
 BigNgine::Entity *Ground;
 BigNgine::Entity *Wall;
-BigNgine::Entity *GRID;
+BigNgine::Entity *Grid;
 BigNgine::Entity *sky;
 
 Input::Callback *coolCallback;
@@ -29,10 +29,10 @@ void coolCallbackFunc(int key, int scancode, int mods)
 {
 	if (key == BIGNGINE_KEY_W)
 	{
-		Game::ChangeActiveScene(Scene);
+		Logger::Log("hello :)");
 	} else if (key == BIGNGINE_KEY_Q)
 	{
-		Game::ChangeActiveScene(Scene2);
+		coolCallback->active = false;
 	}
 }
 
@@ -40,14 +40,13 @@ void Start()
 {
 	//	Scene stuff
 	Scene = new BigNgine::Scene();
-	Scene2 = new BigNgine::Scene();
 	
 	////	Player or Marisa stuff
 	Player = new BigNgine::Entity();
 	auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 	auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
-	pRendererBehaviour->SetTexture("assets/img/mariss.png");
+	pRendererBehaviour->setFile("assets/img/mariss.png");
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
@@ -83,14 +82,14 @@ void Start()
 	Wall->AddBehaviour(WRenderer);
 	Wall->AddBehaviour(WPhysics);
 	
-	GRID = new BigNgine::Entity();
-	auto *GRIDrenderer = new BigNgine::ShaderRendererBehaviour();
-	GRIDrenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
-	GRIDrenderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/debugBackground.glsl"));
-	GRID->SetDefaultSize(BigNgine::Vector2((float) Game::width, (float) Game::height));
-	GRID->SetDefaultPosition(BigNgine::Vector2(-600, -400));
-	GRID->SetDepth(-0.5f);
-	GRID->AddBehaviour(GRIDrenderer);
+	Grid = new BigNgine::Entity();
+	auto *GridRenderer = new BigNgine::ShaderRendererBehaviour();
+	GridRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
+	GridRenderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/debugBackground.glsl"));
+	Grid->SetDefaultSize(BigNgine::Vector2((float) Game::width, (float) Game::height));
+	Grid->SetDefaultPosition(BigNgine::Vector2(-600, -400));
+	Grid->SetDepth(-0.5f);
+	Grid->AddBehaviour(GridRenderer);
 	
 	sky = new BigNgine::Entity();
 	auto *skyRenderer = new BigNgine::ShaderRendererBehaviour();
@@ -100,49 +99,35 @@ void Start()
 	sky->SetDepth(0.9f);
 	sky->AddBehaviour(skyRenderer);
 	
-	// Input::Callback* coolCallback = new Input::Callback(
-	// 	[](int key, int scancode, int mods) {
-	// 		if(key == BIGNGINE_KEY_W) {
-	// 			Logger::Log("hello :)");
-	// 		}
-	// 	}
-	// );
-	
-	coolCallback = new Input::Callback(coolCallbackFunc);
-	
 	///	Adding stuff to Scene
-	Scene2->AddEntity(sky);
+//	Scene->AddEntity(sky);
 	Scene->AddEntity(Wall);
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
-	Scene->AddEntity(GRID);
+	Scene->AddEntity(Grid);
 	Game::SetActiveScene(Scene);
 }
 
 void Update([[maybe_unused]]int deltaTime)
 {
-//	GRID->size.x = (float) Game::width;
-//	GRID->size.y = (float) Game::height;
-//	GRID->position.x = (float) -Game::width / 2;
-//	GRID->position.y = (float) -Game::height / 2;
-//	Scene->Camera->position = BigNgine::Vector2(100.0,100.0);
+	if(Input::Get(BIGNGINE_KEY_Z))
+		Game::width -= deltaTime / 1000.0;
 
+	//FIXME: It should make the window wider (spoiler: it doesn't)
+	if(Input::Get(BIGNGINE_KEY_X))
+		Game::width += deltaTime / 1000.0;
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
 {
 	Game::width = 1200;
 	Game::height = 800;
-	Game::Name = "BigNgine";
+	Game::name = "BigNgine";
 	Game::icon = "assets/icon/icon.png";
-	try
-	{
-		Game::Start(Start, Update);
-	}
-	catch (std::exception &e)
-	{
-		Logger::Error(e.what());
-	}
 	
+	Game::Start(Start, Update);
+
+	delete Scene;
+
 	return 0;
 }

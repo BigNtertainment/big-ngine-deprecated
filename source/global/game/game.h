@@ -36,5 +36,5 @@ namespace Game
 	void ChangeActiveScene(BigNgine::Scene* scene);
 
 	extern GLFWwindow* window;
-	extern const char *Name;
+	extern const char *name;
 };

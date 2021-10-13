@@ -85,7 +85,7 @@ void BigNgine::TextureRendererBehaviour::Start()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)nullptr);
 	glEnableVertexAttribArray(0);
 //	useless
-//	TODO: get rid of this
+//	TODO(imustend): get rid of this
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 //	texture coord attribute
