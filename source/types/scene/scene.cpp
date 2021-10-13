@@ -3,10 +3,8 @@
 #include "../../global/game/game.h"
 
 BigNgine::Scene::Scene() {
-	Camera = new Entity();
-
-	Camera->size = Vector2(Game::width, Game::height);
-
+	Camera = new BigNgine::Entity();
+	CameraZoom = 1.0f;
 	AddEntity(Camera);
 }
 
@@ -22,6 +20,7 @@ void BigNgine::Scene::Start() {
 	for(auto & entity : entities) {
 		entity->Start();
 	}
+	activeTime = 0;
 }
 
 void BigNgine::Scene::Update(int deltaTime) {
@@ -32,6 +31,7 @@ void BigNgine::Scene::Update(int deltaTime) {
 	int32 positionIterations = 2;
 
 	world->Step(deltaTime / 1000.0, velocityIterations, positionIterations);
+	activeTime += deltaTime;
 }
 
 void BigNgine::Scene::Destroy() {

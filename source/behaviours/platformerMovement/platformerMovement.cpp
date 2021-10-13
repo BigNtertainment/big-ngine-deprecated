@@ -1,6 +1,6 @@
 #include "platformerMovement.h"
 
-#define DEFAULT_SPEED 150.0f
+#define DEFAULT_SPEED 450.0f
 #define DEFAULT_JUMP_FORCE 300.0f
 #define DEFAULT_JUMP_CHECK_PRECISION 5
 #define DEFAULT_COYOTE_TIME 0.25f
@@ -23,22 +23,23 @@ void BigNgine::PlatformerMovementBehaviour::Start() {
 
 void BigNgine::PlatformerMovementBehaviour::Update(int deltaTime) {
 	// Moving horizontally
-	float horizontalMovement = 0; // Input::Get(RightButton) - Input::Get(LeftButton);
+	auto horizontalMovement = (float)(Input::Get(RightButton) - Input::Get(LeftButton));
 
 	// Jumping
-	bool jumping = false; // Input::Get(JumpButton) && jumpTimer <= 0.0f;
+	bool jumping = Input::Get(JumpButton) && jumpTimer <= 0.0f;
 
 	for(PhysicsBehaviour* physicsBehaviour : physics) {
-		physicsBehaviour->MoveBy(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));
+		if(horizontalMovement != 0.0)
+			physicsBehaviour->MoveBy(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));
 
 		if(jumping) {
 			jumpTimer = JUMP_TIMER;
-			physicsBehaviour->ApplyForce(Vector2(0.0f, jumping * jumpForce));
+			physicsBehaviour->ApplyForce(Vector2(0.0f, jumpForce));
 		}
 	}
 
 	if(jumpTimer > 0.0f)
-		jumpTimer -= deltaTime / 1000.0f;
+		jumpTimer -= (float)deltaTime / 1000.0f;
 }
 
 void BigNgine::PlatformerMovementBehaviour::Destroy() {

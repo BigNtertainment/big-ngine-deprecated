@@ -16,6 +16,8 @@ namespace BigNgine {
 
 		b2Vec2* gravity;
 		b2World* world;
+		
+		float CameraZoom;
 
 		Scene();
 
@@ -26,6 +28,8 @@ namespace BigNgine {
 		void Destroy();
 
 		~Scene();
+		
+		unsigned int activeTime = 0;
 
 	private:
 		std::vector<Entity*> entities;

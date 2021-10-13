@@ -13,9 +13,9 @@ namespace BigNgine {
 		int jumpCheckPrecision;
 		float coyoteTime;
 
-		// SDL_KeyCode LeftButton = SDLK_a;
-		// SDL_KeyCode RightButton = SDLK_d;
-		// SDL_KeyCode JumpButton = SDLK_SPACE;
+		 int LeftButton = BIGNGINE_KEY_A;
+		 int RightButton = BIGNGINE_KEY_D;
+		 int JumpButton = BIGNGINE_KEY_SPACE;
 
 		PlatformerMovementBehaviour();
 		PlatformerMovementBehaviour(float _speed);

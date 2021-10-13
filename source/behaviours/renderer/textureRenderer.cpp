@@ -85,7 +85,7 @@ void BigNgine::TextureRendererBehaviour::Start()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)nullptr);
 	glEnableVertexAttribArray(0);
 //	useless
-//	TODO: get rid of this
+//	TODO(imustend): get rid of this
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 //	texture coord attribute
@@ -136,6 +136,10 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	int u_position = glGetUniformLocation(program, "u_position");
 	int u_size = glGetUniformLocation(program, "u_size");
 	int u_depth = glGetUniformLocation(program, "u_depth");
+	int u_time = glGetUniformLocation(program, "u_time");
+	int u_rotation = glGetUniformLocation(program, "u_rotation");
+	int u_camera_position = glGetUniformLocation(program, "u_camera_position");
+	int u_camera_zoom = glGetUniformLocation(program, "u_camera_zoom");
 	
 	
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -143,10 +147,15 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	glUseProgram(program);
 	
 	//	setting all uniforms
-	glUniform2f(u_resolution, Game::width, Game::height);
+	glUniform2f(u_resolution, (float)Game::width, (float)Game::height);
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
+	glUniform1f(u_rotation, parent->rotation);
+	glUniform1i(u_time, (int)parent->GetParentScene()->activeTime);
+	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x, parent->GetParentScene()->Camera->position.y);
+	glUniform1f(u_camera_zoom, parent->GetParentScene()->CameraZoom);
+	
 	
 	//	all the opengl binding and actually rendering the points
 	glBindVertexArray(VAO);
@@ -165,17 +174,17 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	glDeleteProgram(program);
 }
 
-void BigNgine::TextureRendererBehaviour::SetVertShader(std::string vertexShader)
+[[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetVertShader(std::string vertexShader)
 {
 	vertShader = std::move(vertexShader);
 }
 
-void BigNgine::TextureRendererBehaviour::SetFragShader(std::string fragmentShader)
+[[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetFragShader(std::string fragmentShader)
 {
 	fragShader = std::move(fragmentShader);
 }
 
-void BigNgine::TextureRendererBehaviour::setFile(const std::string &file)
+void BigNgine::TextureRendererBehaviour::setFile(const std::string &_file)
 {
-	TextureRendererBehaviour::file = file;
+	TextureRendererBehaviour::file = _file;
 }

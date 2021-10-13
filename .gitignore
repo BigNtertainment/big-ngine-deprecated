@@ -2,5 +2,4 @@ build/main.exe
 obj/*
 .vscode
 obj
-CMakeLists.txt
 .idea
