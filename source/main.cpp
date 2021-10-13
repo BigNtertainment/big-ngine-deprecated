@@ -110,14 +110,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
 	Game::height = 800;
 	Game::name = "BigNgine";
 	Game::icon = "assets/icon/icon.png";
-	try
-	{
-		Game::Start(Start, Update);
-	}
-	catch (std::exception &e)
-	{
-		Logger::Error(e.what());
-	}
+	
+	Game::Start(Start, Update);
 
 	delete Scene;
 
