@@ -95,14 +95,22 @@ void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 	int u_position = glGetUniformLocation(program, "u_position");
 	int u_size = glGetUniformLocation(program, "u_size");
 	int u_depth = glGetUniformLocation(program, "u_depth");
+	int u_time = glGetUniformLocation(program, "u_time");
+	int u_rotation = glGetUniformLocation(program, "u_rotation");
+	int u_camera_position = glGetUniformLocation(program, "u_camera_position");
+	int u_camera_zoom = glGetUniformLocation(program, "u_camera_zoom");
 	
 	glUseProgram(program);
 	
 //	setting all uniforms
-	glUniform2f(u_resolution, Game::width, Game::height);
+	glUniform2f(u_resolution, (float)Game::width, (float)Game::height);
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
+	glUniform1i(u_time, (int)parent->GetParentScene()->activeTime);
+	glUniform1f(u_rotation, parent->rotation);
+	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x, parent->GetParentScene()->Camera->position.y);
+	glUniform1f(u_camera_zoom, parent->GetParentScene()->CameraZoom);
 	
 //	all the opengl binding and actually rendering the points
 	glBindVertexArray(VAO);

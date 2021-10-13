@@ -6,8 +6,6 @@
 
 namespace BigNgine
 {
-	//TODO: Add rotation support
-
 	class FollowBehaviour : public Behaviour
 	{
 	public:

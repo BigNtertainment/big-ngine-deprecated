@@ -7,107 +7,98 @@
 #include "types/entity/entity.h"
 #include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
+#include "behaviours/follow/follow.h"
 #include "behaviours/renderer/renderer.h"
 #include "behaviours/physicsStatic/physicsStatic.h"
 #include "behaviours/physics/physics.h"
 #include "behaviours/platformerMovement/platformerMovement.h"
+#include "behaviours/follow/follow.h"
 
 
-BigNgine::Scene* Scene;
+BigNgine::Scene *Scene;
 
-BigNgine::Entity* Player;
-BigNgine::Entity* Ground;
-BigNgine::Entity* Wall;
-BigNgine::Entity* Box;
-BigNgine::Entity* Box2;
-BigNgine::Entity* Background;
+BigNgine::Entity *Player;
+BigNgine::Entity *Ground;
+BigNgine::Entity *Wall;
+BigNgine::Entity *GRID;
+BigNgine::Entity *sky;
 
-Input::Callback* coolCallback;
+Input::Callback *coolCallback;
 
-void coolCallbackFunc(int key, int scancode, int mods) {
-	if(key == BIGNGINE_KEY_W) {
+void coolCallbackFunc(int key, int scancode, int mods)
+{
+	if (key == BIGNGINE_KEY_W)
+	{
 		Logger::Log("hello :)");
-	} else if(key == BIGNGINE_KEY_Q) {
+	} else if (key == BIGNGINE_KEY_Q)
+	{
 		coolCallback->active = false;
 	}
 }
 
 void Start()
 {
-//	Scene stuff
-//	auto* BackgroundRenderer = new BigNgine::RendererBehaviour();
+	//	Scene stuff
 	Scene = new BigNgine::Scene();
-//	BackgroundRenderer->file = "assets/img/background.bmp";
-//	Scene->Camera->AddBehaviour(BackgroundRenderer);
-
-
-////	Player or Marisa stuff
+	
+	////	Player or Marisa stuff
 	Player = new BigNgine::Entity();
-	auto* pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
-	auto* pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
-	auto* pMovement = new BigNgine::PlatformerMovementBehaviour();
+	auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
+	auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
+	auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
 	pRendererBehaviour->setFile("assets/img/mariss.png");
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Player->SetDefaultPosition(BigNgine::Vector2(600.0f, 0.0f));
-	Player->SetDepth(-0.5f);
+	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
+	Player->SetDepth(0.0f);
 	Player->AddBehaviour(pRendererBehaviour);
 	Player->AddBehaviour(pPhysicsBehaviour);
 	Player->AddBehaviour(pMovement);
+	
+	auto* FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
+	FollowPlayer->lockRotation = true;
 
-//	Ground stuff
+	Scene->Camera->AddBehaviour(FollowPlayer);
+
+	//	Ground stuff
 	Ground = new BigNgine::Entity();
-	auto* GRenderer = new BigNgine::ShaderRendererBehaviour();
-	auto* GPhysics = new BigNgine::PhysicsStaticBehaviour();
+	auto *GRenderer = new BigNgine::ShaderRendererBehaviour();
+	auto *GPhysics = new BigNgine::PhysicsStaticBehaviour();
 	GRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-	Ground->SetDefaultSize(BigNgine::Vector2(640.0f, 40.0f));
-	Ground->SetDefaultPosition(BigNgine::Vector2(0.0f, 700.0f));
+	Ground->SetDefaultSize(BigNgine::Vector2(800.0f, 40.0f));
+	Ground->SetDefaultPosition(BigNgine::Vector2(-500.0f, 300.0f));
 	Ground->SetDepth(0.0f);
 	Ground->AddBehaviour(GRenderer);
 	Ground->AddBehaviour(GPhysics);
-
-// Wall stuff
+	
+	// Wall stuff
 	Wall = new BigNgine::Entity();
-	auto* WRenderer = new BigNgine::ShaderRendererBehaviour();
-	auto* WPhysics = new BigNgine::PhysicsStaticBehaviour();
+	auto *WRenderer = new BigNgine::ShaderRendererBehaviour();
+	auto *WPhysics = new BigNgine::PhysicsStaticBehaviour();
 	WRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
 	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Wall->SetDefaultPosition(BigNgine::Vector2(270.0f, 340.0f));
+	Wall->SetDefaultPosition(BigNgine::Vector2(.0f, .0f));
 	Wall->SetDepth(0.0f);
 	Wall->AddBehaviour(WRenderer);
 	Wall->AddBehaviour(WPhysics);
-
-
 	
-//	====================================
-
+	GRID = new BigNgine::Entity();
+	auto *GRIDrenderer = new BigNgine::ShaderRendererBehaviour();
+	GRIDrenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
+	GRIDrenderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/debugBackground.glsl"));
+	GRID->SetDefaultSize(BigNgine::Vector2((float) Game::width, (float) Game::height));
+	GRID->SetDefaultPosition(BigNgine::Vector2(-600, -400));
+	GRID->SetDepth(-0.5f);
+	GRID->AddBehaviour(GRIDrenderer);
 	
-	Box = new BigNgine::Entity();
+	sky = new BigNgine::Entity();
+	auto *skyRenderer = new BigNgine::ShaderRendererBehaviour();
+	skyRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/sky.glsl"));
+	sky->SetDefaultSize(BigNgine::Vector2((float) Game::width, (float) Game::height));
+	sky->SetDefaultPosition(BigNgine::Vector2(-600, -400));
+	sky->SetDepth(0.9f);
+	sky->AddBehaviour(skyRenderer);
 	
-	auto* renderer = new BigNgine::ShaderRendererBehaviour();
-
-	renderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-	Box->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Box->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
-	Box->SetDepth(-0.5f);
-	Box->AddBehaviour(renderer);
-
-	Box2 = new BigNgine::Entity();
-	auto* renderer2 = new BigNgine::TextureRendererBehaviour();
-	Box2->SetDefaultSize(BigNgine::Vector2(300.0f, 300.0f));
-	Box2->SetDefaultPosition(BigNgine::Vector2(532.0, 321.0f));
-	renderer2->setFile("assets/img/szutka.png");
-	Box2->SetDepth(0.0f);
-	Box2->AddBehaviour(renderer2);
-	
-	Background = new BigNgine::Entity();
-	auto* renderer3 = new BigNgine::ShaderRendererBehaviour();
-	renderer3->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
-	Background->SetDefaultSize(BigNgine::Vector2(Game::width, Game::height));
-	Background->SetDefaultPosition(BigNgine::Vector2(0.0f, 0.0f));
-	Background->SetDepth(0.5f);
-	Background->AddBehaviour(renderer3);
-
 	// Input::Callback* coolCallback = new Input::Callback(
 	// 	[](int key, int scancode, int mods) {
 	// 		if(key == BIGNGINE_KEY_W) {
@@ -115,39 +106,42 @@ void Start()
 	// 		}
 	// 	}
 	// );
-
+	
 	coolCallback = new Input::Callback(coolCallbackFunc);
-
-///	Adding stuff to Scene
-	Scene->AddEntity(Background);
+	
+	///	Adding stuff to Scene
+//	Scene->AddEntity(sky);
+	Scene->AddEntity(Wall);
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
-//	Scene->AddEntity(Wall);
-	Scene->AddEntity(Box);
-//	Scene->AddEntity(Box2);
+	Scene->AddEntity(GRID);
 	Game::SetActiveScene(Scene);
 }
 
-void Update(int deltaTime)
+void Update([[maybe_unused]]int deltaTime)
 {
-	Background->size.x = Game::width;
-	Background->size.y = Game::height;
+//	GRID->size.x = (float) Game::width;
+//	GRID->size.y = (float) Game::height;
+//	GRID->position.x = (float) -Game::width / 2;
+//	GRID->position.y = (float) -Game::height / 2;
+//	Scene->Camera->position = BigNgine::Vector2(100.0,100.0);
+
 }
 
-int main(int argc, char *args[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
 {
-	Game::width *= 2;
-	Game::height *= 1.7;
+	Game::width = 1200;
+	Game::height = 800;
 	Game::Name = "BigNgine";
 	Game::icon = "assets/icon/icon.png";
 	try
 	{
 		Game::Start(Start, Update);
 	}
-	catch (std::exception& e)
+	catch (std::exception &e)
 	{
 		Logger::Error(e.what());
 	}
-
+	
 	return 0;
 }
