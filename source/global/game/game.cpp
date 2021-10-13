@@ -91,11 +91,13 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	glfwSetKeyCallback(Game::window, Input::Callback::ExecuteCallbacks);
 
 //	TODO(pietrek14): sort entities array before activating them,
-//	 from biggest depth to smallest
+//		from biggest depth to smallest
+//	FIXME: if you add entity while game loop is running start functions wont execute!!!
+//		or you change scene more then once or something it doesnt work
+//		THE GAME CRASHES
+
+
 //	starting every entity
-
-//	pietrek14: no
-
 	Start();
 	ActiveScene->Start();
 	
@@ -116,9 +118,9 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		glfwPollEvents();
 		lastTime = clock();
 
-		if (floor(16.666f - deltaTime) > 0)
+		if (floor(16.666f - (float)deltaTime) > 0)
 		{
-			std::chrono::milliseconds timespan((int)(16.666f - deltaTime));
+			std::chrono::milliseconds timespan((int)(16.666f - (float)deltaTime));
 			std::this_thread::sleep_for(std::chrono::milliseconds(timespan));
 		}
 

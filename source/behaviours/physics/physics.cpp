@@ -45,10 +45,10 @@ void BigNgine::PhysicsBehaviour::MoveTo(const BigNgine::Vector2& _target)
 	body->SetTransform(b2Vec2(x  + parent->size.x/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), body->GetAngle());
 }
 
-void BigNgine::PhysicsBehaviour::MoveBy(const BigNgine::Vector2& _target)
+void BigNgine::PhysicsBehaviour::MoveBy(const BigNgine::Vector2& _offset)
 {
-	float x = (_target.x + parent->position.x) / PIXELS_PER_METERS;
-	float y = (_target.y + parent->position.y) / PIXELS_PER_METERS;
+	float x = (_offset.x + parent->position.x) / PIXELS_PER_METERS;
+	float y = (_offset.y + parent->position.y) / PIXELS_PER_METERS;
 	parent->position.x = x * PIXELS_PER_METERS;
 	parent->position.y = y * PIXELS_PER_METERS;
 	body->SetTransform(b2Vec2(x  + parent->size.y/2 / PIXELS_PER_METERS, y  + parent->size.y/2 / PIXELS_PER_METERS), body->GetAngle());

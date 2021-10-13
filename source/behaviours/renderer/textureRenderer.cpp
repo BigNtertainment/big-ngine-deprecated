@@ -121,6 +121,7 @@ void BigNgine::TextureRendererBehaviour::Start()
 	}
 	else
 	{
+//		TODO(imustend): add and debug path to texture
 		Logger::Error("Could not load texture");
 	}
 	stbi_image_free(data);
@@ -184,7 +185,7 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	fragShader = std::move(fragmentShader);
 }
 
-void BigNgine::TextureRendererBehaviour::setFile(const std::string &_file)
+void BigNgine::TextureRendererBehaviour::SetTexture(const std::string &_file)
 {
 	TextureRendererBehaviour::file = _file;
 }

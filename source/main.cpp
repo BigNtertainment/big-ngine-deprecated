@@ -1,5 +1,4 @@
 #include <cmath>
-#include "external/Box2D/include/box2d/box2d.h"
 #include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"
@@ -16,6 +15,7 @@
 
 
 BigNgine::Scene *Scene;
+BigNgine::Scene *Scene2;
 
 BigNgine::Entity *Player;
 BigNgine::Entity *Ground;
@@ -29,10 +29,10 @@ void coolCallbackFunc(int key, int scancode, int mods)
 {
 	if (key == BIGNGINE_KEY_W)
 	{
-		Logger::Log("hello :)");
+		Game::ChangeActiveScene(Scene);
 	} else if (key == BIGNGINE_KEY_Q)
 	{
-		coolCallback->active = false;
+		Game::ChangeActiveScene(Scene2);
 	}
 }
 
@@ -40,13 +40,14 @@ void Start()
 {
 	//	Scene stuff
 	Scene = new BigNgine::Scene();
+	Scene2 = new BigNgine::Scene();
 	
 	////	Player or Marisa stuff
 	Player = new BigNgine::Entity();
 	auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 	auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
-	pRendererBehaviour->setFile("assets/img/mariss.png");
+	pRendererBehaviour->SetTexture("assets/img/mariss.png");
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
@@ -110,7 +111,7 @@ void Start()
 	coolCallback = new Input::Callback(coolCallbackFunc);
 	
 	///	Adding stuff to Scene
-//	Scene->AddEntity(sky);
+	Scene2->AddEntity(sky);
 	Scene->AddEntity(Wall);
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);
