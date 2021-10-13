@@ -3,7 +3,7 @@ SRC := source
 BLD := build
 OBJ := obj
 
-CFLAGS := --std=c++17 -Wall -I./$(SRC)/external/Box2D/include -I./$(SRC)/external/Box2D/src -I./$(SRC)/external/GLFW/include -I./$(SRC)/external/GLAD -I./$(SRC)/external/STBI
+CFLAGS := --std=c++20 -Wall -I./$(SRC)/external/Box2D/include -I./$(SRC)/external/Box2D/src -I./$(SRC)/external/GLFW/include -I./$(SRC)/external/GLAD -I./$(SRC)/external/STBI
 LDFLAGS := -L./$(SRC)/external/GLFW/lib -lglfw3dll
 
 SOURCES := $(wildcard $(SRC)/*.cpp)

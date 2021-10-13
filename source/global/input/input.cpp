@@ -1,6 +1,6 @@
 #include "input.h"
 
-inline bool Input::Get(int key) {
+bool Input::Get(int key) {
 	return glfwGetKey(Game::window, key) == GLFW_PRESS;
 }
 

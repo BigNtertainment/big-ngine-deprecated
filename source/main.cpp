@@ -116,7 +116,7 @@ void Start()
 	// 	}
 	// );
 
-	coolCallback = new Input::Callback(coolCallbackFunc);
+	// coolCallback = new Input::Callback(coolCallbackFunc);
 
 ///	Adding stuff to Scene
 	Scene->AddEntity(Background);
@@ -130,6 +130,13 @@ void Start()
 
 void Update(int deltaTime)
 {
+	if(Input::Get(BIGNGINE_KEY_A))
+		Game::width -= deltaTime / 1000.0;
+
+	//FIXME: It should make the window wider (spoiler: it doesn't)
+	if(Input::Get(BIGNGINE_KEY_D))
+		Game::width += deltaTime / 1000.0;
+
 	Background->size.x = Game::width;
 	Background->size.y = Game::height;
 }
@@ -148,6 +155,10 @@ int main(int argc, char *args[])
 	{
 		Logger::Error(e.what());
 	}
+
+	delete Scene;
+
+	delete coolCallback;
 
 	return 0;
 }

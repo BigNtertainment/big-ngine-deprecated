@@ -132,7 +132,7 @@
 
 namespace Input {
 	/// Check if a key is pressed
-	inline bool Get(int key);
+	bool Get(int key);
 
 	class Callback {
 	public:
