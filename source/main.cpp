@@ -1,18 +1,5 @@
 #include <cmath>
-#include "external/Box2D/include/box2d/box2d.h"
-#include "global/logger/logger.h"
-#include "global/game/game.h"
-#include "global/input/input.h"
-#include "global/fileSystem/fileSystem.h"
-#include "types/entity/entity.h"
-#include "types/scene/scene.h"
-#include "types/behaviour/behaviour.h"
-#include "behaviours/follow/follow.h"
-#include "behaviours/renderer/renderer.h"
-#include "behaviours/physicsStatic/physicsStatic.h"
-#include "behaviours/physics/physics.h"
-#include "behaviours/platformerMovement/platformerMovement.h"
-#include "behaviours/follow/follow.h"
+#include "BigNgine.h"
 
 
 BigNgine::Scene *Scene;
@@ -46,7 +33,7 @@ void Start()
 	auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 	auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
-	pRendererBehaviour->setFile("assets/img/mariss.png");
+	pRendererBehaviour->SetTexture("assets/img/mariss.png");
 	pPhysicsBehaviour->constraintRotation = true;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
@@ -111,11 +98,10 @@ void Start()
 void Update([[maybe_unused]]int deltaTime)
 {
 	if(Input::Get(BIGNGINE_KEY_Z))
-		Game::width -= deltaTime / 1000.0;
-
-	//FIXME: It should make the window wider (spoiler: it doesn't)
+		Game::width -= (int)(deltaTime / 10);
+	
 	if(Input::Get(BIGNGINE_KEY_X))
-		Game::width += deltaTime / 1000.0;
+		Game::width += (int)(deltaTime / 10);
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])

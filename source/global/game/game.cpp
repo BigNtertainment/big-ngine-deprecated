@@ -129,7 +129,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		// For calculating deltaTime
 		lastTime = clock();
 
-		// Calculate the delay necessery to keep the constant frame rate
+		// Calculate the delay necessary to keep the constant frame rate
 		if (floor(16.666f - deltaTime) > 0)
 		{
 			std::chrono::milliseconds timespan((int)(16.666f - deltaTime));

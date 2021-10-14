@@ -134,6 +134,7 @@
 namespace Input {
 /// Check if a key is pressed
 ///	@param key Key value.
+/// @returns bool key pressed
 	bool Get(int key);
 
 	class Callback {
