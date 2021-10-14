@@ -120,10 +120,7 @@ void BigNgine::TextureRendererBehaviour::Start()
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
-	{
-//		TODO(imustend): add and debug path to texture
-		Logger::Error("Could not load texture");
-	}
+		Logger::Error("Could not load texture at: " + std::string(file));
 	stbi_image_free(data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	

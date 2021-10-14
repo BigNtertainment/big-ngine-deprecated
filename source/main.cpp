@@ -10,18 +10,18 @@ BigNgine::Entity *Wall;
 BigNgine::Entity *Grid;
 BigNgine::Entity *sky;
 
-Input::Callback *coolCallback;
+//Input::Callback *coolCallback;
 
-void coolCallbackFunc(int key, int scancode, int mods)
-{
-	if (key == BIGNGINE_KEY_W)
-	{
-		Logger::Log("hello :)");
-	} else if (key == BIGNGINE_KEY_Q)
-	{
-		coolCallback->active = false;
-	}
-}
+//void coolCallbackFunc(int key, int scancode, int mods)
+//{
+//	if (key == BIGNGINE_KEY_W)
+//	{
+//		Logger::Log("hello :)");
+//	} else if (key == BIGNGINE_KEY_Q)
+//	{
+//		coolCallback->active = false;
+//	}
+//}
 
 void Start()
 {
@@ -87,7 +87,7 @@ void Start()
 	sky->AddBehaviour(skyRenderer);
 	
 	///	Adding stuff to Scene
-//	Scene->AddEntity(sky);
+	Scene->AddEntity(sky);
 	Scene->AddEntity(Wall);
 	Scene->AddEntity(Player);
 	Scene->AddEntity(Ground);

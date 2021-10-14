@@ -1,5 +1,6 @@
 #include "cursor.h"
 
+//FIXME: this crashes program again...
 BigNgine::Vector2 Cursor::GetPosition() {
 	double *x = nullptr, *y = nullptr;
 
