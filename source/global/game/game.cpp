@@ -90,6 +90,14 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	// Activate callbacks on key events
 	glfwSetKeyCallback(Game::window, Input::Callback::ExecuteCallbacks);
 
+//	TODO(pietrek14): sort entities array before activating them,
+//		from biggest depth to smallest
+//	FIXME: if you add entity while game loop is running start functions wont execute!!!
+//		or you change scene more then once or something it doesnt work
+//		THE GAME CRASHES
+
+
+//	starting every entity
 	// Call the user-given start function
 	Start();
 	// Start the active scene
@@ -121,7 +129,7 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		// For calculating deltaTime
 		lastTime = clock();
 
-		// Calculate the delay necessery to keep the constant frame rate
+		// Calculate the delay necessary to keep the constant frame rate
 		if (floor(16.666f - deltaTime) > 0)
 		{
 			std::chrono::milliseconds timespan((int)(16.666f - deltaTime));

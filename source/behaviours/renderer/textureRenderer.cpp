@@ -120,9 +120,7 @@ void BigNgine::TextureRendererBehaviour::Start()
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
-	{
-		Logger::Error("Could not load texture");
-	}
+		Logger::Error("Could not load texture at: " + std::string(file));
 	stbi_image_free(data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	
@@ -184,7 +182,7 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	fragShader = std::move(fragmentShader);
 }
 
-void BigNgine::TextureRendererBehaviour::setFile(const std::string &_file)
+void BigNgine::TextureRendererBehaviour::SetTexture(const std::string &_file)
 {
 	TextureRendererBehaviour::file = _file;
 }

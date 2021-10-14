@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 
+// lol
 #define 	BIGNGINE_KEY_UNKNOWN   -1
 #define 	BIGNGINE_KEY_SPACE   32
 #define 	BIGNGINE_KEY_APOSTROPHE   39 /* ' */
@@ -131,7 +132,9 @@
 #define		BIGNGINE_RELEASE GLFW_RELEASE
 
 namespace Input {
-	/// Check if a key is pressed
+/// Check if a key is pressed
+///	@param key Key value.
+/// @returns bool key pressed
 	bool Get(int key);
 
 	class Callback {

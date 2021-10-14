@@ -7,7 +7,7 @@ BigNgine::FollowBehaviour::FollowBehaviour(Entity* _followed) {
 	pivot = Vector2(0, 0);
 }
 
-BigNgine::FollowBehaviour::FollowBehaviour(Entity* _followed, Vector2 _pivot) {
+BigNgine::FollowBehaviour::FollowBehaviour(Entity* _followed, const Vector2& _pivot) {
 	followed = _followed;
 	pivot = _pivot;
 }
