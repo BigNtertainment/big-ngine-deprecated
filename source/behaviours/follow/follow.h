@@ -13,9 +13,14 @@ namespace BigNgine
 		Vector2 pivot;
 
 		bool lockRotation = false;
-
-		FollowBehaviour(Entity* _followed);
-		FollowBehaviour(Entity* _followed, Vector2 _pivot);
+	
+/// 	This behaviour sets position of parent entity to position of the followed entity.
+///		@param _followed This is entity to be followed.
+		explicit FollowBehaviour(Entity* _followed);
+/// 	This behaviour sets position of parent entity to position of the followed entity.
+///		@param _followed This is entity to be followed.
+///		@param _pivot Offset from position of followed entity.
+		FollowBehaviour(Entity* _followed, const Vector2& _pivot);
 
 		void Update(int deltaTime);
 	};

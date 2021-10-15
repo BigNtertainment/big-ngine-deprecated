@@ -21,6 +21,8 @@ namespace BigNgine {
 
 		Scene();
 
+///		Adds entity to Scene
+///		@param entity BigNgine::Entity entity to be added to scene
 		void AddEntity(Entity* entity);
 
 		void Start();

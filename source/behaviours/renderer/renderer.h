@@ -66,7 +66,9 @@ namespace BigNgine
 		///@default Default set to standard BigNgine fragment texture shader
 		void SetFragShader(std::string fragmentShader);
 		
-		void setFile(const std::string &_file);
+///		Set texture
+///		@param _file Path to your file of choice(should be picture)
+		void SetTexture(const std::string &_file);
 		
 	
 	private:

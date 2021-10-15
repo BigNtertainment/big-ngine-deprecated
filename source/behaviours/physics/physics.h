@@ -11,23 +11,24 @@ namespace BigNgine
 		bool constraintX;
 		bool constraintY;
 		bool constraintRotation;
-
-		int GetNumber() {
-			return 5;
-		}
-
+		
 		void Start();
 
 		void Update(int deltaTime);
 
 		void Destroy();
 		
+///		Moves parent entity to position passed by _target
+///		@param _target BigNgine::Vector2 with position
 		void MoveTo(const BigNgine::Vector2& _target);
-		void MoveBy(const BigNgine::Vector2& _target);
+///		Moves parent entity by offset passed by _offset
+///		@param _offset BigNgine::Vector2 with offset
+		void MoveBy(const BigNgine::Vector2& _offset);
+///		Applies force to the center of parent entity
+///		@param force BigNgine::Vector2 with force
 		void ApplyForce(const BigNgine::Vector2& force);
 		
-		/// it does not check if entity is on the ground it just returns true
-		///@param NONE
+		/// It does not check if entity is on the ground, it just returns true.
 		///@returns true
 		bool IsGrounded();
 
