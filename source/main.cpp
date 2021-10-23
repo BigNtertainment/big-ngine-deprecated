@@ -10,25 +10,12 @@ BigNgine::Entity *Wall;
 BigNgine::Entity *Grid;
 BigNgine::Entity *sky;
 
-//Input::Callback *coolCallback;
-
-//void coolCallbackFunc(int key, int scancode, int mods)
-//{
-//	if (key == BIGNGINE_KEY_W)
-//	{
-//		Logger::Log("hello :)");
-//	} else if (key == BIGNGINE_KEY_Q)
-//	{
-//		coolCallback->active = false;
-//	}
-//}
-
 void Start()
 {
 	//	Scene stuff
 	Scene = new BigNgine::Scene();
 	
-	////	Player or Marisa stuff
+	///	Player or Marisa stuff
 	Player = new BigNgine::Entity();
 	auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 	auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
@@ -98,10 +85,10 @@ void Start()
 void Update([[maybe_unused]]int deltaTime)
 {
 	if(Input::Get(BIGNGINE_KEY_Z))
-		Game::width -= (int)(deltaTime / 10);
+		Scene->CameraZoom -= (float)(deltaTime / 1000.);
 	
 	if(Input::Get(BIGNGINE_KEY_X))
-		Game::width += (int)(deltaTime / 10);
+		Scene->CameraZoom += (float)(deltaTime / 1000.);
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])

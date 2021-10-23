@@ -5,11 +5,11 @@ void BigNgine::TextureRendererBehaviour::Start()
 {
 	//	setting up all the relations between points in one entity-square
 	float vertices[] = {
-//			positions			useless 			texture coords
-			1.0f, 0.0f, 0.0f,	0.0f, 0.0f, 0.0f,	1.0f, 0.0f,	// top right
-			1.0f, 1.0f, 0.0f,	0.0f, 0.0f, 0.0f,	1.0f, 1.0f,	// bottom right
-			0.0f, 1.0f, 0.0f,	0.0f, 0.0f, 0.0f,	0.0f, 1.0f,	// bottom left
-			0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 0.0f,	0.0f, 0.0f 	// top left
+//			positions			texture coords
+			1.0f, 0.0f, 0.0f,	1.0f, 0.0f,	// top right
+			1.0f, 1.0f, 0.0f,	1.0f, 1.0f,	// bottom right
+			0.0f, 1.0f, 0.0f,	0.0f, 1.0f,	// bottom left
+			0.0f, 0.0f, 0.0f,	0.0f, 0.0f 	// top left
 	};
 	
 	//	setting up how the points form triangles
@@ -82,15 +82,11 @@ void BigNgine::TextureRendererBehaviour::Start()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_square), indices_square, GL_STATIC_DRAW);
 	
 //	position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)nullptr);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)nullptr);
 	glEnableVertexAttribArray(0);
-//	useless
-//	TODO(imustend): get rid of this
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
 //	texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	

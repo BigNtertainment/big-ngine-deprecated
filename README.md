@@ -8,7 +8,7 @@ https://trello.com/b/QMKhWjB4/bigngine
 
 ## Technologies
 
-To run this project, you're gonna need:
+To run this project, you're going to need:
 
 - Windows operating system (we use dlls)
 - make
@@ -34,4 +34,4 @@ All the functionalities should be well documented in code. We plan on creating a
 
 ## Usage
 
-For now we recommend not using BigNgine for game development, as it is not yet finished.
+For now, we recommend not using BigNgine for game development, as it is not yet finished.
