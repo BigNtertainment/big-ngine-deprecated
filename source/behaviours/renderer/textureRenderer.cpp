@@ -134,6 +134,7 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	int u_rotation = glGetUniformLocation(program, "u_rotation");
 	int u_camera_position = glGetUniformLocation(program, "u_camera_position");
 	int u_camera_zoom = glGetUniformLocation(program, "u_camera_zoom");
+	int u_texture_flip = glGetUniformLocation(program, "u_texture_flip");
 	
 	
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -149,6 +150,7 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	glUniform1i(u_time, (int)parent->GetParentScene()->activeTime);
 	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x, parent->GetParentScene()->Camera->position.y);
 	glUniform1f(u_camera_zoom, parent->GetParentScene()->CameraZoom);
+	glUniform2f(u_texture_flip, (float)xFlipped, (float)yFlipped);
 	
 	
 	//	all the opengl binding and actually rendering the points

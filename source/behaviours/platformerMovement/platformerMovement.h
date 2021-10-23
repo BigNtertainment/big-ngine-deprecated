@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../types/behaviour/behaviour.h"
+#include "../renderer/renderer.h"
 #include "../physics/physics.h"
 #include "../../global/input/input.h"
 #include <vector>

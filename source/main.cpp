@@ -10,6 +10,16 @@ BigNgine::Entity *Wall;
 BigNgine::Entity *Grid;
 BigNgine::Entity *sky;
 
+Input::Callback* MovementFlip;
+
+void MovementFlipFunc(int key, int scancode, int mods) {
+	if(key == BIGNGINE_KEY_A) {
+		Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = false;
+	} else if(key == BIGNGINE_KEY_D) {
+		Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = true;
+	}
+}
+
 void Start()
 {
 	//	Scene stuff
@@ -72,6 +82,8 @@ void Start()
 	sky->SetDefaultPosition(BigNgine::Vector2(-600, -400));
 	sky->SetDepth(0.9f);
 	sky->AddBehaviour(skyRenderer);
+	
+	MovementFlip = new Input::Callback(MovementFlipFunc);
 	
 	///	Adding stuff to Scene
 	Scene->AddEntity(sky);
