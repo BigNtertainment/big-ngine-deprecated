@@ -31,7 +31,7 @@ void Start()
 	auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
 	pRendererBehaviour->SetTexture("assets/img/mariss.png");
-	pPhysicsBehaviour->constraintRotation = true;
+	pPhysicsBehaviour->constraintRotation = false;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDepth(0.0f);
@@ -60,7 +60,7 @@ void Start()
 	auto *WRenderer = new BigNgine::ShaderRendererBehaviour();
 	auto *WPhysics = new BigNgine::PhysicsStaticBehaviour();
 	WRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	Wall->SetDefaultSize(BigNgine::Vector2(69.f, 420.f));
 	Wall->SetDefaultPosition(BigNgine::Vector2(.0f, .0f));
 	Wall->SetDepth(0.0f);
 	Wall->AddBehaviour(WRenderer);
