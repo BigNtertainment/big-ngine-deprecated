@@ -43,12 +43,12 @@ namespace BigNgine
 //	====================================================================================================================
 	class TextureRendererBehaviour : public Behaviour
 	{
-	private:
 		friend class AnimationBehaviour;
 	public:
 		std::string file;
 		std::string vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
 		std::string fragShader = FileSystem::LoadFile("assets/shaders/frag/textureStandard.glsl");
+		bool yFlipped, xFlipped;
 		
 		void Start();
 		

@@ -10,6 +10,16 @@ BigNgine::Entity *Wall;
 BigNgine::Entity *Grid;
 BigNgine::Entity *sky;
 
+Input::Callback* MovementFlip;
+
+void MovementFlipFunc(int key, int scancode, int mods) {
+	if(key == BIGNGINE_KEY_A) {
+		Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = false;
+	} else if(key == BIGNGINE_KEY_D) {
+		Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = true;
+	}
+}
+
 void Start()
 {
 	//	Scene stuff
@@ -21,7 +31,7 @@ void Start()
 	auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 	auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
 	pRendererBehaviour->SetTexture("assets/img/mariss.png");
-	pPhysicsBehaviour->constraintRotation = true;
+	pPhysicsBehaviour->constraintRotation = false;
 	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
 	Player->SetDepth(0.0f);
@@ -50,7 +60,7 @@ void Start()
 	auto *WRenderer = new BigNgine::ShaderRendererBehaviour();
 	auto *WPhysics = new BigNgine::PhysicsStaticBehaviour();
 	WRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-	Wall->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
+	Wall->SetDefaultSize(BigNgine::Vector2(69.f, 420.f));
 	Wall->SetDefaultPosition(BigNgine::Vector2(.0f, .0f));
 	Wall->SetDepth(0.0f);
 	Wall->AddBehaviour(WRenderer);
@@ -72,6 +82,8 @@ void Start()
 	sky->SetDefaultPosition(BigNgine::Vector2(-600, -400));
 	sky->SetDepth(0.9f);
 	sky->AddBehaviour(skyRenderer);
+	
+	MovementFlip = new Input::Callback(MovementFlipFunc);
 	
 	///	Adding stuff to Scene
 	Scene->AddEntity(sky);
