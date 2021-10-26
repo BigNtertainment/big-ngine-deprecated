@@ -89,6 +89,8 @@ void Update([[maybe_unused]]int deltaTime)
 	
 	if(Input::Get(BIGNGINE_KEY_X))
 		Scene->CameraZoom += (float)(deltaTime / 1000.);
+
+	Logger::Log(Cursor::GetPosition());
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
