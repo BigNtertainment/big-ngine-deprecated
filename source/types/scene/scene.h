@@ -1,8 +1,11 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 #include "box2d/box2d.h"
 #include "../entity/entity.h"
+#include "../vector2/vector2.h"
+#include "../../global/game/game.h"
 
 namespace BigNgine {
 	class Entity;
@@ -11,6 +14,8 @@ namespace BigNgine {
 	class Scene {
 		friend Entity;
 		friend Behaviour;
+		static std::vector<Scene*> scenes;
+
 	public:
 		Entity* Camera;
 

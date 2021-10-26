@@ -84,5 +84,7 @@ BigNgine::Scene* BigNgine::Entity::GetParentScene() {
 }
 
 BigNgine::Entity::~Entity() {
-	Destroy();
+	for(auto & behaviour : behaviours) {
+		delete behaviour;
+	}
 }

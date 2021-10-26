@@ -1,11 +1,11 @@
 #include "./scene.h"
-#include "../vector2/vector2.h"
-#include "../../global/game/game.h"
 
 BigNgine::Scene::Scene() {
 	Camera = new BigNgine::Entity();
 	CameraZoom = 1.0f;
 	AddEntity(Camera);
+
+	Scene::scenes.push_back(this);
 }
 
 void BigNgine::Scene::AddEntity(Entity* entity) {
@@ -36,11 +36,15 @@ void BigNgine::Scene::Update(int deltaTime) {
 
 void BigNgine::Scene::Destroy() {
 	for(auto & entity : entities) {
-		delete entity;
+		entity->Destroy();
 	}
-	delete world;
 }
 
 BigNgine::Scene::~Scene() {
-	Destroy();
+	for(auto & entity : entities) {
+		delete entity;
+	}
+	delete world;
+
+	Scene::scenes.erase(std::remove(Scene::scenes.begin(), Scene::scenes.end(), this), Scene::scenes.end());
 }
