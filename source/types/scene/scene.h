@@ -7,6 +7,8 @@
 #include "../vector2/vector2.h"
 #include "../../global/game/game.h"
 
+// TODO: Add scene specific Start and Update to constructor as parameters. It can be used to restore scene default state when loading it. (I solved it woohoo!!!)
+
 namespace BigNgine {
 	class Entity;
 	class Behaviour;
@@ -14,15 +16,12 @@ namespace BigNgine {
 	class Scene {
 		friend Entity;
 		friend Behaviour;
-		static std::vector<Scene*> scenes;
-
 	public:
 		Entity* Camera;
+		float CameraZoom;
 
 		b2Vec2* gravity;
 		b2World* world;
-		
-		float CameraZoom;
 
 		Scene();
 
@@ -30,15 +29,21 @@ namespace BigNgine {
 ///		@param entity BigNgine::Entity entity to be added to scene
 		void AddEntity(Entity* entity);
 
+		int GetActiveTime();
+
 		void Start();
 		void Update(int deltaTime);
 		void Destroy();
 
 		~Scene();
-		
-		unsigned int activeTime = 0;
 
+		static std::vector<Scene*> scenes;
 	private:
 		std::vector<Entity*> entities;
+
+		void* (*_Start)();
+		void* (*_Update)(int);
+		
+		unsigned int activeTime = 0;
 	};
 }

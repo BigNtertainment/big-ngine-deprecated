@@ -1,5 +1,7 @@
 #include "./scene.h"
 
+std::vector<BigNgine::Scene*> BigNgine::Scene::scenes;
+
 BigNgine::Scene::Scene() {
 	Camera = new BigNgine::Entity();
 	CameraZoom = 1.0f;
@@ -12,6 +14,10 @@ void BigNgine::Scene::AddEntity(Entity* entity) {
 	entity->parentScene = this;
 
 	entities.push_back(entity);
+}
+
+int BigNgine::Scene::GetActiveTime() {
+	return activeTime;
 }
 
 void BigNgine::Scene::Start() {
@@ -45,6 +51,7 @@ BigNgine::Scene::~Scene() {
 		delete entity;
 	}
 	delete world;
+	delete gravity;
 
 	Scene::scenes.erase(std::remove(Scene::scenes.begin(), Scene::scenes.end(), this), Scene::scenes.end());
 }

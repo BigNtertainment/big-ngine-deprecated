@@ -140,8 +140,14 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		glfwSetWindowSize(window, Game::width, Game::height);
 	}
 
-	// TODO: Make actual garbage collection (delete all scenes here)
-	delete ActiveScene;
+	// Delete all scenes
+	// We do it like that because scenes are automatically removed from the BigNgine::Scene::scenes vector on deletion
+
+	const int size = BigNgine::Scene::scenes.size();
+
+	for(int i = 0; i < size; i++) {
+		delete BigNgine::Scene::scenes[0];
+	}
 
 	// Finish off GLFW
 	Game::window = nullptr;

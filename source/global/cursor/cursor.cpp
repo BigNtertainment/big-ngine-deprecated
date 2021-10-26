@@ -5,10 +5,6 @@ BigNgine::Vector2 Cursor::GetPosition() {
 
 	glfwGetCursorPos(Game::window, &x, &y);
 
-	if(&x == NULL) {
-		return BigNgine::Vector2(0, 0);
-	}
-
 	return BigNgine::Vector2(x, y);
 }
 

@@ -1,10 +1,14 @@
 #pragma once
 
+#include <vector>
 #include "../vector2/vector2.h"
 #include "../behaviour/behaviour.h"
 #include "../scene/scene.h"
 #include "../../global/logger/logger.h"
-#include <vector>
+
+#define DEFAULT_POSITION BigNgine::Vector2(0.0, 0.0)
+#define DEFAULT_ROTATION 0.0
+#define DEFAULT_SIZE BigNgine::Vector2(0.0, 0.0)
 
 namespace BigNgine {
 	class Behaviour;
@@ -14,27 +18,12 @@ namespace BigNgine {
 		friend Behaviour;
 		friend Scene;
 	public:
-		Entity();
-		Entity(const BigNgine::Vector2& _defaultPosition);
-		Entity(const BigNgine::Vector2& _defaultPosition, float _defaultRotation);
-		Entity(const BigNgine::Vector2& _defaultPosition, float _defaultRotation, const BigNgine::Vector2& _defaultSize);
+		Entity(const BigNgine::Vector2& _position = DEFAULT_POSITION, float _rotation = DEFAULT_ROTATION, const BigNgine::Vector2& _size = DEFAULT_SIZE);
 
 		BigNgine::Vector2 position;
 		float rotation;
 		BigNgine::Vector2 size;
 		float depth;
-		
-///		Set default position of entity.
-///		@param _position BigNgine::Vector2 with position
-///		@important Origin of entity is its top left corner.
-		void SetDefaultPosition(const Vector2& _position);
-///		Set default rotation of entity.
-///		@param _rotation float with rotation in degrees
-///		@default 0 degrees
-		void SetDefaultRotation(float _rotation);
-///		Set default size of entity.
-///		@param _size BigNgine::Vector2 with size of entity
-		void SetDefaultSize(const Vector2& _size);
 		
 ///		Set entities depth
 ///		@info the bigger the number the further the shit away
@@ -74,9 +63,5 @@ namespace BigNgine {
 	private:
 		Scene* parentScene;
 		std::vector<Behaviour*> behaviours;
-
-		BigNgine::Vector2 defaultPosition;
-		float defaultRotation;
-		BigNgine::Vector2 defaultSize;
 	};
 }

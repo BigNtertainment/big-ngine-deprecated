@@ -107,7 +107,7 @@ void BigNgine::ShaderRendererBehaviour::Update(int deltaTime)
 	glUniform2f(u_position, parent->position.x, parent->position.y);
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
-	glUniform1i(u_time, (int)parent->GetParentScene()->activeTime);
+	glUniform1i(u_time, (int)parent->GetParentScene()->GetActiveTime());
 	glUniform1f(u_rotation, parent->rotation);
 	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x, parent->GetParentScene()->Camera->position.y);
 	glUniform1f(u_camera_zoom, parent->GetParentScene()->CameraZoom);
