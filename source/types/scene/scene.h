@@ -23,7 +23,7 @@ namespace BigNgine {
 		b2Vec2* gravity;
 		b2World* world;
 
-		Scene();
+		Scene(void (*Start)(BigNgine::Scene*), void (*Update)(BigNgine::Scene*, int));
 
 ///		Adds entity to Scene
 ///		@param entity BigNgine::Entity entity to be added to scene
@@ -41,8 +41,8 @@ namespace BigNgine {
 	private:
 		std::vector<Entity*> entities;
 
-		void* (*_Start)();
-		void* (*_Update)(int);
+		void (*_Start)(BigNgine::Scene*);
+		void (*_Update)(BigNgine::Scene*, int);
 		
 		unsigned int activeTime = 0;
 	};
