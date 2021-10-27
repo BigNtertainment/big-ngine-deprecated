@@ -20,6 +20,12 @@
 // 	}
 // }
 
+class Rotate : public BigNgine::Behaviour {
+	void Update(int deltaTime) {
+		parent->rotation += deltaTime / 50.0;
+	}
+};
+
 void Start()
 {
 	BigNgine::Scene* Scene = new BigNgine::Scene([](BigNgine::Scene* Scene) {
@@ -98,8 +104,8 @@ void Start()
 		Scene->AddEntity(Player);
 
 		auto* funnyCallback = new Input::Callback([](int key, int scancode, int mods) {
-			if(key == BIGNGINE_KEY_A) {
-				Logger::Log("A");
+			if(key == BIGNGINE_KEY_Q) {
+				Logger::Log("Q");
 			}
 		});
 
@@ -115,18 +121,31 @@ void Start()
 	
 	// MovementFlip = new Input::Callback(MovementFlipFunc);
 
-	Game::SetActiveScene(Scene);
+	BigNgine::Scene* StillDREScene = new BigNgine::Scene([](BigNgine::Scene* Scene) {
+		auto* Player = new BigNgine::Entity(BigNgine::Vector2(-50.0f, -50.0f), 0.0f, BigNgine::Vector2(100.0f, 100.0f));
+		Player->SetDepth(0.0f);
+
+		auto* PlayerRotate = new Rotate();
+		auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
+		pRendererBehaviour->SetTexture("assets/img/mariss.png");
+
+		Player->AddBehaviour(PlayerRotate);
+		Player->AddBehaviour(pRendererBehaviour);
+
+		Scene->AddEntity(Player);
+
+		Audio::Play("G:\\rurzne_zeczy\\2001\\04 Still D.R.E.mp3");
+	},
+	[](BigNgine::Scene* Scene, int deltaTime) {
+
+	});
+
+	Game::SetActiveScene(StillDREScene);
 }
 
 void Update([[maybe_unused]]int deltaTime)
 {
-	// if(Input::Get(BIGNGINE_KEY_Z))
-	// 	Scene->CameraZoom -= (float)(deltaTime / 1000.);
-	
-	// if(Input::Get(BIGNGINE_KEY_X))
-	// 	Scene->CameraZoom += (float)(deltaTime / 1000.);
-
-	Logger::Log(Cursor::GetPosition());
+	// Logger::Log(Cursor::GetPosition());
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
