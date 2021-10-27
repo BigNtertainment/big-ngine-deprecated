@@ -131,6 +131,10 @@
 #define		BIGNGINE_PRESS GLFW_PRESS
 #define		BIGNGINE_RELEASE GLFW_RELEASE
 
+namespace BigNgine {
+	class Scene;
+}
+
 namespace Input {
 /// Check if a key is pressed
 ///	@param key Key value.
@@ -138,17 +142,15 @@ namespace Input {
 	bool Get(int key);
 
 	class Callback {
+		friend BigNgine::Scene;
 	public:
 		Callback(void(*_callback)(int, int, int));
-		~Callback();
+
+		void Call(int, int, int);
 
 		bool active = true;
 		int event = BIGNGINE_PRESS;
-
-		static void ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods);
 	private:
-		int ID;
-
 		void(*callback)(int, int, int);
 	};
 }

@@ -24,6 +24,13 @@ void Game::Stop() {
 	Game::running = false;
 }
 
+void ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	for(Input::Callback* callback : ActiveScene->GetCallbacks()) {
+		if(callback->active && callback->event == action)
+			callback->Call(key, scancode, mods);
+	}
+}
+
 void Game::Start(void(*Start)(), void(*Update)(int)) {
 	// initialization of SDL libraries
 
@@ -88,14 +95,13 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	stbi_image_free(images[0].pixels);
 
 	// Activate callbacks on key events
-	glfwSetKeyCallback(Game::window, Input::Callback::ExecuteCallbacks);
+	glfwSetKeyCallback(Game::window, ExecuteCallbacks);
 
 //	TODO(pietrek14): sort entities array before activating them,
 //		from biggest depth to smallest
 //	FIXME: if you add entity while game loop is running start functions wont execute!!!
 //		or you change scene more then once or something it doesnt work
 //		THE GAME CRASHES
-
 
 //	starting every entity
 	// Call the user-given start function

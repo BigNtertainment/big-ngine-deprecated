@@ -19,6 +19,14 @@ void BigNgine::Scene::AddEntity(Entity* entity) {
 	entities.push_back(entity);
 }
 
+void BigNgine::Scene::AddCallback(Input::Callback* callback) {
+	callbacks.push_back(callback);
+}
+
+std::vector<Input::Callback*> BigNgine::Scene::GetCallbacks() {
+	return callbacks;
+}
+
 int BigNgine::Scene::GetActiveTime() {
 	return activeTime;
 }
