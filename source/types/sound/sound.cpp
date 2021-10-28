@@ -24,7 +24,10 @@ BigNgine::Sound::~Sound() {
 void BigNgine::Sound::OpenMP3(std::string path) {
 	std::string mciString = "open \"" + path + "\" type mpegvideo alias " + std::to_string(id);
 
-	mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
 
 	SetVolume(volume);
 }
@@ -36,7 +39,10 @@ void BigNgine::Sound::OpenMP3(std::string path) {
 void BigNgine::Sound::OpenWav(std::string path) {
 	std::string mciString = "open \"" + path + "\" type waveaudio alias " + std::to_string(id);
 
-	mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
 
 	SetVolume(volume);
 }
@@ -47,7 +53,10 @@ void BigNgine::Sound::OpenWav(std::string path) {
 void BigNgine::Sound::Play() {
 	std::string mciString = "play " + std::to_string(id);
 
-	mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
 
 	paused = false;
 }
@@ -58,7 +67,10 @@ void BigNgine::Sound::Play() {
 void BigNgine::Sound::Pause() {
 	std::string mciString = "pause " + std::to_string(id);
 
-	mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
 
 	paused = true;
 }
@@ -69,7 +81,10 @@ void BigNgine::Sound::Pause() {
 void BigNgine::Sound::Resume() {
 	std::string mciString = "resume " + std::to_string(id);
 
-	mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
 
 	paused = false;
 }
@@ -80,7 +95,10 @@ void BigNgine::Sound::Resume() {
 void BigNgine::Sound::Stop() {
 	std::string mciString = "stop " + std::to_string(id);
 
-	mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
 
 	paused = true;
 }
@@ -91,7 +109,10 @@ void BigNgine::Sound::Stop() {
 void BigNgine::Sound::Close() {
 	std::string mciString = "close " + std::to_string(id);
 
-	mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
 }
 
 // TODO: Check if it works for .wav files cause it probably doesn't
@@ -101,7 +122,10 @@ void BigNgine::Sound::Close() {
 void BigNgine::Sound::SetVolume(int _volume) {
 	std::string mciString = "setaudio " + std::to_string(id) + " volume to " + std::to_string(volume);
 
-	mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
 
 	volume = _volume;
 }
