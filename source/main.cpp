@@ -20,6 +20,27 @@
 // 	}
 // }
 
+BigNgine::Sound* StillDre;
+
+void PauseCallbackFunc(int key, int scancode, int mods) {
+	switch(key) {
+	case BIGNGINE_KEY_SPACE:
+		if(StillDre->IsPaused())
+			StillDre->Resume();
+		else
+			StillDre->Pause();
+		break;
+
+	case BIGNGINE_KEY_E:
+		StillDre->SetVolume(StillDre->GetVolume() + 10);
+		break;
+
+	case BIGNGINE_KEY_Q:
+		StillDre->SetVolume(StillDre->GetVolume() - 10);
+		break;
+	}
+}
+
 class Rotate : public BigNgine::Behaviour {
 	void Update(int deltaTime) {
 		parent->rotation += deltaTime / 50.0;
@@ -134,7 +155,14 @@ void Start()
 
 		Scene->AddEntity(Player);
 
-		Audio::Play("G:\\rurzne_zeczy\\2001\\04 Still D.R.E.mp3");
+		StillDre = new BigNgine::Sound();
+		StillDre->OpenMP3("G:\\rurzne_zeczy\\2001\\04 Still D.R.E.mp3");
+
+		StillDre->Play();
+
+		auto* PauseCallback = new Input::Callback(PauseCallbackFunc);
+
+		Scene->AddCallback(PauseCallback);
 	},
 	[](BigNgine::Scene* Scene, int deltaTime) {
 

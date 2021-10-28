@@ -48,12 +48,13 @@ namespace BigNgine {
 
 		~Scene();
 
-		static std::vector<Scene*> scenes;
-
+		static std::vector<Scene*> GetScenes();
 		std::vector<Input::Callback*> GetCallbacks();
 	private:
 		std::vector<Entity*> entities;
 		std::vector<Input::Callback*> callbacks;
+
+		static std::vector<Scene*> scenes;
 
 		void (*_Start)(BigNgine::Scene*);
 		void (*_Update)(BigNgine::Scene*, int);

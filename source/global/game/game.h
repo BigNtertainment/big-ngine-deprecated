@@ -4,6 +4,7 @@
 #include "../logger/logger.h"
 #include "../../types/entity/entity.h"
 #include "../../types/scene/scene.h"
+#include "../../types/sound/sound.h"
 #include "glad.h"
 #include "GLFW/glfw3.h"
 #include "stb_image.h"

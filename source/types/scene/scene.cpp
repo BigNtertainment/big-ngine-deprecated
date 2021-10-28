@@ -70,3 +70,7 @@ BigNgine::Scene::~Scene() {
 
 	Scene::scenes.erase(std::remove(Scene::scenes.begin(), Scene::scenes.end(), this), Scene::scenes.end());
 }
+
+std::vector<BigNgine::Scene*> BigNgine::Scene::GetScenes() {
+	return BigNgine::Scene::scenes;
+}

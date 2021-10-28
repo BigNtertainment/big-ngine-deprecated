@@ -7,11 +7,11 @@
 #include "global/input/input.h"
 #include "global/fileSystem/fileSystem.h"
 #include "global/cursor/cursor.h"
-#include "global/audio/audio.h"
 
 #include "types/entity/entity.h"
 #include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
+#include "types/sound/sound.h"
 
 #include "behaviours/follow/follow.h"
 #include "behaviours/renderer/renderer.h"
