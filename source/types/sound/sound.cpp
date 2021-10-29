@@ -17,6 +17,22 @@ BigNgine::Sound::~Sound() {
 	Sound::sounds.erase(std::remove(Sound::sounds.begin(), Sound::sounds.end(), this), Sound::sounds.end());
 }
 
+BigNgine::Sound* BigNgine::Sound::LoadMP3(std::string path) {
+	Sound* result = new Sound();
+
+	result->LoadMP3(path);
+
+	return result;
+}
+
+BigNgine::Sound* BigNgine::Sound::LoadWav(std::string path) {
+	Sound* result = new Sound();
+
+	result->LoadWav(path);
+
+	return result;
+}
+
 /**
  * Opens an MP3 file to play later.
  * @param path Path to the MP3 file.
@@ -57,8 +73,8 @@ void BigNgine::Sound::Play() {
 
 	if(error != 0)
 		std::cout << error << std::endl;
-
-	paused = false;
+	else
+		paused = false;
 }
 
 /**
@@ -71,8 +87,8 @@ void BigNgine::Sound::Pause() {
 
 	if(error != 0)
 		std::cout << error << std::endl;
-
-	paused = true;
+	else
+		paused = true;
 }
 
 /**
@@ -85,8 +101,8 @@ void BigNgine::Sound::Resume() {
 
 	if(error != 0)
 		std::cout << error << std::endl;
-
-	paused = false;
+	else
+		paused = false;
 }
 
 /**
@@ -99,8 +115,8 @@ void BigNgine::Sound::Stop() {
 
 	if(error != 0)
 		std::cout << error << std::endl;
-
-	paused = true;
+	else
+		paused = true;
 }
 
 /**
@@ -126,8 +142,8 @@ void BigNgine::Sound::SetVolume(int _volume) {
 
 	if(error != 0)
 		std::cout << error << std::endl;
-
-	volume = _volume;
+	else
+		volume = _volume;
 }
 
 /**

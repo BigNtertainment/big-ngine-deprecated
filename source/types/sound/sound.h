@@ -13,6 +13,9 @@ namespace BigNgine {
 		Sound();
 		~Sound();
 
+		static Sound* LoadMP3(std::string path);
+		static Sound* LoadWav(std::string path);
+
 		void OpenMP3(std::string path);
 		void OpenWav(std::string path);
 		void Play();
