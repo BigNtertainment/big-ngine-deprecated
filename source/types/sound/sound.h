@@ -19,6 +19,7 @@ namespace BigNgine {
 		void OpenMP3(std::string path);
 		void OpenWav(std::string path);
 		void Play();
+		void PlayOnLoop();
 		void Pause();
 		void Resume();
 		void Stop();

@@ -1,46 +1,6 @@
 #include <cmath>
 #include "BigNgine.h"
 
-
-// BigNgine::Scene *Scene;
-
-// BigNgine::Entity *Player;
-// BigNgine::Entity *Ground;
-// BigNgine::Entity *Wall;
-// BigNgine::Entity *Grid;
-// BigNgine::Entity *sky;
-
-// Input::Callback* MovementFlip;
-
-// void MovementFlipFunc(int key, int scancode, int mods) {
-// 	if(key == BIGNGINE_KEY_A) {
-// 		Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = false;
-// 	} else if(key == BIGNGINE_KEY_D) {
-// 		Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = true;
-// 	}
-// }
-
-BigNgine::Sound* StillDre;
-
-void PauseCallbackFunc(int key, int scancode, int mods) {
-	switch(key) {
-	case BIGNGINE_KEY_SPACE:
-		if(StillDre->IsPaused())
-			StillDre->Resume();
-		else
-			StillDre->Pause();
-		break;
-
-	case BIGNGINE_KEY_E:
-		StillDre->SetVolume(StillDre->GetVolume() + 10);
-		break;
-
-	case BIGNGINE_KEY_Q:
-		StillDre->SetVolume(StillDre->GetVolume() - 10);
-		break;
-	}
-}
-
 class Rotate : public BigNgine::Behaviour {
 	void Update(int deltaTime) {
 		parent->rotation += deltaTime / 50.0;
@@ -155,12 +115,31 @@ void Start()
 
 		Scene->AddEntity(Player);
 
-		StillDre = new BigNgine::Sound();
-		StillDre->OpenMP3("G:\\rurzne_zeczy\\2001\\04 Still D.R.E.mp3");
 
-		StillDre->Play();
+		BigNgine::Sound* StillDre = new BigNgine::Sound();
+		// Put your path here :)
+		StillDre->OpenMP3("");
 
-		auto* PauseCallback = new Input::Callback(PauseCallbackFunc);
+		StillDre->PlayOnLoop();
+
+		auto* PauseCallback = new Input::Callback([StillDre](int key, int scancode, int mods) {
+			switch(key) {
+				case BIGNGINE_KEY_SPACE:
+					if(StillDre->IsPaused())
+						StillDre->Resume();
+					else
+						StillDre->Pause();
+					break;
+
+				case BIGNGINE_KEY_E:
+					StillDre->SetVolume(StillDre->GetVolume() + 100);
+					break;
+
+				case BIGNGINE_KEY_Q:
+					StillDre->SetVolume(StillDre->GetVolume() - 100);
+					break;
+			}
+		});
 
 		Scene->AddCallback(PauseCallback);
 	},

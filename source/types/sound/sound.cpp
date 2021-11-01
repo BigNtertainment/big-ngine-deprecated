@@ -78,6 +78,20 @@ void BigNgine::Sound::Play() {
 }
 
 /**
+ * Playes an audio file on loop
+ */
+void BigNgine::Sound::PlayOnLoop() {
+	std::string mciString = "play " + std::to_string(id) + " repeat";
+
+	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+
+	if(error != 0)
+		std::cout << error << std::endl;
+	else
+		paused = false;
+}
+
+/**
  * Pauses the playback of an audio file
  */
 void BigNgine::Sound::Pause() {
@@ -131,7 +145,6 @@ void BigNgine::Sound::Close() {
 		std::cout << error << std::endl;
 }
 
-// TODO: Check if it works for .wav files cause it probably doesn't
 /**
  * Sets the playback volume
  */

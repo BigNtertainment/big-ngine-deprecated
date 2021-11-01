@@ -1,8 +1,9 @@
 #pragma once
-#include "../game/game.h"
 #include "glad.h"
 #include <GLFW/glfw3.h>
 #include <vector>
+#include <functional>
+#include "../game/game.h"
 
 // lol
 #define 	BIGNGINE_KEY_UNKNOWN   -1
@@ -131,6 +132,8 @@
 #define		BIGNGINE_PRESS GLFW_PRESS
 #define		BIGNGINE_RELEASE GLFW_RELEASE
 
+typedef std::function<void(int, int, int)> callbackfunc;
+
 namespace BigNgine {
 	class Scene;
 }
@@ -144,13 +147,13 @@ namespace Input {
 	class Callback {
 		friend BigNgine::Scene;
 	public:
-		Callback(void(*_callback)(int, int, int));
+		Callback(callbackfunc _callback);
 
 		void Call(int, int, int);
 
 		bool active = true;
 		int event = BIGNGINE_PRESS;
 	private:
-		void(*callback)(int, int, int);
+		callbackfunc callback;
 	};
 }
