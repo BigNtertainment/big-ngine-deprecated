@@ -21,6 +21,7 @@ namespace BigNgine {
 		Entity(const BigNgine::Vector2& _position = DEFAULT_POSITION, float _rotation = DEFAULT_ROTATION, const BigNgine::Vector2& _size = DEFAULT_SIZE);
 
 		BigNgine::Vector2 position;
+//		TODO: make rotation mean something
 		float rotation;
 		BigNgine::Vector2 size;
 		float depth;

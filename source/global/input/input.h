@@ -3,6 +3,7 @@
 #include "glad.h"
 #include <GLFW/glfw3.h>
 #include <vector>
+#include <functional>
 
 // lol
 #define 	BIGNGINE_KEY_UNKNOWN   -1
@@ -144,13 +145,13 @@ namespace Input {
 	class Callback {
 		friend BigNgine::Scene;
 	public:
-		Callback(void(*_callback)(int, int, int));
+		Callback(std::function<void(int, int, int)> _callback);
 
 		void Call(int, int, int);
 
 		bool active = true;
 		int event = BIGNGINE_PRESS;
 	private:
-		void(*callback)(int, int, int);
+		std::function<void(int, int, int)> callback;
 	};
 }

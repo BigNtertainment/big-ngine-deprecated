@@ -4,7 +4,7 @@ bool Input::Get(int key) {
 	return glfwGetKey(Game::window, key) == GLFW_PRESS;
 }
 
-Input::Callback::Callback(void(*_callback)(int, int, int)) {
+Input::Callback::Callback(std::function<void(int, int, int)> _callback) {
 	callback = _callback;
 }
 

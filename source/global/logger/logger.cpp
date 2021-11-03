@@ -98,14 +98,14 @@ void Logger::Error(int input)
 //vector 2
 void Logger::Log(BigNgine::Vector2 input)
 {
-    std::string message = "[" + currentDateTime() + "][ERROR]  x: " + std::to_string(input.x) + "    y:  " + std::to_string(input.y) + "\n";
+    std::string message = "[" + currentDateTime() + "][INFO]  x: " + std::to_string(input.x) + "    y:  " + std::to_string(input.y) + "\n";
 
     std::printf( NC, message.c_str());
 }
 
 void Logger::Warn(BigNgine::Vector2 input)
 {
-    std::string message = "[" + currentDateTime() + "][ERROR]  x: " + std::to_string(input.x) + "    y:  " + std::to_string(input.y) + "\n";
+    std::string message = "[" + currentDateTime() + "][WARN]  x: " + std::to_string(input.x) + "    y:  " + std::to_string(input.y) + "\n";
 
     std::printf( WARNING, message.c_str());
 }

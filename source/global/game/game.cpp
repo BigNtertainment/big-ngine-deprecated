@@ -32,13 +32,6 @@ void ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int
 }
 
 void Game::Start(void(*Start)(), void(*Update)(int)) {
-	// initialization of SDL libraries
-
-	// if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
-	// 	Logger::Error(SDL_GetError());
-	// 	return;
-	// }
-	// Mix_Init(MIX_INIT_MP3);
 
 //	OpenGL initialization
 	glfwInit();
