@@ -145,7 +145,7 @@ namespace Input {
 	class Callback {
 		friend BigNgine::Scene;
 	public:
-		Callback(std::function<void(int, int, int)> _callback);
+		explicit Callback(std::function<void(int, int, int)> _callback);
 
 		void Call(int, int, int);
 

@@ -18,7 +18,7 @@ namespace BigNgine {
 		friend Behaviour;
 		friend Scene;
 	public:
-		Entity(const BigNgine::Vector2& _position = DEFAULT_POSITION, float _rotation = DEFAULT_ROTATION, const BigNgine::Vector2& _size = DEFAULT_SIZE);
+		explicit Entity(const BigNgine::Vector2& _position = DEFAULT_POSITION, float _rotation = DEFAULT_ROTATION, const BigNgine::Vector2& _size = DEFAULT_SIZE);
 
 		BigNgine::Vector2 position;
 //		TODO: make rotation mean something
