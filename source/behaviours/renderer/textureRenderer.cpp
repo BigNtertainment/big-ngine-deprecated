@@ -95,36 +95,20 @@ void BigNgine::TextureRendererBehaviour::Start()
 	
 	
 //	textures
-
-//	generating texture buffers
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	
-//	setting wrapping method
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	
-//	setting rasterisation method
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	// load image, create texture and generate mipmaps
-	int width, height;
-	unsigned char *data = stbi_load(file.c_str(), &width, &height, nullptr, 4);
-	if (data)
+	Logger::Log("TextureRendererBehaviour::Start()");
+	size_t i = 0;
+	for(auto & texturePath : texturePaths)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		textures.push_back(new Texture(texturePath));
 	}
-	else
-		Logger::Error("Could not load texture at: " + std::string(file));
-	stbi_image_free(data);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	
-	
+
 }
 
 void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 {
+	// TODO(imustend): make uniform a object, so user can add how many they want
+	//					vector of uniforms
+
 	//	getting all uniform IDs
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
 	int u_position = glGetUniformLocation(program, "u_position");
@@ -136,8 +120,11 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	int u_camera_zoom = glGetUniformLocation(program, "u_camera_zoom");
 	int u_texture_flip = glGetUniformLocation(program, "u_texture_flip");
 	
+	//TODO(imustend): find some way to control which texture is used
+	// 				 make a behaviour that will control the animation of the textures
+	int i = (parent->GetParentScene()->GetActiveTime() / 100) % textures.size();
+	textures[i]->Bind();
 	
-	glBindTexture(GL_TEXTURE_2D, texture);
 	
 	glUseProgram(program);
 	
@@ -157,7 +144,10 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// this technically can stay, but it should be called for used texture
+	// however it won`t really make any difference
+	textures[0]->Unbind();
 	
 }
 
@@ -166,8 +156,11 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
-	glDeleteTextures(1, &texture);
 	glDeleteProgram(program);
+	for (auto & texture : textures)
+	{
+		delete texture;
+	}
 }
 
 [[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetVertShader(std::string vertexShader)
@@ -180,7 +173,7 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	fragShader = std::move(fragmentShader);
 }
 
-void BigNgine::TextureRendererBehaviour::SetTexture(const std::string &_file)
+void BigNgine::TextureRendererBehaviour::AddTexture(const char * _file)
 {
-	TextureRendererBehaviour::file = _file;
+	TextureRendererBehaviour::texturePaths.push_back(_file);
 }
