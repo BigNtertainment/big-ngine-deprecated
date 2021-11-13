@@ -11,14 +11,25 @@ void Start()
 			auto *Player = new BigNgine::Entity(BigNgine::Vector2(100.0f, 100.0f), 0.0f, BigNgine::Vector2(100.0f, 100.0f));
 			Player->SetDepth(0.0f);
 
+			
+			auto *pAnimation = new BigNgine::AnimationBehaviour();
 			auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
-			pRendererBehaviour->SetTexture("assets/img/mariss.png");
+			pRendererBehaviour->AddTexture("assets/img/1.png");
+			pAnimation->AddTexture("assets/img/1.png");
+			pAnimation->AddTexture("assets/img/2.png");
+			pAnimation->AddTexture("assets/img/3.png");
+			pAnimation->AddTexture("assets/img/4.png");
+			pAnimation->AddTexture("assets/img/5.png");
+			pAnimation->AddTexture("assets/img/6.png");
+			pAnimation->AddTexture("assets/img/7.png");
+			pAnimation->AddTexture("assets/img/8.png");
 
 			auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 			pPhysicsBehaviour->constraintRotation = true;
 
 			auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
 
+			Player->AddBehaviour(pAnimation);
 			Player->AddBehaviour(pRendererBehaviour);
 			Player->AddBehaviour(pPhysicsBehaviour);
 			Player->AddBehaviour(pMovement);
@@ -148,7 +159,7 @@ void Start()
 void Update([[maybe_unused]] int deltaTime)
 {
 	// mouse position debug
-	Logger::Log(Cursor::GetPosition());
+//	Logger::Log(Cursor::GetPosition());
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])

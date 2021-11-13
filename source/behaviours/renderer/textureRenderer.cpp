@@ -92,15 +92,15 @@ void BigNgine::TextureRendererBehaviour::Start()
 	
 	glBindVertexArray(0);
 	
-	
-	
+
+//TODO(imustend): will have to add method to render one texture without animation behaviour
 //	textures
-	Logger::Log("TextureRendererBehaviour::Start()");
-	size_t i = 0;
-	for(auto & texturePath : texturePaths)
-	{
-		textures.push_back(new Texture(texturePath));
-	}
+//	for(auto & texturePath : texturePaths)
+//	{
+//		textures.push_back(new Texture(texturePath));
+//	}
+
+	texture = new Texture(texturePaths[0]);
 
 }
 
@@ -122,8 +122,7 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	
 	//TODO(imustend): find some way to control which texture is used
 	// 				 make a behaviour that will control the animation of the textures
-	int i = (parent->GetParentScene()->GetActiveTime() / 100) % textures.size();
-	textures[i]->Bind();
+	texture->Bind();
 	
 	
 	glUseProgram(program);
@@ -147,7 +146,7 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 
 	// this technically can stay, but it should be called for used texture
 	// however it won`t really make any difference
-	textures[0]->Unbind();
+	texture->Unbind();
 	
 }
 
@@ -157,10 +156,7 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(program);
-	for (auto & texture : textures)
-	{
-		delete texture;
-	}
+	delete texture;
 }
 
 [[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetVertShader(std::string vertexShader)
@@ -171,6 +167,11 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 [[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetFragShader(std::string fragmentShader)
 {
 	fragShader = std::move(fragmentShader);
+}
+
+[[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetTexture(Texture *_texture)
+{
+	texture = _texture;
 }
 
 void BigNgine::TextureRendererBehaviour::AddTexture(const char * _file)

@@ -17,7 +17,6 @@ namespace BigNgine
 //	====================================================================================================================
 	class ShaderRendererBehaviour : public Behaviour
 	{
-		friend class AnimationBehaviour;
 	public:
 		std::string vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
 		std::string fragShader;
@@ -72,9 +71,13 @@ namespace BigNgine
 ///		@param _file Path to your file of choice(should be picture)
 		void AddTexture(const char * _file);
 		
+		///Set texture
+		void SetTexture(Texture * _texture);
+  
+		
 	
 	private:
 		unsigned int VBO, VAO, EBO, program;
-		std::vector<Texture*> textures;	
+		Texture* texture;
 	};
 }
