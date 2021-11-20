@@ -1,4 +1,3 @@
-#include "/animation.h"
 #include "animation.h"
 
 
@@ -11,26 +10,18 @@ void BigNgine::AnimationBehaviour::Start()
     {
         _textures.push_back(new BigNgine::Texture(texturePath));
     }
+	frameDuration = animationDuration / (float)_textures.size();
 }
 
 void BigNgine::AnimationBehaviour::Update(int deltaTime)
 {
-//	TODO(tymon): finish this
+//	yeah, this is a bit ugly, but it works
 	animationTimer += (float)deltaTime / 1000.0f;
 	if (animationTimer >= animationDuration)
 	{
 		animationTimer = 0.0f;
 	}
-/*    if(!_textures.empty())
-    {
-        _textureRenderer->SetTexture(_textures[_currentTexture]);
-        _currentTexture++;
-        if(_currentTexture >= _textures.size())
-        {
-            _currentTexture = 0;
-        }
-    }*/
-	Logger::Log(animationTimer);
+	_textureRenderer->SetTexture(_textures[(int)(animationTimer / frameDuration)]);
 }
 
 void BigNgine::AnimationBehaviour::Delete()
@@ -45,5 +36,11 @@ void BigNgine::AnimationBehaviour::Delete()
 void BigNgine::AnimationBehaviour::AddTexture(const char *texturePath)
 {
 	texturePaths.push_back(texturePath);
+}
+
+void BigNgine::AnimationBehaviour::setAnimationDuration(float _animationDuration)
+{
+	animationDuration = _animationDuration;
+	animationTimer = animationDuration / (float)_textures.size();
 }
 

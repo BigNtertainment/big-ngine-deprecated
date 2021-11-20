@@ -6,8 +6,6 @@
 
 #define DEFAULT_ANIMATION_DURATION 1.0f
 
-//animation behaviour class
-
 namespace BigNgine
 {
 	class AnimationBehaviour : public Behaviour
@@ -24,12 +22,14 @@ namespace BigNgine
 		void Delete();
 		
 		void AddTexture(const char *texturePath);
+		
+		void setAnimationDuration(float _animationDuration);
 	
 	private:
 		BigNgine::TextureRendererBehaviour* _textureRenderer;
 		std::vector<Texture*> _textures;
-		unsigned short int _currentTexture;
-		float animationDuration;
 		float animationTimer;
+		float animationDuration;
+		float frameDuration;
 	};
 }

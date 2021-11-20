@@ -9,7 +9,6 @@
 #include <iostream>
 
 
-// TODO(imustend): implement texture class
 namespace BigNgine{
 	class Texture{
 	public:

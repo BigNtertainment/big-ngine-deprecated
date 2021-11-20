@@ -92,14 +92,13 @@ void BigNgine::TextureRendererBehaviour::Start()
 	
 	glBindVertexArray(0);
 	
-
-//TODO(imustend): will have to add method to render one texture without animation behaviour
-//	textures
-//	for(auto & texturePath : texturePaths)
-//	{
-//		textures.push_back(new Texture(texturePath));
-//	}
-
+	
+	if (texturePaths.empty())
+	{
+		Logger::Error("didn't get any textures to load");
+		texture = new Texture("");
+		return;
+	}
 	texture = new Texture(texturePaths[0]);
 
 }
@@ -120,8 +119,6 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	int u_camera_zoom = glGetUniformLocation(program, "u_camera_zoom");
 	int u_texture_flip = glGetUniformLocation(program, "u_texture_flip");
 	
-	//TODO(imustend): find some way to control which texture is used
-	// 				 make a behaviour that will control the animation of the textures
 	texture->Bind();
 	
 	

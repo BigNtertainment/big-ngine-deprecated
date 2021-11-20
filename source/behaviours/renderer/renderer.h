@@ -5,7 +5,7 @@
 #include "../../types/behaviour/behaviour.h"
 #include "../../global/game/game.h"
 #include "../../global/logger/logger.h"
-#include "../../types/textures/texture.h"
+#include "../../types/texture/texture.h"
 #include "../../global/fileSystem/fileSystem.h"
 #include <string>
 #include <iostream>
@@ -21,7 +21,7 @@ namespace BigNgine
 		std::string vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
 		std::string fragShader;
 
-		void Start();
+		void Start() override;
 
 		void Update(int deltaTime);
 
