@@ -1,126 +1,156 @@
 #include "logger.h"
 
-#define NC "\e[0m%-6s\e[m"
-#define WARNING "\e[93;10m%-6s\e[m"
-#define ERROR "\e[91;1m%-6s\e[m"
+#include <windows.h>
+
+//the logger coloring works only on Windows, also sets your terminal background to black no matter what color you had
 
 // string
-void Logger::Log(std::string message)
+void Logger::Log(const std::string& message)
 {
-	message = "[" + currentDateTime() + "][INFO] " + message + "\n";
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 7);
 
-	std::printf( NC, message.c_str());
+	std::cout << "[" << currentDateTime() << "][INFO] " << message << std::endl;
+	
 }
 
-void Logger::Warn(std::string message)
+void Logger::Warn(const std::string& message)
 {
-	message = "[" + currentDateTime() + "][WARNING] " + message + "\n";
-
-	std::printf( WARNING, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 14);
+	
+	std::cout << "[" << currentDateTime() << "][WARNING] " << message << std::endl;
+	
 }
 
-void Logger::Error(std::string message)
+void Logger::Error(const std::string& message)
 {
-	message = "[" + currentDateTime() + "][ERROR] " + message + "\n";
-
-	std::printf( ERROR, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 12);
+	
+	std::cout << "[" << currentDateTime() << "][ERROR] " << message << std::endl;
+	
 }
 
 
 void Logger::Log(float input)
 {
-	std::string message = "[" + currentDateTime() + "][INFO] " + std::to_string(input) + "\n";
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 7);
 
-	std::printf( NC, message.c_str());
+	std::cout << "[" << currentDateTime() << "][INFO] " << std::to_string(input) << std::endl;
+	
 }
 
 void Logger::Warn(float input)
 {
-	std::string message = "[" + currentDateTime() + "][WARNING] " + std::to_string(input) + "\n";
-
-	std::printf( WARNING, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 14);
+	
+	std::cout << "[" << currentDateTime() << "][WARNING] " << std::to_string(input) << std::endl;
+	
 }
 
 void Logger::Error(float input)
 {
-	std::string message = "[" + currentDateTime() + "][ERROR] " + std::to_string(input) + "\n";
-
-	std::printf( ERROR, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 12);
+	
+	std::cout << "[" << currentDateTime() << "][ERROR] " << std::to_string(input) << std::endl;
+	
 }
 
 
 // double
 void Logger::Log(double input)
 {
-	std::string message = "[" + currentDateTime() + "][INFO] " + std::to_string(input) + "\n";
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 7);
 
-	std::printf( NC, message.c_str());
+	std::cout << "[" << currentDateTime() << "][INFO] " << std::to_string(input) << std::endl;
+	
 }
 
 void Logger::Warn(double input)
 {
-	std::string message = "[" + currentDateTime() + "][WARNING] " + std::to_string(input) + "\n";
-
-	std::printf( WARNING, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 14);
+	
+	std::cout << "[" << currentDateTime() << "][WARNING] " << std::to_string(input) << std::endl;
+	
 }
 
 void Logger::Error(double input)
 {
-	std::string message = "[" + currentDateTime() + "][ERROR] " + std::to_string(input) + "\n";
-
-	std::printf( ERROR, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 12);
+	
+	std::cout << "[" << currentDateTime() << "][ERROR] " << std::to_string(input) << std::endl;
+	
 }
 
 
 // int
 void Logger::Log(int input)
 {
-	std::string message = "[" + currentDateTime() + "][INFO] " + std::to_string(input) + "\n";
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 7);
 
-	std::printf( NC, message.c_str());
+	std::cout << "[" << currentDateTime() << "][INFO] " << std::to_string(input) << std::endl;
+	
 }
 
 void Logger::Warn(int input)
 {
-	std::string message = "[" + currentDateTime() + "][WARNING] " + std::to_string(input) + "\n";
-
-	std::printf( WARNING, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 14);
+	
+	std::cout << "[" << currentDateTime() << "][WARNING] " << std::to_string(input) << std::endl;
+	
 }
 
 void Logger::Error(int input)
 {
-	std::string message = "[" + currentDateTime() + "][ERROR] " + std::to_string(input) + "\n";
-
-	std::printf( ERROR, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 12);
+	
+	std::cout << "[" << currentDateTime() << "][ERROR] " << std::to_string(input) << std::endl;
+	
 }
 
 
 //vector 2
-void Logger::Log(BigNgine::Vector2 input)
+void Logger::Log(const BigNgine::Vector2& input)
 {
-    std::string message = "[" + currentDateTime() + "][INFO]  x: " + std::to_string(input.x) + "    y:  " + std::to_string(input.y) + "\n";
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 7);
 
-    std::printf( NC, message.c_str());
+	std::cout << "[" << currentDateTime() << "][INFO] " << std::to_string(input.x) << " " << std::to_string(input.y) << std::endl;
+	
 }
 
-void Logger::Warn(BigNgine::Vector2 input)
+void Logger::Warn(const BigNgine::Vector2& input)
 {
-    std::string message = "[" + currentDateTime() + "][WARN]  x: " + std::to_string(input.x) + "    y:  " + std::to_string(input.y) + "\n";
-
-    std::printf( WARNING, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 14);
+	
+	std::cout << "[" << currentDateTime() << "][WARNING] " << std::to_string(input.x) << " " << std::to_string(input.y) << std::endl;
+	
 }
 
-void Logger::Error(BigNgine::Vector2 input)
+void Logger::Error(const BigNgine::Vector2& input)
 {
-    std::string message = "[" + currentDateTime() + "][ERROR]  x: " + std::to_string(input.x) + "    y:  " + std::to_string(input.y) + "\n";
-
-    std::printf( ERROR, message.c_str());
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 12);
+	
+	std::cout << "[" << currentDateTime() << "][ERROR] " << std::to_string(input.x) << " " << std::to_string(input.y) << std::endl;
+	
 }
 
 
-const std::string currentDateTime() {
-    time_t     now = time(0);
-    struct tm  tstruct;
+std::string currentDateTime() {
+    time_t     now = time(nullptr);
+    struct tm  tstruct{};
     char       buf[80];
     tstruct = *localtime(&now);
     // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime

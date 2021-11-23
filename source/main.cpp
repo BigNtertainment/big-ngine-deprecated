@@ -1,6 +1,8 @@
 //???
 //#include <cmath>
 #include "BigNgine.h"
+#include <windows.h>
+
 
 void Start()
 {
@@ -162,8 +164,7 @@ void Start()
 
 void Update([[maybe_unused]] int deltaTime)
 {
-	// mouse position debug
-//	Logger::Log(Cursor::GetPosition());
+
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
