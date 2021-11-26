@@ -2,7 +2,7 @@
 
 std::vector<BigNgine::Scene*> BigNgine::Scene::scenes;
 
-BigNgine::Scene::Scene(void (*Start)(BigNgine::Scene*), void (*Update)(BigNgine::Scene*, int)) {
+BigNgine::Scene::Scene(scene_startfunc Start, scene_updatefunc Update) {
 	Camera = new BigNgine::Entity();
 	CameraZoom = 1.0f;
 	AddEntity(Camera);
@@ -69,4 +69,8 @@ BigNgine::Scene::~Scene() {
 	delete gravity;
 
 	Scene::scenes.erase(std::remove(Scene::scenes.begin(), Scene::scenes.end(), this), Scene::scenes.end());
+}
+
+std::vector<BigNgine::Scene*> BigNgine::Scene::GetScenes() {
+	return BigNgine::Scene::scenes;
 }

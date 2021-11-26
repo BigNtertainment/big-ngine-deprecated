@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <functional>
 #include "box2d/box2d.h"
 #include "glad.h"
 #include <GLFW/glfw3.h>
@@ -10,7 +11,8 @@
 #include "../../global/game/game.h"
 #include "../../global/input/input.h"
 
-// TODO: Add scene specific Start and Update to constructor as parameters. It can be used to restore scene default state when loading it. (I solved it woohoo!!!)
+typedef std::function<void(BigNgine::Scene*)> scene_startfunc;
+typedef std::function<void(BigNgine::Scene*, int)> scene_updatefunc;
 
 namespace Input {
 	class Callback;
@@ -30,7 +32,7 @@ namespace BigNgine {
 		b2Vec2* gravity;
 		b2World* world;
 
-		Scene(void (*Start)(BigNgine::Scene*), void (*Update)(BigNgine::Scene*, int));
+		Scene(scene_startfunc Start, scene_updatefunc Update);
 
 ///		Adds entity to Scene
 ///		@param entity BigNgine::Entity entity to be added to scene
@@ -48,15 +50,16 @@ namespace BigNgine {
 
 		~Scene();
 
-		static std::vector<Scene*> scenes;
-
+		static std::vector<Scene*> GetScenes();
 		std::vector<Input::Callback*> GetCallbacks();
 	private:
 		std::vector<Entity*> entities;
 		std::vector<Input::Callback*> callbacks;
 
-		void (*_Start)(BigNgine::Scene*);
-		void (*_Update)(BigNgine::Scene*, int);
+		static std::vector<Scene*> scenes;
+
+		scene_startfunc _Start;
+		scene_updatefunc _Update;
 		
 		unsigned int activeTime = 0;
 	};

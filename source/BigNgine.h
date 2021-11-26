@@ -11,6 +11,7 @@
 #include "types/entity/entity.h"
 #include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
+#include "types/sound/sound.h"
 
 #include "behaviours/follow/follow.h"
 #include "behaviours/renderer/renderer.h"
