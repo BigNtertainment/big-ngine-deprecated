@@ -10,7 +10,15 @@ void BigNgine::AnimationBehaviour::Start()
     {
         _textures.push_back(new BigNgine::Texture(texturePath));
     }
+
 	frameDuration = animationDuration / (float)_textures.size();
+	
+//	letting the user know that animation has no textures in case of crash
+//	would be nice to have proper error handling
+	if(_textures.empty())
+	{
+		Logger::Error("Animation has no textures");
+	}
 }
 
 void BigNgine::AnimationBehaviour::Update(int deltaTime)

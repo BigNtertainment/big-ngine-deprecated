@@ -7,6 +7,8 @@ uniform vec2 u_position;
 
 vec2 sp;
 int pixelSize = 5;
+int RGBRange = 256;
+vec3 color = vec3(91, 127, 78) / RGBRange;
 
 void main(){
     sp.x = int(gl_FragCoord.x) % pixelSize;
@@ -24,5 +26,5 @@ void main(){
     (sp.y/ u_size.y) - ((u_resolution.y / u_size.y) - 1. - (u_position.y / u_size.y))
     );
 
-    glFragColor = vec4(st.x,0.0,st.y,1.0);
+    glFragColor = vec4(color,1.0);
 }

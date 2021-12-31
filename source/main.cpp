@@ -1,5 +1,3 @@
-//???
-//#include <cmath>
 #include "BigNgine.h"
 #include <windows.h>
 
@@ -13,21 +11,9 @@ void Start()
 
 			auto *Player = new BigNgine::Entity(BigNgine::Vector2(100.0f, 100.0f), 0.0f, BigNgine::Vector2(100.0f, 100.0f));
 			Player->SetDepth(0.0f);
-
 			
-			auto *pAnimation = new BigNgine::AnimationBehaviour(.5f);
 			auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
-//			pRendererBehaviour->AddTexture("assets/img/13.png");
-//          FIXME(imustend): crashes here, if you first add animation and then renderer without adding texture to renderer
-//			TODO(imustend): add animation manager so that we can add multiple animations to the same entity (but how?)
-			pAnimation->AddTexture("assets/img/1.png");
-			pAnimation->AddTexture("assets/img/2.png");
-			pAnimation->AddTexture("assets/img/3.png");
-			pAnimation->AddTexture("assets/img/4.png");
-			pAnimation->AddTexture("assets/img/5.png");
-			pAnimation->AddTexture("assets/img/6.png");
-			pAnimation->AddTexture("assets/img/7.png");
-			pAnimation->AddTexture("assets/img/8.png");
+			pRendererBehaviour->AddTexture("assets/img/mariss_xmas.png");
 
 			auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 			pPhysicsBehaviour->constraintRotation = true;
@@ -35,18 +21,29 @@ void Start()
 			auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
 
 			Player->AddBehaviour(pRendererBehaviour);
-			Player->AddBehaviour(pAnimation);
 			Player->AddBehaviour(pPhysicsBehaviour);
 			Player->AddBehaviour(pMovement);
-
+			
+//			Christmas tree
+			auto *christmas_tree = new BigNgine::Entity(BigNgine::Vector2(200.0f, 200.0f - 100), 0.0f, BigNgine::Vector2(75.0f * 2, 100.0f * 2));
+			christmas_tree->SetDepth(0.5f);
+			auto *christmas_tree_renderer = new BigNgine::TextureRendererBehaviour();
+			christmas_tree_renderer->AddTexture("assets/img/mariss.png");
+			auto* christmas_tree_animation = new BigNgine::AnimationBehaviour(2.f);
+			christmas_tree_animation->AddTexture("assets/img/christmas_tree_1.png");
+			christmas_tree_animation->AddTexture("assets/img/christmas_tree_2.png");
+			
+			
+			christmas_tree->AddBehaviour(christmas_tree_renderer);
+			christmas_tree->AddBehaviour(christmas_tree_animation);
 			// Make Camera follow the Player
 
 //			IMPORTANT(imustend): if i remember correctly, adding renderer to camera doesn't work, but i don't remember why
-/*			auto *FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
+			auto *FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
 			FollowPlayer->lockRotation = true;
 
-			Scene->Camera->AddBehaviour(FollowPlayer);
-
+//			Scene->Camera->AddBehaviour(FollowPlayer);
+/*
 			// Add a Debug Grid on top of the Camera
 			//does not work
 
@@ -58,7 +55,6 @@ void Start()
 				FileSystem::LoadFile("assets/shaders/vert/debugBackground.glsl"));
 
 			Scene->Camera->SetDepth(.5f);
-			//										  FIXME(imustend): renderer on camera doesnt work
 			Scene->Camera->AddBehaviour(GridRenderer);*/
 
 			//add floor
@@ -78,7 +74,7 @@ void Start()
 
 			// Add a Floor2
 
-			auto *Floor2 = new BigNgine::Entity(BigNgine::Vector2(300.f, 340.f), 0.0f,
+			auto *Floor2 = new BigNgine::Entity(BigNgine::Vector2(300.f, 300.f), 0.0f,
 												BigNgine::Vector2(600.0f, 40.0f));
 			Floor2->SetDepth(0.0f);
 
@@ -131,8 +127,9 @@ void Start()
 
 			Scene->AddEntity(Floor);
 			Scene->AddEntity(Floor2);
-			Scene->AddEntity(Wall);
+//			Scene->AddEntity(Wall);
 			Scene->AddEntity(Sky);
+			Scene->AddEntity(christmas_tree);
 			Scene->AddEntity(Player);
 
 			auto *flipTextureOnMovement = new Input::Callback(
