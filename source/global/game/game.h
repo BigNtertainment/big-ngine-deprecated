@@ -4,7 +4,6 @@
 #include "../logger/logger.h"
 #include "../../types/entity/entity.h"
 #include "../../types/scene/scene.h"
-#include "../../types/scene/scene.h"
 #include "glad.h"
 #include "GLFW/glfw3.h"
 #include "stb_image.h"
@@ -12,6 +11,10 @@
 #include <thread>
 #include <string>
 #include <ctime>
+
+namespace BigNgine {
+	class Scene;
+}
 
 namespace Game
 {

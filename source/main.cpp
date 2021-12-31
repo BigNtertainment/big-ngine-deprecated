@@ -1,106 +1,167 @@
-#include <cmath>
 #include "BigNgine.h"
+#include <windows.h>
 
-
-BigNgine::Scene *Scene;
-
-BigNgine::Entity *Player;
-BigNgine::Entity *Ground;
-BigNgine::Entity *Wall;
-BigNgine::Entity *Grid;
-BigNgine::Entity *sky;
-
-Input::Callback* MovementFlip;
-
-void MovementFlipFunc(int key, int scancode, int mods) {
-	if(key == BIGNGINE_KEY_A) {
-		Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = false;
-	} else if(key == BIGNGINE_KEY_D) {
-		Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = true;
-	}
-}
 
 void Start()
 {
-	//	Scene stuff
-	Scene = new BigNgine::Scene();
-	
-	///	Player or Marisa stuff
-	Player = new BigNgine::Entity();
-	auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
-	auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
-	auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
-	pRendererBehaviour->SetTexture("assets/img/mariss.png");
-	pPhysicsBehaviour->constraintRotation = false;
-	Player->SetDefaultSize(BigNgine::Vector2(100.0f, 100.0f));
-	Player->SetDefaultPosition(BigNgine::Vector2(100.0f, 100.0f));
-	Player->SetDepth(0.0f);
-	Player->AddBehaviour(pRendererBehaviour);
-	Player->AddBehaviour(pPhysicsBehaviour);
-	Player->AddBehaviour(pMovement);
-	
-	auto* FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
-	FollowPlayer->lockRotation = true;
+	auto *Scene = new BigNgine::Scene(
+		[](BigNgine::Scene *Scene)
+		{
+			// Add Player to the Scene
 
-	Scene->Camera->AddBehaviour(FollowPlayer);
+			auto *Player = new BigNgine::Entity(BigNgine::Vector2(100.0f, 100.0f), 0.0f, BigNgine::Vector2(100.0f, 100.0f));
+			Player->SetDepth(0.0f);
+			
+			auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
+			pRendererBehaviour->AddTexture("assets/img/mariss_xmas.png");
 
-	//	Ground stuff
-	Ground = new BigNgine::Entity();
-	auto *GRenderer = new BigNgine::ShaderRendererBehaviour();
-	auto *GPhysics = new BigNgine::PhysicsStaticBehaviour();
-	GRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-	Ground->SetDefaultSize(BigNgine::Vector2(800.0f, 40.0f));
-	Ground->SetDefaultPosition(BigNgine::Vector2(-500.0f, 300.0f));
-	Ground->SetDepth(0.0f);
-	Ground->AddBehaviour(GRenderer);
-	Ground->AddBehaviour(GPhysics);
-	
-	// Wall stuff
-	Wall = new BigNgine::Entity();
-	auto *WRenderer = new BigNgine::ShaderRendererBehaviour();
-	auto *WPhysics = new BigNgine::PhysicsStaticBehaviour();
-	WRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
-	Wall->SetDefaultSize(BigNgine::Vector2(69.f, 420.f));
-	Wall->SetDefaultPosition(BigNgine::Vector2(.0f, .0f));
-	Wall->SetDepth(0.0f);
-	Wall->AddBehaviour(WRenderer);
-	Wall->AddBehaviour(WPhysics);
-	
-	Grid = new BigNgine::Entity();
-	auto *GridRenderer = new BigNgine::ShaderRendererBehaviour();
-	GridRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
-	GridRenderer->SetVertShader(FileSystem::LoadFile("assets/shaders/vert/debugBackground.glsl"));
-	Grid->SetDefaultSize(BigNgine::Vector2((float) Game::width, (float) Game::height));
-	Grid->SetDefaultPosition(BigNgine::Vector2(-600, -400));
-	Grid->SetDepth(-0.5f);
-	Grid->AddBehaviour(GridRenderer);
-	
-	sky = new BigNgine::Entity();
-	auto *skyRenderer = new BigNgine::ShaderRendererBehaviour();
-	skyRenderer->SetFragShader(FileSystem::LoadFile("assets/shaders/frag/sky.glsl"));
-	sky->SetDefaultSize(BigNgine::Vector2((float) Game::width, (float) Game::height));
-	sky->SetDefaultPosition(BigNgine::Vector2(-600, -400));
-	sky->SetDepth(0.9f);
-	sky->AddBehaviour(skyRenderer);
-	
-	MovementFlip = new Input::Callback(MovementFlipFunc);
-	
-	///	Adding stuff to Scene
-	Scene->AddEntity(sky);
-	Scene->AddEntity(Wall);
-	Scene->AddEntity(Player);
-	Scene->AddEntity(Ground);
-	Scene->AddEntity(Grid);
+			auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
+			pPhysicsBehaviour->constraintRotation = true;
+
+			auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
+
+			Player->AddBehaviour(pRendererBehaviour);
+			Player->AddBehaviour(pPhysicsBehaviour);
+			Player->AddBehaviour(pMovement);
+			
+//			Christmas tree
+			auto *christmas_tree = new BigNgine::Entity(BigNgine::Vector2(200.0f, 200.0f - 100), 0.0f, BigNgine::Vector2(75.0f * 2, 100.0f * 2));
+			christmas_tree->SetDepth(0.5f);
+			auto *christmas_tree_renderer = new BigNgine::TextureRendererBehaviour();
+			christmas_tree_renderer->AddTexture("assets/img/mariss.png");
+			auto* christmas_tree_animation = new BigNgine::AnimationBehaviour(2.f);
+			christmas_tree_animation->AddTexture("assets/img/christmas_tree_1.png");
+			christmas_tree_animation->AddTexture("assets/img/christmas_tree_2.png");
+			
+			
+			christmas_tree->AddBehaviour(christmas_tree_renderer);
+			christmas_tree->AddBehaviour(christmas_tree_animation);
+			// Make Camera follow the Player
+
+//			IMPORTANT(imustend): if i remember correctly, adding renderer to camera doesn't work, but i don't remember why
+			auto *FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
+			FollowPlayer->lockRotation = true;
+
+//			Scene->Camera->AddBehaviour(FollowPlayer);
+/*
+			// Add a Debug Grid on top of the Camera
+			//does not work
+
+			auto *GridRenderer = new BigNgine::ShaderRendererBehaviour();
+
+			GridRenderer->SetFragShader(
+				FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
+			GridRenderer->SetVertShader(
+				FileSystem::LoadFile("assets/shaders/vert/debugBackground.glsl"));
+
+			Scene->Camera->SetDepth(.5f);
+			Scene->Camera->AddBehaviour(GridRenderer);*/
+
+			//add floor
+			auto *Floor = new BigNgine::Entity(
+				BigNgine::Vector2(-500.0f, 300.0f), 0.0f,
+				BigNgine::Vector2(800.0f, 40.0f));
+			Floor->SetDepth(0.0f);
+
+			auto *FRenderer = new BigNgine::ShaderRendererBehaviour();
+			FRenderer->SetFragShader(
+				FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
+
+			auto *FPhysics = new BigNgine::PhysicsStaticBehaviour();
+
+			Floor->AddBehaviour(FRenderer);
+			Floor->AddBehaviour(FPhysics);
+
+			// Add a Floor2
+
+			auto *Floor2 = new BigNgine::Entity(BigNgine::Vector2(300.f, 300.f), 0.0f,
+												BigNgine::Vector2(600.0f, 40.0f));
+			Floor2->SetDepth(0.0f);
+
+			auto *FRenderer2 = new BigNgine::ShaderRendererBehaviour();
+			FRenderer2->SetFragShader(
+				FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
+
+			auto *FPhysics2 = new BigNgine::PhysicsStaticBehaviour();
+
+			Floor2->AddBehaviour(FRenderer2);
+			Floor2->AddBehaviour(FPhysics2);
+
+			// Add a wall
+
+			auto *Wall = new BigNgine::Entity(
+				BigNgine::Vector2(.0f, 200.f), 0.0f,
+				BigNgine::Vector2(100.f, 100.f));
+			Wall->SetDepth(0.0f);
+
+			auto *WRenderer = new BigNgine::ShaderRendererBehaviour();
+			WRenderer->SetFragShader(
+				FileSystem::LoadFile("assets/shaders/frag/standard.glsl"));
+
+			auto *WPhysics = new BigNgine::PhysicsStaticBehaviour();
+
+			Wall->AddBehaviour(WRenderer);
+			Wall->AddBehaviour(WPhysics);
+
+			// Add a Sky Background
+			//										  adding a 20 pixel margin bc we have some precision issues with follow camera behaviour
+			auto *Sky = new BigNgine::Entity(
+				BigNgine::Vector2(-610, -410), 0.0f,
+				BigNgine::Vector2(
+					(float)Game::width + 20,
+					(float)Game::height + 20));
+
+			Sky->SetDepth(0.9f);
+
+			auto *SkyRenderer = new BigNgine::ShaderRendererBehaviour();
+			SkyRenderer->SetFragShader(
+				FileSystem::LoadFile("assets/shaders/frag/sky.glsl"));
+
+			// sky follow camera :)
+			auto *FollowCamera = new BigNgine::FollowBehaviour(
+				Scene->Camera,
+				BigNgine::Vector2(-610., -410.));
+
+			Sky->AddBehaviour(FollowCamera);
+			Sky->AddBehaviour(SkyRenderer);
+
+			Scene->AddEntity(Floor);
+			Scene->AddEntity(Floor2);
+//			Scene->AddEntity(Wall);
+			Scene->AddEntity(Sky);
+			Scene->AddEntity(christmas_tree);
+			Scene->AddEntity(Player);
+
+			auto *flipTextureOnMovement = new Input::Callback(
+				[Player](int key, int scancode, int mods)
+				{
+					if (key == BIGNGINE_KEY_A)
+					{
+						Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = false;
+					}
+					else if (key == BIGNGINE_KEY_D)
+					{
+						Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = true;
+					}
+				});
+
+			Scene->AddCallback(flipTextureOnMovement);
+		},
+		[](BigNgine::Scene *Scene, int deltaTime)
+		{
+			if (Input::Get(BIGNGINE_KEY_Z))
+				Scene->CameraZoom -= ((float)deltaTime / 1000.0f);
+
+			if (Input::Get(BIGNGINE_KEY_X))
+				Scene->CameraZoom += ((float)deltaTime / 1000.0f);
+		});
+
 	Game::SetActiveScene(Scene);
 }
 
-void Update([[maybe_unused]]int deltaTime)
+void Update([[maybe_unused]] int deltaTime)
 {
-	if(Input::Get(BIGNGINE_KEY_Z))
-		Scene->CameraZoom -= (float)(deltaTime / 1000.);
-	
-	if(Input::Get(BIGNGINE_KEY_X))
-		Scene->CameraZoom += (float)(deltaTime / 1000.);
+
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
@@ -109,10 +170,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
 	Game::height = 800;
 	Game::name = "BigNgine";
 	Game::icon = "assets/icon/icon.png";
-	
-	Game::Start(Start, Update);
 
-	delete Scene;
+	Game::Start(Start, Update);
 
 	return 0;
 }

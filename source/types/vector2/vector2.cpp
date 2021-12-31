@@ -5,11 +5,6 @@ BigNgine::Vector2::Vector2() {
 	y = 0.0;
 }
 
-BigNgine::Vector2::Vector2(float _x){
-	x = _x;
-	y = _x;
-}
-
 BigNgine::Vector2::Vector2(float _x, float _y) {
 	x = _x;
 	y = _y;

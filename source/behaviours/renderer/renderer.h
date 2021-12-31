@@ -5,9 +5,11 @@
 #include "../../types/behaviour/behaviour.h"
 #include "../../global/game/game.h"
 #include "../../global/logger/logger.h"
+#include "../../types/texture/texture.h"
 #include "../../global/fileSystem/fileSystem.h"
 #include <string>
 #include <iostream>
+#include <vector>
 
 namespace BigNgine
 {
@@ -15,12 +17,11 @@ namespace BigNgine
 //	====================================================================================================================
 	class ShaderRendererBehaviour : public Behaviour
 	{
-		friend class AnimationBehaviour;
 	public:
 		std::string vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
 		std::string fragShader;
 
-		void Start();
+		void Start() override;
 
 		void Update(int deltaTime);
 
@@ -45,7 +46,7 @@ namespace BigNgine
 	{
 		friend class AnimationBehaviour;
 	public:
-		std::string file;
+		std::vector<const char *> texturePaths;
 		std::string vertShader = FileSystem::LoadFile("assets/shaders/vert/standard.glsl");
 		std::string fragShader = FileSystem::LoadFile("assets/shaders/frag/textureStandard.glsl");
 		bool yFlipped, xFlipped;
@@ -68,10 +69,15 @@ namespace BigNgine
 		
 ///		Set texture
 ///		@param _file Path to your file of choice(should be picture)
-		void SetTexture(const std::string &_file);
+		void AddTexture(const char * _file);
+		
+		///Set texture
+		void SetTexture(Texture * _texture);
+  
 		
 	
 	private:
-		unsigned int VBO, VAO, EBO, program, texture;
+		unsigned int VBO, VAO, EBO, program;
+		Texture* texture;
 	};
 }

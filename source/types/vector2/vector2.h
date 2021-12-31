@@ -6,7 +6,6 @@ namespace BigNgine {
 		float x, y;
 
 		Vector2();
-		explicit Vector2(float _x);
 		Vector2(float _x, float _y);
 		Vector2(const Vector2& other);
 	};

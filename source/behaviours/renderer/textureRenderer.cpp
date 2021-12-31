@@ -93,38 +93,21 @@ void BigNgine::TextureRendererBehaviour::Start()
 	glBindVertexArray(0);
 	
 	
-	
-//	textures
-
-//	generating texture buffers
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	
-//	setting wrapping method
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	
-//	setting rasterisation method
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	// load image, create texture and generate mipmaps
-	int width, height;
-	unsigned char *data = stbi_load(file.c_str(), &width, &height, nullptr, 4);
-	if (data)
+	if (texturePaths.empty())
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		Logger::Error("didn't get any textures to load");
+		texture = new Texture("");
+		return;
 	}
-	else
-		Logger::Error("Could not load texture at: " + std::string(file));
-	stbi_image_free(data);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	
-	
+	texture = new Texture(texturePaths[0]);
+
 }
 
 void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 {
+	// TODO(imustend): make uniform a object, so user can add how many they want
+	//					vector of uniforms
+
 	//	getting all uniform IDs
 	int u_resolution = glGetUniformLocation(program, "u_resolution");
 	int u_position = glGetUniformLocation(program, "u_position");
@@ -136,8 +119,8 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	int u_camera_zoom = glGetUniformLocation(program, "u_camera_zoom");
 	int u_texture_flip = glGetUniformLocation(program, "u_texture_flip");
 	
+	texture->Bind();
 	
-	glBindTexture(GL_TEXTURE_2D, texture);
 	
 	glUseProgram(program);
 	
@@ -147,7 +130,7 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	glUniform2f(u_size, parent->size.x, parent->size.y);
 	glUniform1f(u_depth, parent->depth);
 	glUniform1f(u_rotation, parent->rotation);
-	glUniform1i(u_time, (int)parent->GetParentScene()->activeTime);
+	glUniform1i(u_time, (int)parent->GetParentScene()->GetActiveTime());
 	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x, parent->GetParentScene()->Camera->position.y);
 	glUniform1f(u_camera_zoom, parent->GetParentScene()->CameraZoom);
 	glUniform2f(u_texture_flip, (float)xFlipped, (float)yFlipped);
@@ -157,7 +140,10 @@ void BigNgine::TextureRendererBehaviour::Update(int deltaTime)
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// this technically can stay, but it should be called for used texture
+	// however it won`t really make any difference
+	texture->Unbind();
 	
 }
 
@@ -166,8 +152,8 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
-	glDeleteTextures(1, &texture);
 	glDeleteProgram(program);
+	delete texture;
 }
 
 [[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetVertShader(std::string vertexShader)
@@ -180,7 +166,12 @@ void BigNgine::TextureRendererBehaviour::Destroy()
 	fragShader = std::move(fragmentShader);
 }
 
-void BigNgine::TextureRendererBehaviour::SetTexture(const std::string &_file)
+[[maybe_unused]]void BigNgine::TextureRendererBehaviour::SetTexture(Texture *_texture)
 {
-	TextureRendererBehaviour::file = _file;
+	texture = _texture;
+}
+
+void BigNgine::TextureRendererBehaviour::AddTexture(const char * _file)
+{
+	TextureRendererBehaviour::texturePaths.push_back(_file);
 }

@@ -1,12 +1,11 @@
 #include "cursor.h"
 
-//FIXME: this crashes program again...
 BigNgine::Vector2 Cursor::GetPosition() {
-	double *x = nullptr, *y = nullptr;
+	double x = 0, y = 0;
 
-	glfwGetCursorPos(Game::window, x, y);
+	glfwGetCursorPos(Game::window, &x, &y);
 
-	return {(float)*x, (float)*y};
+	return BigNgine::Vector2(x, y);
 }
 
 void Cursor::SetPosition(const BigNgine::Vector2& position) {

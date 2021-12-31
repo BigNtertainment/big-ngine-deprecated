@@ -24,14 +24,14 @@ void Game::Stop() {
 	Game::running = false;
 }
 
-void Game::Start(void(*Start)(), void(*Update)(int)) {
-	// initialization of SDL libraries
+void ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	for(Input::Callback* callback : ActiveScene->GetCallbacks()) {
+		if(callback->active && callback->event == action)
+			callback->Call(key, scancode, mods);
+	}
+}
 
-	// if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
-	// 	Logger::Error(SDL_GetError());
-	// 	return;
-	// }
-	// Mix_Init(MIX_INIT_MP3);
+void Game::Start(void(*Start)(), void(*Update)(int)) {
 
 //	OpenGL initialization
 	glfwInit();
@@ -88,14 +88,13 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	stbi_image_free(images[0].pixels);
 
 	// Activate callbacks on key events
-	glfwSetKeyCallback(Game::window, Input::Callback::ExecuteCallbacks);
+	glfwSetKeyCallback(Game::window, ExecuteCallbacks);
 
 //	TODO(pietrek14): sort entities array before activating them,
 //		from biggest depth to smallest
 //	FIXME: if you add entity while game loop is running start functions wont execute!!!
 //		or you change scene more then once or something it doesnt work
 //		THE GAME CRASHES
-
 
 //	starting every entity
 	// Call the user-given start function
@@ -140,8 +139,14 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 		glfwSetWindowSize(window, Game::width, Game::height);
 	}
 
-	// TODO: Make actual garbage collection (delete all scenes here)
-	delete ActiveScene;
+	// Delete all scenes
+	// We do it like that because scenes are automatically removed from the BigNgine::Scene::scenes vector on deletion
+
+	const int size = BigNgine::Scene::scenes.size();
+
+	for(int i = 0; i < size; i++) {
+		delete BigNgine::Scene::scenes[0];
+	}
 
 	// Finish off GLFW
 	Game::window = nullptr;
