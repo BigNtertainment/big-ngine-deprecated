@@ -20,7 +20,6 @@ To run this project, you're going to need:
 - `make / make output` to compile
 - `make run` to run
 - `make clean` to delete the obj files and the build
-- `make penis` to penis
 - `make build_and_run` to compile and then run
 - `make all` to compile without using .o files
 
