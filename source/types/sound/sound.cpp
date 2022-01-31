@@ -17,18 +17,28 @@ BigNgine::Sound::~Sound() {
 	Sound::sounds.erase(std::remove(Sound::sounds.begin(), Sound::sounds.end(), this), Sound::sounds.end());
 }
 
-BigNgine::Sound* BigNgine::Sound::LoadMP3(std::string path) {
+/**
+ * Loads an MP3 file into memory.
+ * @param path The path to the MP3 file.
+ * @return A pointer to the Sound object.
+ */
+BigNgine::Sound* BigNgine::Sound::LoadMP3(const std::string& path) {
 	Sound* result = new Sound();
 
-	result->LoadMP3(path);
+	result->OpenMP3(path);
 
 	return result;
 }
 
-BigNgine::Sound* BigNgine::Sound::LoadWav(std::string path) {
+/**
+ * Loads a WAV file into memory.
+ * @param path The path to the WAV file.
+ * @return A pointer to the Sound object.
+ */
+BigNgine::Sound* BigNgine::Sound::LoadWav(const std::string& path) {
 	Sound* result = new Sound();
 
-	result->LoadWav(path);
+	result->OpenWav(path);
 
 	return result;
 }
@@ -37,13 +47,13 @@ BigNgine::Sound* BigNgine::Sound::LoadWav(std::string path) {
  * Opens an MP3 file to play later.
  * @param path Path to the MP3 file.
  */
-void BigNgine::Sound::OpenMP3(std::string path) {
+void BigNgine::Sound::OpenMP3(const std::string& path) {
 	std::string mciString = "open \"" + path + "\" type mpegvideo alias " + std::to_string(id);
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to open MP3 file: " + path + " Error code: " + std::to_string(error));
 
 	SetVolume(volume);
 }
@@ -52,27 +62,27 @@ void BigNgine::Sound::OpenMP3(std::string path) {
  * Opens an WAV file to play later.
  * @param path Path to the MP3 file.
  */
-void BigNgine::Sound::OpenWav(std::string path) {
+void BigNgine::Sound::OpenWav(const std::string& path) {
 	std::string mciString = "open \"" + path + "\" type waveaudio alias " + std::to_string(id);
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to open WAV file: " + path + " Error code: " + std::to_string(error));
 
 	SetVolume(volume);
 }
 
 /**
- * Playes an audio file
+ * Plays an audio file
  */
 void BigNgine::Sound::Play() {
 	std::string mciString = "play " + std::to_string(id);
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to play sound with id: " + std::to_string(id) + ". Error code: " + std::to_string(error));
 	else
 		paused = false;
 }
@@ -83,10 +93,10 @@ void BigNgine::Sound::Play() {
 void BigNgine::Sound::PlayOnLoop() {
 	std::string mciString = "play " + std::to_string(id) + " repeat";
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to play on loop sound with id: " + std::to_string(id) + ". Error code: " + std::to_string(error));
 	else
 		paused = false;
 }
@@ -97,10 +107,10 @@ void BigNgine::Sound::PlayOnLoop() {
 void BigNgine::Sound::Pause() {
 	std::string mciString = "pause " + std::to_string(id);
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to pause sound with id: " + std::to_string(id) + ". Error code: " + std::to_string(error));
 	else
 		paused = true;
 }
@@ -111,10 +121,10 @@ void BigNgine::Sound::Pause() {
 void BigNgine::Sound::Resume() {
 	std::string mciString = "resume " + std::to_string(id);
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to resume playing sound with id: " + std::to_string(id) + ". Error code: " + std::to_string(error));
 	else
 		paused = false;
 }
@@ -125,10 +135,10 @@ void BigNgine::Sound::Resume() {
 void BigNgine::Sound::Stop() {
 	std::string mciString = "stop " + std::to_string(id);
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to stop playing sound with id: " + std::to_string(id) + ". Error code: " + std::to_string(error));
 	else
 		paused = true;
 }
@@ -139,10 +149,10 @@ void BigNgine::Sound::Stop() {
 void BigNgine::Sound::Close() {
 	std::string mciString = "close " + std::to_string(id);
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to close audio file from sound with id: " + std::to_string(id) + ". Error code: " + std::to_string(error));
 }
 
 /**
@@ -151,10 +161,10 @@ void BigNgine::Sound::Close() {
 void BigNgine::Sound::SetVolume(int _volume) {
 	std::string mciString = "setaudio " + std::to_string(id) + " volume to " + std::to_string(volume);
 
-	MCIERROR error = mciSendString(mciString.c_str(), NULL, 0, NULL);
+	MCIERROR error = mciSendString(mciString.c_str(), nullptr, 0, nullptr);
 
 	if(error != 0)
-		std::cout << error << std::endl;
+		Logger::Error("Failed to set volume for sound with id: " + std::to_string(id) + " to " + std::to_string(_volume) + ". Error code: " + std::to_string(error));
 	else
 		volume = _volume;
 }
@@ -170,7 +180,7 @@ std::vector<BigNgine::Sound*> BigNgine::Sound::GetSounds() {
  * Whether the sound is playing or paused
  * @return True if the sound is paused, false if the sound is playing
  */
-bool BigNgine::Sound::IsPaused() {
+bool BigNgine::Sound::IsPaused() const {
 	return paused;
 }
 
@@ -178,13 +188,13 @@ bool BigNgine::Sound::IsPaused() {
  * Whether the sound is playing or paused
  * @return True if the sound is playing, false if the sound is paused
  */
-bool BigNgine::Sound::IsPlaying() {
+bool BigNgine::Sound::IsPlaying() const {
 	return !paused;
 }
 
 /**
  * Returns the volume of the playback
  */
-int BigNgine::Sound::GetVolume() {
+int BigNgine::Sound::GetVolume() const {
 	return volume;
 }
