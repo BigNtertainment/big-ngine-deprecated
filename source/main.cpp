@@ -42,7 +42,9 @@ void Start()
 			auto *FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
 			FollowPlayer->lockRotation = true;
 
-//			Scene->Camera->AddBehaviour(FollowPlayer);
+			Scene->Camera->AddBehaviour(FollowPlayer);
+			Scene->Camera->SetDepth(.5f);
+
 /*
 			// Add a Debug Grid on top of the Camera
 			//does not work
@@ -104,12 +106,11 @@ void Start()
 			Wall->AddBehaviour(WPhysics);
 
 			// Add a Sky Background
-			//										  adding a 20 pixel margin bc we have some precision issues with follow camera behaviour
 			auto *Sky = new BigNgine::Entity(
-				BigNgine::Vector2(-610, -410), 0.0f,
+				BigNgine::Vector2(-600, -400), 0.0f,
 				BigNgine::Vector2(
-					(float)Game::width + 20,
-					(float)Game::height + 20));
+					Game::width,
+					Game::height));
 
 			Sky->SetDepth(0.9f);
 
@@ -120,7 +121,7 @@ void Start()
 			// sky follow camera :)
 			auto *FollowCamera = new BigNgine::FollowBehaviour(
 				Scene->Camera,
-				BigNgine::Vector2(-610., -410.));
+				BigNgine::Vector2(-600., -400.));
 
 			Sky->AddBehaviour(FollowCamera);
 			Sky->AddBehaviour(SkyRenderer);
@@ -161,7 +162,6 @@ void Start()
 
 void Update([[maybe_unused]] int deltaTime)
 {
-
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])

@@ -142,10 +142,19 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	// Delete all scenes
 	// We do it like that because scenes are automatically removed from the BigNgine::Scene::scenes vector on deletion
 
-	const int size = BigNgine::Scene::scenes.size();
+	const int sceneQuantity = BigNgine::Scene::GetScenes().size();
 
-	for(int i = 0; i < size; i++) {
-		delete BigNgine::Scene::scenes[0];
+	for(int i = 0; i < sceneQuantity; i++) {
+		delete BigNgine::Scene::GetScenes()[0];
+	}
+
+	// Also delete all sounds
+	// Similar thing to scenes
+
+	const int soundQuantity = BigNgine::Sound::GetSounds().size();
+
+	for(int i = 0; i < soundQuantity; i++) {
+		delete BigNgine::Sound::GetSounds()[0];
 	}
 
 	// Finish off GLFW

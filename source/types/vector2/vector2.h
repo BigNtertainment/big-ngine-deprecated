@@ -1,4 +1,5 @@
 #pragma once
+#include <sstream>
 
 namespace BigNgine {
 	class Vector2 {
@@ -16,4 +17,5 @@ namespace BigNgine {
 	Vector2 operator/(Vector2 left, const Vector2& right);
 	Vector2 operator*(Vector2 left, const int& right);
 	Vector2 operator/(Vector2 left, const int& right);
+	std::ostream& operator<< (std::ostream& stream, const Vector2& vector);
 }
