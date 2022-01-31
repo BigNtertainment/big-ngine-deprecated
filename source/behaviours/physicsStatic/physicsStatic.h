@@ -7,11 +7,11 @@ namespace BigNgine
 	class PhysicsStaticBehaviour : public Behaviour
 	{
 	public:
-		void Start();
+		void Start() override;
 
-		void Update(int deltaTime);
+		void Update(int deltaTime) override;
 
-		void Destroy();
+		void Destroy() override;
 	
 	private:
 		b2BodyDef staticBodyDef;

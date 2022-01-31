@@ -19,7 +19,7 @@ namespace BigNgine
 	
 		void Update(int deltaTime) override;
 	
-		void Delete();
+		void Destroy() override;
 		
 		void AddTexture(const char *texturePath);
 		

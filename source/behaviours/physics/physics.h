@@ -12,11 +12,11 @@ namespace BigNgine
 		bool constraintY;
 		bool constraintRotation;
 		
-		void Start();
+		void Start() override;
 
-		void Update(int deltaTime);
+		void Update(int deltaTime) override;
 
-		void Destroy();
+		void Destroy() override;
 		
 ///		Moves parent entity to position passed by _target
 ///		@param _target BigNgine::Vector2 with position
@@ -40,7 +40,6 @@ namespace BigNgine
 		b2PolygonShape dynamicBox;
 
 		b2FixtureDef fixtureDef;
-		
 		
 		bool isGrounded;
 	};

@@ -22,6 +22,6 @@ namespace BigNgine
 ///		@param _pivot Offset from position of followed entity.
 		FollowBehaviour(Entity* _followed, const Vector2& _pivot);
 
-		void Update(int deltaTime);
+		void Update(int deltaTime) override;
 	};
 }

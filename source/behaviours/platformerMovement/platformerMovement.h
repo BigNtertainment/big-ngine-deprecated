@@ -27,9 +27,9 @@ namespace BigNgine {
 
 		PlatformerMovementBehaviour(float _speed = PLATFORMER_MOVEMENT_DEFAULT_SPEED, float _jumpForce = PLATFORMER_MOVEMENT_DEFAULT_JUMP_FORCE, int _jumpCheckPrecision = PLATFORMER_MOVEMENT_DEFAULT_JUMP_CHECK_PRECISION, float _coyoteTime = PLATFORMER_MOVEMENT_DEFAULT_COYOTE_TIME);
 
-		void Start();
-		void Update(int deltaTime);
-		void Destroy();
+		void Start() override;
+		void Update(int deltaTime) override;
+		void Destroy() override;
 
 	private:
 		std::vector<PhysicsBehaviour*> physics;

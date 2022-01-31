@@ -23,9 +23,9 @@ namespace BigNgine
 
 		void Start() override;
 
-		void Update(int deltaTime);
+		void Update(int deltaTime) override;
 
-		void Destroy();
+		void Destroy() override;
 		
 		///Set vertex shader
 		///@param vertexShader code in string
@@ -51,11 +51,11 @@ namespace BigNgine
 		std::string fragShader = FileSystem::LoadFile("assets/shaders/frag/textureStandard.glsl");
 		bool yFlipped, xFlipped;
 		
-		void Start();
+		void Start() override;
 		
-		void Update(int deltaTime);
+		void Update(int deltaTime) override;
 		
-		void Destroy();
+		void Destroy() override;
 		
 		///Set vertex shader
 		///@param vertexShader code in string
@@ -73,8 +73,6 @@ namespace BigNgine
 		
 		///Set texture
 		void SetTexture(Texture * _texture);
-  
-		
 	
 	private:
 		unsigned int VBO, VAO, EBO, program;
