@@ -17,7 +17,8 @@ void BigNgine::PlatformerMovementBehaviour::Update(int deltaTime) {
 
 	for(PhysicsBehaviour* physicsBehaviour : physics) {
 		if(horizontalMovement != 0.0)
-			physicsBehaviour->MoveBy(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));
+//			physicsBehaviour->MoveBy(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));
+			physicsBehaviour->ApplyForce(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));
 
 		// TODO: Make jump force dependent on press length
 		if(jumping) {

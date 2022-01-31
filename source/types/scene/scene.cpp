@@ -3,10 +3,6 @@
 std::vector<BigNgine::Scene*> BigNgine::Scene::scenes;
 
 BigNgine::Scene::Scene(scene_startfunc Start, scene_updatefunc Update) {
-	Camera = new BigNgine::Entity();
-	CameraZoom = 1.0f;
-	AddEntity(Camera);
-
 	_Start = Start;
 	_Update = Update;
 
@@ -36,6 +32,10 @@ void BigNgine::Scene::Start() {
 	world = new b2World(*gravity);
 	activeTime = 0;
 
+	Camera = new BigNgine::Entity();
+	CameraZoom = 1.0f;
+	AddEntity(Camera);
+
 	_Start(this);
 	for(auto & entity : entities) {
 		entity->Start();
@@ -59,14 +59,13 @@ void BigNgine::Scene::Destroy() {
 	for(auto & entity : entities) {
 		entity->Destroy();
 	}
+
+	delete world;
+	delete gravity;
 }
 
 BigNgine::Scene::~Scene() {
-	for(auto & entity : entities) {
-		delete entity;
-	}
-	delete world;
-	delete gravity;
+	Destroy();
 
 	Scene::scenes.erase(std::remove(Scene::scenes.begin(), Scene::scenes.end(), this), Scene::scenes.end());
 }

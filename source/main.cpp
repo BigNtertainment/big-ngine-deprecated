@@ -1,5 +1,8 @@
-#include <cmath>
+//???
+//#include <cmath>
 #include "BigNgine.h"
+#include <windows.h>
+
 
 void Start()
 {
@@ -11,8 +14,20 @@ void Start()
 			auto *Player = new BigNgine::Entity(BigNgine::Vector2(100.0f, 100.0f), 0.0f, BigNgine::Vector2(100.0f, 100.0f));
 			Player->SetDepth(0.0f);
 
+			
+			auto *pAnimation = new BigNgine::AnimationBehaviour(.5f);
 			auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
-			pRendererBehaviour->SetTexture("assets/img/mariss.png");
+//			pRendererBehaviour->AddTexture("assets/img/13.png");
+//          FIXME(imustend): crashes here, if you first add animation and then renderer without adding texture to renderer
+//			TODO(imustend): add animation manager so that we can add multiple animations to the same entity (but how?)
+			pAnimation->AddTexture("assets/img/1.png");
+			pAnimation->AddTexture("assets/img/2.png");
+			pAnimation->AddTexture("assets/img/3.png");
+			pAnimation->AddTexture("assets/img/4.png");
+			pAnimation->AddTexture("assets/img/5.png");
+			pAnimation->AddTexture("assets/img/6.png");
+			pAnimation->AddTexture("assets/img/7.png");
+			pAnimation->AddTexture("assets/img/8.png");
 
 			auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
 			pPhysicsBehaviour->constraintRotation = true;
@@ -20,17 +35,35 @@ void Start()
 			auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
 
 			Player->AddBehaviour(pRendererBehaviour);
+			Player->AddBehaviour(pAnimation);
 			Player->AddBehaviour(pPhysicsBehaviour);
 			Player->AddBehaviour(pMovement);
 
 			// Make Camera follow the Player
 
-			auto *FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
+//			IMPORTANT(imustend): if i remember correctly, adding renderer to camera doesn't work, but i don't remember why
+/*			auto *FollowPlayer = new BigNgine::FollowBehaviour(Player, BigNgine::Vector2(50., 50.));
 			FollowPlayer->lockRotation = true;
 
 			Scene->Camera->AddBehaviour(FollowPlayer);
 			Scene->Camera->SetDepth(.5f);
 
+
+			// Add a Debug Grid on top of the Camera
+			//does not work
+
+			auto *GridRenderer = new BigNgine::ShaderRendererBehaviour();
+
+			GridRenderer->SetFragShader(
+				FileSystem::LoadFile("assets/shaders/frag/grid.glsl"));
+			GridRenderer->SetVertShader(
+				FileSystem::LoadFile("assets/shaders/vert/debugBackground.glsl"));
+
+			Scene->Camera->SetDepth(.5f);
+			//										  FIXME(imustend): renderer on camera doesnt work
+			Scene->Camera->AddBehaviour(GridRenderer);*/
+
+			//add floor
 			auto *Floor = new BigNgine::Entity(
 				BigNgine::Vector2(-500.0f, 300.0f), 0.0f,
 				BigNgine::Vector2(800.0f, 40.0f));
@@ -95,8 +128,8 @@ void Start()
 				Scene->Camera,
 				BigNgine::Vector2(-600., -400.));
 
-			Sky->AddBehaviour(SkyRenderer);
 			Sky->AddBehaviour(FollowCamera);
+			Sky->AddBehaviour(SkyRenderer);
 
 			Scene->AddEntity(Floor);
 			Scene->AddEntity(Floor2);

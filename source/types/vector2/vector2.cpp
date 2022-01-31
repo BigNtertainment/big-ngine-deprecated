@@ -68,3 +68,11 @@ BigNgine::Vector2 BigNgine::operator/(BigNgine::Vector2 left, const int& right) 
 
 	return result;
 }
+
+std::ostream& BigNgine::operator<< (std::ostream& stream, const BigNgine::Vector2& vector) {
+	std::stringstream ss;
+
+	ss << "(" << vector.x << ", " << vector.y << ")";
+
+	return stream << ss.str();
+}

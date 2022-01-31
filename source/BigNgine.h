@@ -1,7 +1,5 @@
 #pragma once
 
-#include "external/Box2D/include/box2d/box2d.h"
-
 #include "global/logger/logger.h"
 #include "global/game/game.h"
 #include "global/input/input.h"
@@ -19,3 +17,4 @@
 #include "behaviours/physics/physics.h"
 #include "behaviours/platformerMovement/platformerMovement.h"
 #include "behaviours/follow/follow.h"
+#include "behaviours/animation/animation.h"

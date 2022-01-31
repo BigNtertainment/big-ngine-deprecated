@@ -3627,7 +3627,7 @@ static void stbi__YCbCr_to_RGB_simd(stbi_uc *out, stbi_uc const *y, stbi_uc cons
 
 #ifdef STBI_SSE2
    // step == 3 is pretty ugly on the final interleave, and i'm not convinced
-   // it's useful in practice (you wouldn't use it for textures, for example).
+   // it's useful in practice (you wouldn't use it for texture, for example).
    // so just accelerate step == 4 case.
    if (step == 4) {
       // this is a fairly straightforward implementation and not super-optimized.

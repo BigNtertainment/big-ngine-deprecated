@@ -11,6 +11,10 @@
 #include "../../global/game/game.h"
 #include "../../global/input/input.h"
 
+namespace BigNgine {
+	class Scene;
+}
+
 typedef std::function<void(BigNgine::Scene*)> scene_startfunc;
 typedef std::function<void(BigNgine::Scene*, int)> scene_updatefunc;
 

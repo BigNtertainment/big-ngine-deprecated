@@ -6,9 +6,9 @@
 
 namespace Logger
 {
-	void Log(std::string message);
-	void Warn(std::string message);
-	void Error(std::string message);
+	void Log(const std::string& message);
+	void Warn(const std::string& message);
+	void Error(const std::string& message);
 
 
 	void Log(float input);
@@ -25,9 +25,9 @@ namespace Logger
 	void Warn(int input);
 	void Error(int input);
 
-	void Log(BigNgine::Vector2 input);
-	void Warn(BigNgine::Vector2 input);
-	void Error(BigNgine::Vector2 input);
+	void Log(const BigNgine::Vector2& input);
+	void Warn(const BigNgine::Vector2& input);
+	void Error(const BigNgine::Vector2& input);
 }
 
-const std::string currentDateTime();
+std::string currentDateTime();
