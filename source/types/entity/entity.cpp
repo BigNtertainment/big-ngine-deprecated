@@ -30,14 +30,6 @@ void BigNgine::Entity::Update(int deltaTime) {
 	}
 }
 
-void BigNgine::Entity::Destroy() {
-	for(auto & behaviour : behaviours) {
-		if(behaviour->active) {
-			behaviour->Destroy();
-		}
-	}
-}
-
 BigNgine::Scene* BigNgine::Entity::GetParentScene() {
 	return parentScene;
 }

@@ -32,7 +32,7 @@ void BigNgine::AnimationBehaviour::Update(int deltaTime)
 	_textureRenderer->SetTexture(_textures[(int)(animationTimer / frameDuration)]);
 }
 
-void BigNgine::AnimationBehaviour::Delete()
+void BigNgine::AnimationBehaviour::Destroy()
 {
     for(auto texture : _textures)
     {

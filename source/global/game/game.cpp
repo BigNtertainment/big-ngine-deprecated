@@ -31,7 +31,7 @@ void ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int
 	}
 }
 
-void Game::Start(void(*Start)(), void(*Update)(int)) {
+void Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, game_updatefunc Update) {
 
 //	OpenGL initialization
 	glfwInit();
@@ -63,14 +63,12 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	/* tell GL to only draw onto a pixel if the shape is closer to the viewer
 	than anything already drawn at that pixel */
 	glEnable(GL_DEPTH_TEST); /* enable depth-testing */
-
 	
 	//	so we can use alpha values in fragment shaders
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 	
-
 	/* with LESS depth-testing interprets a smaller depth value as meaning "closer" */
 //	TODO(imustend): make it GL_GREATER
 //	 and write disclaimer
@@ -99,9 +97,9 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 //	starting every entity
 	// Call the user-given start function
 	Start();
-	// Start the active scene
-	ActiveScene->Start();
-	
+
+	SetActiveScene(firstScene);
+
 	// Main game loop
 	while(Game::running && !glfwWindowShouldClose(window)) {
 		// Background color
@@ -162,14 +160,11 @@ void Game::Start(void(*Start)(), void(*Update)(int)) {
 	glfwTerminate();
 }
 
-//TODO: Make it into one function somehow
+//TODO: Make the active scene a copy of the scene you want to make active, so you don't lose scene data
 
 void Game::SetActiveScene(BigNgine::Scene* scene) {
-	ActiveScene = scene;
-}
-
-void Game::ChangeActiveScene(BigNgine::Scene* scene) {
-	ActiveScene->Destroy();
+	if(ActiveScene != nullptr)
+		delete ActiveScene;
 
 	ActiveScene = scene;
 

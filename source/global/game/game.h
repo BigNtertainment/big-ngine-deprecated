@@ -17,6 +17,9 @@ namespace BigNgine {
 	class Scene;
 }
 
+typedef std::function<void()> game_startfunc;
+typedef std::function<void(int)> game_updatefunc;
+
 namespace Game
 {
 	extern bool running;
@@ -24,10 +27,11 @@ namespace Game
 	extern int height;
 	extern const char *icon;
 	
-///	Function that starts game, should be called once at the start your program.
+///	Function that starts the game, should be called once at the start your program.
+///	@param firstScene The first scene
 ///	@param Start Function that is called once.
 /// @param Update Function that is called every frame.
-	void Start(void(*Start)(), void(*Update)(int));
+	void Start(BigNgine::Scene* firstScene, game_startfunc Start, game_updatefunc Update);
 ///	Stops game
 	void Stop();
 	

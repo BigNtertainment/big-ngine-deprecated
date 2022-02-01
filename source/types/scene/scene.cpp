@@ -55,17 +55,13 @@ void BigNgine::Scene::Update(int deltaTime) {
 	}
 }
 
-void BigNgine::Scene::Destroy() {
+BigNgine::Scene::~Scene() {
 	for(auto & entity : entities) {
-		entity->Destroy();
+		delete entity;
 	}
 
 	delete world;
 	delete gravity;
-}
-
-BigNgine::Scene::~Scene() {
-	Destroy();
 
 	Scene::scenes.erase(std::remove(Scene::scenes.begin(), Scene::scenes.end(), this), Scene::scenes.end());
 }
