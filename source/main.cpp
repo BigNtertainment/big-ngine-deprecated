@@ -143,7 +143,9 @@ auto *Scene = new BigNgine::Scene(
 
 void Start()
 {
-	
+	Logger::Log("Start.");
+	Logger::Warn("Start?");
+	Logger::Error("Start!");
 }
 
 void Update([[maybe_unused]] int deltaTime)

@@ -1,33 +1,63 @@
-#include <iostream>
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <windows.h>
 #include "../../types/vector2/vector2.h"
+
+#define CONSOLE_DEFAULT FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE
+#define CONSOLE_GREEN FOREGROUND_GREEN
+#define CONSOLE_YELLOW FOREGROUND_RED | FOREGROUND_GREEN
+#define CONSOLE_RED FOREGROUND_RED
 
 namespace Logger
 {
-	void Log(const std::string& message);
-	void Warn(const std::string& message);
-	void Error(const std::string& message);
+	template<typename T>
+	inline void Log(const T& message, std::ostream& stream = std::cout) {
+		// Change the console color
+		SetConsoleColor(CONSOLE_GREEN);
 
+		// Get the current date and time
+		std::string currentDateTime = CurrentDateTime();
 
-	void Log(float input);
-	void Warn(float input);
-	void Error(float input);
+		// Write the message to the stream
+		stream << "[" << currentDateTime << "][LOG] " << message << std::endl;
 
+		// Reset the console color
+		SetConsoleColor(CONSOLE_DEFAULT);
+	}
 
-	void Log(double input);
-	void Warn(double input);
-	void Error(double input);
+	template<typename T>
+	void Warn(const T& message, std::ostream& stream = std::cout) {
+		// Change the console color
+		SetConsoleColor(CONSOLE_YELLOW);
 
+		// Get the current date and time
+		std::string currentDateTime = CurrentDateTime();
 
-	void Log(int input);
-	void Warn(int input);
-	void Error(int input);
+		// Write the message to the stream
+		stream << "[" << currentDateTime << "][WARN] " << message << std::endl;
 
-	void Log(const BigNgine::Vector2& input);
-	void Warn(const BigNgine::Vector2& input);
-	void Error(const BigNgine::Vector2& input);
+		// Reset the console color
+		SetConsoleColor(CONSOLE_DEFAULT);
+	}
+
+	template<typename T>
+	void Error(const T& message, std::ostream& stream = std::cout) {
+		// Change the console color
+		SetConsoleColor(CONSOLE_RED);
+
+		// Get the current date and time
+		std::string currentDateTime = CurrentDateTime();
+
+		// Write the message to the stream
+		stream << "[" << currentDateTime << "][ERROR] " << message << std::endl;
+
+		// Reset the console color
+		SetConsoleColor(CONSOLE_DEFAULT);
+	}
+
+	void SetConsoleColor(int color);
+	std::string CurrentDateTime();
 }
-
-std::string currentDateTime();
