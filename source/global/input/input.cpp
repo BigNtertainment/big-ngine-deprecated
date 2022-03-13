@@ -1,7 +1,7 @@
 #include "input.h"
 
 bool Input::Get(int key) {
-	return glfwGetKey(Game::window, key) == GLFW_PRESS;
+	return glfwGetKey(BigNgine::Game::GetInstance()->GetWindow(), key) == GLFW_PRESS;
 }
 
 Input::Callback::Callback(callbackfunc _callback) {

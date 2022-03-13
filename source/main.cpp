@@ -89,11 +89,13 @@ auto *Scene = new BigNgine::Scene(
 		Wall->AddBehaviour(WPhysics);
 
 		// Add a Sky Background
+		BigNgine::Game* game = BigNgine::Game::GetInstance();
+
 		auto *Sky = new BigNgine::Entity(
 			BigNgine::Vector2(-600, -400), 0.0f,
 			BigNgine::Vector2(
-				Game::width,
-				Game::height));
+				game->GetWindowWidth(),
+				game->GetWindowHeight()));
 
 		Sky->SetDepth(0.9f);
 
@@ -127,7 +129,8 @@ auto *Scene = new BigNgine::Scene(
 				{
 					Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped = true;
 				}
-			});
+			}
+		);
 
 		Scene->AddCallback(flipTextureOnMovement);
 	},
@@ -154,12 +157,17 @@ void Update([[maybe_unused]] int deltaTime)
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
 {
-	Game::width = 1200;
-	Game::height = 800;
-	Game::name = "BigNgine";
-	Game::icon = "assets/icon/icon.png";
+	BigNgine::Game* game = BigNgine::Game::GetInstance();
 
-	Game::Start(Scene, Start, Update);
+	game->ResizeWindow(1200, 800);
+
+	game->SetName("BigNgine");
+
+	game->SetIcon("assets/icon/icon.png");
+
+	Logger::Log("Starting game.");
+
+	game->Start(Scene, Start, Update);
 
 	return 0;
 }

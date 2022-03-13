@@ -26,7 +26,7 @@ void BigNgine::PhysicsBehaviour::Update(int deltaTime)
 	body->SetAwake(true);
 
 	b2Vec2 position = body->GetPosition();
-	
+
 	parent->rotation = body->GetAngle() * 180.0 / PI;
 	parent->position.x = position.x * PIXELS_PER_METERS - parent->size.x/2;
 	parent->position.y = position.y * PIXELS_PER_METERS - parent->size.y/2;

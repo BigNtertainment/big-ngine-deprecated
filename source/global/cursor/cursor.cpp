@@ -3,23 +3,23 @@
 BigNgine::Vector2 Cursor::GetPosition() {
 	double x = 0, y = 0;
 
-	glfwGetCursorPos(Game::window, &x, &y);
+	glfwGetCursorPos(BigNgine::Game::GetInstance()->GetWindow(), &x, &y);
 
 	return BigNgine::Vector2(x, y);
 }
 
 void Cursor::SetPosition(const BigNgine::Vector2& position) {
-	glfwSetCursorPos(Game::window, position.x, position.y);
+	glfwSetCursorPos(BigNgine::Game::GetInstance()->GetWindow(), position.x, position.y);
 }
 
 void Cursor::SetNormal() {
-	glfwSetInputMode(Game::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	glfwSetInputMode(BigNgine::Game::GetInstance()->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
 void Cursor::SetInvisible() {
-	glfwSetInputMode(Game::window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	glfwSetInputMode(BigNgine::Game::GetInstance()->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 }
 
 void Cursor::SetDisabled() {
-	glfwSetInputMode(Game::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(BigNgine::Game::GetInstance()->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }

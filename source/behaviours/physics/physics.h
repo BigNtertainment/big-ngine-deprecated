@@ -40,7 +40,7 @@ namespace BigNgine
 		b2PolygonShape dynamicBox;
 
 		b2FixtureDef fixtureDef;
-		
+
 		bool isGrounded;
 	};
 }

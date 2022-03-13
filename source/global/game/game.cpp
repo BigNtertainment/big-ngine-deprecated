@@ -2,38 +2,30 @@
 
 #define FPS 60
 
+BigNgine::Game::Game() {}
+BigNgine::Game::~Game() {}
 
-bool Game::running = true;
-int Game::width = 640;
-int Game::height = 480;
+BigNgine::Game* BigNgine::Game::instance = new BigNgine::Game();
 
-BigNgine::Scene* ActiveScene = nullptr;
-GLFWwindow* Game::window = nullptr;
-const char *Game::name = "BigNgine";
-const char *Game::icon = "";
-
-// window resizing
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+// Window resizing callback
+void FramebufferResizeCallback(GLFWwindow* window, int width, int height)
 {
-	glViewport(0, 0, width, height);
-	Game::width = width;
-	Game::height = height;
+	BigNgine::Game::GetInstance()->ResizeWindow(width, height);
 }
 
-void Game::Stop() {
-	Game::running = false;
+void BigNgine::Game::Stop() {
+	running = false;
 }
 
-void ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	for(Input::Callback* callback : ActiveScene->GetCallbacks()) {
+void BigNgine::Game::ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	for(Input::Callback* callback : BigNgine::Game::GetInstance()->activeScene->GetCallbacks()) {
 		if(callback->active && callback->event == action)
 			callback->Call(key, scancode, mods);
 	}
 }
 
-void Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, game_updatefunc Update) {
-
-//	OpenGL initialization
+void BigNgine::Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, game_updatefunc Update) {
+	//	OpenGL initialization
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
@@ -41,67 +33,67 @@ void Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, game_updatef
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
-//	creating window
-	Game::window = glfwCreateWindow(Game::width, Game::height, Game::name, nullptr, nullptr);
+	// Creating window
+	window = glfwCreateWindow(width, height, name, nullptr, nullptr);
+
 	if (Game::window == nullptr)
 	{
 		glfwTerminate();
 		Logger::Error("Failed to create GLFW window");
 	}
 
-	//	making context for opengl
-	glfwMakeContextCurrent(Game::window);
-	//	window resize stuff
-	glfwSetFramebufferSizeCallback(Game::window, framebuffer_size_callback);
+	// Making context for OpenGL
+	glfwMakeContextCurrent(window);
 
-//	Initialization of GLAD
+	// Window resize stuff
+	glfwSetFramebufferSizeCallback(window, FramebufferResizeCallback);
+
+	// Initialization of GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		Logger::Error("GLAD NOT INITIALIZED");
 	}
 	
-	/* tell GL to only draw onto a pixel if the shape is closer to the viewer
-	than anything already drawn at that pixel */
+	// Tell OpenGL to only draw onto a pixel if the shape is closer to the viewer than anything already drawn at that pixel
 	glEnable(GL_DEPTH_TEST); /* enable depth-testing */
 	
-	//	so we can use alpha values in fragment shaders
+	// So we can use alpha values in fragment shaders
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 	
-	/* with LESS depth-testing interprets a smaller depth value as meaning "closer" */
+	// with LESS depth-testing interprets a smaller depth value as meaning "closer"
 //	TODO(imustend): make it GL_GREATER
 //	 and write disclaimer
 	glDepthFunc(GL_LESS);
 
-	glViewport(0, 0, Game::width, Game::height);
+	glViewport(0, 0, width, height);
 
-	// For calculating deltaTime
-	clock_t lastTime = 0, currentTime;
-
-	// Icon
+	// Set the game icon
 	GLFWimage images[1];
-	images[0].pixels = stbi_load(Game::icon, &images[0].width, &images[0].height, nullptr, 4);
+	images[0].pixels = stbi_load(icon, &images[0].width, &images[0].height, nullptr, 4);
 	glfwSetWindowIcon(window, 1, images);
 	stbi_image_free(images[0].pixels);
 
 	// Activate callbacks on key events
-	glfwSetKeyCallback(Game::window, ExecuteCallbacks);
+	glfwSetKeyCallback(window, ExecuteCallbacks);
 
-//	TODO(pietrek14): sort entities array before activating them,
-//		from biggest depth to smallest
-//	FIXME: if you add entity while game loop is running start functions wont execute!!!
-//		or you change scene more then once or something it doesnt work
-//		THE GAME CRASHES
+	//	FIXME: if you add entity while game loop is running start functions wont execute!!!
+	//		or you change scene more then once or something it doesnt work
+	//		THE GAME CRASHES
 
-//	starting every entity
 	// Call the user-given start function
 	Start();
 
 	SetActiveScene(firstScene);
 
+	// For calculating deltaTime
+	clock_t lastTime = 0, currentTime;
+
+	running = true;
+
 	// Main game loop
-	while(Game::running && !glfwWindowShouldClose(window)) {
+	while(running && !glfwWindowShouldClose(window)) {
 		// Background color
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -115,7 +107,7 @@ void Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, game_updatef
 		Update(deltaTime);
 
 		// Update the active scene
-		ActiveScene->Update(deltaTime);
+		activeScene->Update(deltaTime);
 
 		// Update the frame
 		glfwSwapBuffers(Game::window);
@@ -134,7 +126,7 @@ void Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, game_updatef
 		}
 
 		// Update the window size
-		glfwSetWindowSize(window, Game::width, Game::height);
+		glfwSetWindowSize(window, width, height);
 	}
 
 	// Delete all scenes
@@ -156,17 +148,57 @@ void Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, game_updatef
 	}
 
 	// Finish off GLFW
-	Game::window = nullptr;
+	window = nullptr;
 	glfwTerminate();
 }
 
-//TODO: Make the active scene a copy of the scene you want to make active, so you don't lose scene data
+void BigNgine::Game::SetActiveScene(BigNgine::Scene* scene) {
+	if(activeScene != nullptr)
+		delete activeScene;
 
-void Game::SetActiveScene(BigNgine::Scene* scene) {
-	if(ActiveScene != nullptr)
-		delete ActiveScene;
+	activeScene = scene;
 
-	ActiveScene = scene;
+	activeScene->Start();
+}
 
-	ActiveScene->Start();
+void BigNgine::Game::ResizeWindow(uint32_t width, uint32_t height)
+{
+	if(running)
+		glViewport(0, 0, width, height);
+
+	this->width = width;
+	this->height = height;
+}
+
+void BigNgine::Game::SetName(const char* name)
+{
+	this->name = name;
+}
+
+void BigNgine::Game::SetIcon(const char* icon)
+{
+	this->icon = icon;
+
+	// if(running)
+	// 	return;
+
+	GLFWimage images[1];
+	images[0].pixels = stbi_load(icon, &images[0].width, &images[0].height, nullptr, 4);
+	glfwSetWindowIcon(window, 1, images);
+	stbi_image_free(images[0].pixels);
+}
+
+uint32_t BigNgine::Game::GetWindowWidth() const
+{
+	return width;
+}
+
+uint32_t BigNgine::Game::GetWindowHeight() const
+{
+	return height;
+}
+
+GLFWwindow* BigNgine::Game::GetWindow() const
+{
+	return window;
 }
