@@ -1,6 +1,24 @@
 #include "BigNgine.h"
 #include <windows.h>
 
+class Bullet : public BigNgine::Prefab {
+public:
+	BigNgine::Entity* Create(void* args[]) override {
+		auto* result = new BigNgine::Entity(*(BigNgine::Vector2*)args[0], *(float*)args[1], *(BigNgine::Vector2*)args[2]);
+
+		// Add necessary behaviours
+		auto *bulletRenderer = new BigNgine::TextureRendererBehaviour();
+		bulletRenderer->AddTexture("assets/img/mariss.png");
+
+		auto *bulletPhysics = new BigNgine::PhysicsBehaviour();
+
+		result->AddBehaviour(bulletRenderer);
+		result->AddBehaviour(bulletPhysics);
+
+		return result;
+	}
+};
+
 auto *Scene = new BigNgine::Scene(
 	[](BigNgine::Scene *Scene)
 	{
@@ -141,26 +159,29 @@ auto *Scene = new BigNgine::Scene(
 				if (key == BIGNGINE_KEY_Q)
 				{
 					// Create new bullet
-					auto *bullet = new BigNgine::Entity(
-						Player->position + BigNgine::Vector2(0.f, 20.f * (Player->GetBehaviour<BigNgine::TextureRendererBehaviour>()->xFlipped ? -1.f : 1.f)),
+					Bullet bullet;
+
+					BigNgine::Vector2 position = Player->position + BigNgine::Vector2(
 						0.f,
-						BigNgine::Vector2(10.f, 10.f)
+						20.f * (Player->GetBehaviour<BigNgine::TextureRendererBehaviour>()->xFlipped ? -1.f : 1.f)
 					);
+					float rotation = 0.f;
+					BigNgine::Vector2 scale = BigNgine::Vector2(10.f, 10.f);
+					float bulletForce = 10.f * (Player->GetBehaviour<BigNgine::TextureRendererBehaviour>()->xFlipped ? -1.f : 1.f);
 
-					// Add necessary behaviours
-					auto *bulletRenderer = new BigNgine::TextureRendererBehaviour();
-					bulletRenderer->AddTexture("assets/img/mariss.png");
-
-					auto *bulletPhysics = new BigNgine::PhysicsBehaviour();
-
-					bullet->AddBehaviour(bulletRenderer);
-					bullet->AddBehaviour(bulletPhysics);
+					void* bulletData[] = {
+						&position,
+						&rotation,
+						&scale
+					};
 
 					// Add bullet to scene
-					Scene->AddEntity(bullet);
+					BigNgine::Entity* bulletEntity = bullet.Create(bulletData);
+
+					Scene->AddEntity(bulletEntity);
 
 					// Apply the force to the bullet
-					bulletPhysics->ApplyForce(BigNgine::Vector2(10.f * (Player->GetBehaviour<BigNgine::TextureRendererBehaviour>()->xFlipped ? -1.f : 1.f), 0.f));
+					bulletEntity->GetBehaviour<BigNgine::PhysicsBehaviour>()->ApplyForce(BigNgine::Vector2(bulletForce, 0.f));
 				}
 			}
 		);

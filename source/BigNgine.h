@@ -7,6 +7,7 @@
 #include "global/cursor/cursor.h"
 
 #include "types/entity/entity.h"
+#include "types/prefab/prefab.h"
 #include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
 #include "types/sound/sound.h"
