@@ -10,9 +10,15 @@ BigNgine::Scene::Scene(scene_startfunc Start, scene_updatefunc Update) {
 }
 
 void BigNgine::Scene::AddEntity(Entity* entity) {
+	// Set the entity parent scene
 	entity->parentScene = this;
 
+	// Add the entity to the scene entities vector
 	entities.push_back(entity);
+
+	// If this scene is currently running, call the entity start method
+	if(Game::GetInstance()->GetActiveScene() == this)
+		entity->Start();
 }
 
 void BigNgine::Scene::AddCallback(Input::Callback* callback) {

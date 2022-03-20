@@ -13,10 +13,6 @@ void FramebufferResizeCallback(GLFWwindow* window, int width, int height)
 	BigNgine::Game::GetInstance()->ResizeWindow(width, height);
 }
 
-void BigNgine::Game::Stop() {
-	running = false;
-}
-
 void BigNgine::Game::ExecuteCallbacks(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	for(Input::Callback* callback : BigNgine::Game::GetInstance()->activeScene->GetCallbacks()) {
 		if(callback->active && callback->event == action)
@@ -82,15 +78,17 @@ void BigNgine::Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, ga
 	//		or you change scene more then once or something it doesnt work
 	//		THE GAME CRASHES
 
-	// Call the user-given start function
-	Start();
-
-	SetActiveScene(firstScene);
-
 	// For calculating deltaTime
 	clock_t lastTime = 0, currentTime;
 
+	// Set the game as running
 	running = true;
+
+	// Call the user-given start function
+	Start();
+
+	// Load the first scene
+	SetActiveScene(firstScene);
 
 	// Main game loop
 	while(running && !glfwWindowShouldClose(window)) {
@@ -150,9 +148,21 @@ void BigNgine::Game::Start(BigNgine::Scene* firstScene, game_startfunc Start, ga
 	// Finish off GLFW
 	window = nullptr;
 	glfwTerminate();
+
+	// Delete the game instance
+	delete this;
+}
+
+void BigNgine::Game::Stop() {
+	running = false;
 }
 
 void BigNgine::Game::SetActiveScene(BigNgine::Scene* scene) {
+	if(!running) {
+		Logger::Error("Tried to set active scene while game is not running");
+		return;
+	}
+
 	if(activeScene != nullptr)
 		delete activeScene;
 
@@ -179,9 +189,6 @@ void BigNgine::Game::SetIcon(const char* icon)
 {
 	this->icon = icon;
 
-	// if(running)
-	// 	return;
-
 	GLFWimage images[1];
 	images[0].pixels = stbi_load(icon, &images[0].width, &images[0].height, nullptr, 4);
 	glfwSetWindowIcon(window, 1, images);
@@ -196,6 +203,11 @@ uint32_t BigNgine::Game::GetWindowWidth() const
 uint32_t BigNgine::Game::GetWindowHeight() const
 {
 	return height;
+}
+
+BigNgine::Scene* BigNgine::Game::GetActiveScene() const
+{
+	return activeScene;
 }
 
 GLFWwindow* BigNgine::Game::GetWindow() const

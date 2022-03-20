@@ -73,6 +73,9 @@ namespace BigNgine {
 		/// Returns the height of the game window
 		/// @return uint32_t The height of the game window
 		uint32_t GetWindowHeight() const;
+		/// Returns the scene that's currently active
+		/// @return BigNgine::Scene* The active scene
+		BigNgine::Scene* GetActiveScene() const;
 
 		/// Returns the GLFW window
 		/// @return GLFWwindow* The GLFW window

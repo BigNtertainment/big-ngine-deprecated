@@ -132,7 +132,39 @@ auto *Scene = new BigNgine::Scene(
 			}
 		);
 
+		auto shoot = new Input::Callback(
+			[Player, Scene](int key, int scancode, int mods)
+			{
+				// On Q press
+				if (key == BIGNGINE_KEY_Q)
+				{
+					// Create new bullet
+					auto *bullet = new BigNgine::Entity(
+						Player->position + BigNgine::Vector2(0.f, 20.f * (Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped ? -1.f : 1.f)),
+						0.f,
+						BigNgine::Vector2(10.f, 10.f)
+					);
+
+					// Add necessary behaviours
+					auto *bulletRenderer = new BigNgine::TextureRendererBehaviour();
+					bulletRenderer->AddTexture("assets/img/mariss.png");
+
+					auto *bulletPhysics = new BigNgine::PhysicsBehaviour();
+
+					bullet->AddBehaviour(bulletRenderer);
+					bullet->AddBehaviour(bulletPhysics);
+
+					// Add bullet to scene
+					Scene->AddEntity(bullet);
+
+					// Apply the force to the bullet
+					bulletPhysics->ApplyForce(BigNgine::Vector2(10.f * (Player->GetBehaviours<BigNgine::TextureRendererBehaviour>()[0]->xFlipped ? -1.f : 1.f), 0.f));
+				}
+			}
+		);
+
 		Scene->AddCallback(flipTextureOnMovement);
+		Scene->AddCallback(shoot);
 	},
 	[](BigNgine::Scene *Scene, int deltaTime)
 	{
