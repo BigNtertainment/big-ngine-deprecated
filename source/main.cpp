@@ -4,7 +4,7 @@
 class Bullet : public BigNgine::Prefab {
 public:
 	BigNgine::Entity* Create(void* args[]) override {
-		auto* result = new BigNgine::Entity(*(BigNgine::Vector2*)args[0], *(float*)args[1], *(BigNgine::Vector2*)args[2]);
+		auto* result = new BigNgine::Entity(*(BigNgine::Vector2*)args[0], 0.f, BigNgine::Vector2(10.f, 10.f));
 
 		// Add necessary behaviours
 		auto *bulletRenderer = new BigNgine::TextureRendererBehaviour();
@@ -162,18 +162,12 @@ auto *Scene = new BigNgine::Scene(
 					Bullet bullet;
 
 					BigNgine::Vector2 position = Player->position + BigNgine::Vector2(
-						0.f,
-						20.f * (Player->GetBehaviour<BigNgine::TextureRendererBehaviour>()->xFlipped ? -1.f : 1.f)
+						Player->size.x / 2.f + (Player->size.x / 2.f + 2.f) * (Player->GetBehaviour<BigNgine::TextureRendererBehaviour>()->xFlipped ? 1.f : -1.f),
+						0.f
 					);
-					float rotation = 0.f;
-					BigNgine::Vector2 scale = BigNgine::Vector2(10.f, 10.f);
-					float bulletForce = 10.f * (Player->GetBehaviour<BigNgine::TextureRendererBehaviour>()->xFlipped ? -1.f : 1.f);
+					float bulletForce = 10.f * (Player->GetBehaviour<BigNgine::TextureRendererBehaviour>()->xFlipped ? 1.f : -1.f);
 
-					void* bulletData[] = {
-						&position,
-						&rotation,
-						&scale
-					};
+					void* bulletData[] = { &position };
 
 					// Add bullet to scene
 					Scene->AddPrefab(bullet, bulletData, [bulletForce](BigNgine::Entity* bulletEntity) {
