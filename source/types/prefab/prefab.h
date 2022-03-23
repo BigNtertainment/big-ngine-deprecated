@@ -3,6 +3,8 @@
 #include "../entity/entity.h"
 
 namespace BigNgine {
+	class Entity;
+
 	class Prefab {
 	public:
 		///	Creates a new instance of the prefab.

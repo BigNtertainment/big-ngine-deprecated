@@ -176,12 +176,10 @@ auto *Scene = new BigNgine::Scene(
 					};
 
 					// Add bullet to scene
-					BigNgine::Entity* bulletEntity = bullet.Create(bulletData);
-
-					Scene->AddEntity(bulletEntity);
-
-					// Apply the force to the bullet
-					bulletEntity->GetBehaviour<BigNgine::PhysicsBehaviour>()->ApplyForce(BigNgine::Vector2(bulletForce, 0.f));
+					Scene->AddPrefab(bullet, bulletData, [bulletForce](BigNgine::Entity* bulletEntity) {
+						// Apply the force to the bullet after it has been added to the scene
+						bulletEntity->GetBehaviour<BigNgine::PhysicsBehaviour>()->ApplyForce(BigNgine::Vector2(bulletForce, 0.f));
+					});
 				}
 			}
 		);
