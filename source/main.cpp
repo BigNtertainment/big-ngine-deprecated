@@ -12,7 +12,7 @@ auto *Scene = new BigNgine::Scene(
 		auto *pRendererBehaviour = new BigNgine::TextureRendererBehaviour();
 		pRendererBehaviour->AddTexture("assets/img/mariss_xmas.png");
 
-		auto *pPhysicsBehaviour = new BigNgine::PhysicsBehaviour();
+		auto *pPhysicsBehaviour = new BigNgine::PhysicsDynamicBehaviour();
 		pPhysicsBehaviour->constraintRotation = true;
 
 		auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
@@ -151,7 +151,7 @@ auto *Scene = new BigNgine::Scene(
 					auto *bulletRenderer = new BigNgine::TextureRendererBehaviour();
 					bulletRenderer->AddTexture("assets/img/mariss.png");
 
-					auto *bulletPhysics = new BigNgine::PhysicsBehaviour();
+					auto *bulletPhysics = new BigNgine::PhysicsDynamicBehaviour();
 
 					bullet->AddBehaviour(bulletRenderer);
 					bullet->AddBehaviour(bulletPhysics);

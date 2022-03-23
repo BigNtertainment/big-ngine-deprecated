@@ -10,6 +10,7 @@ SOURCES := $(wildcard $(SRC)/*.cpp)
 SOURCES += $(wildcard $(SRC)/global/*/*.cpp)
 SOURCES += $(wildcard $(SRC)/types/*/*.cpp)
 SOURCES += $(wildcard $(SRC)/behaviours/*/*.cpp)
+SOURCES += $(wildcard $(SRC)/behaviours/*/*/*.cpp)
 SOURCES += $(SRC)/external/GLAD/glad.c
 SOURCES += $(SRC)/external/STBI/stb.cpp
 SOURCES += $(wildcard $(SRC)/external/Box2D/*/*/*.cpp)

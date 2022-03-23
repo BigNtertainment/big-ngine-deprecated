@@ -2,7 +2,7 @@
 
 #include "../../types/behaviour/behaviour.h"
 #include "../renderer/renderer.h"
-#include "../physics/physics.h"
+#include "../physics/physicsDynamic/physicsDynamic.h"
 #include "../../global/input/input.h"
 #include <vector>
 
@@ -32,7 +32,7 @@ namespace BigNgine {
 		void Destroy() override;
 
 	private:
-		std::vector<PhysicsBehaviour*> physics;
+		std::vector<PhysicsDynamicBehaviour*> physics;
 		float _jumpTimer;
 	};
 }

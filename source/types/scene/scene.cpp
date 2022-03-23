@@ -34,8 +34,6 @@ int BigNgine::Scene::GetActiveTime() {
 }
 
 void BigNgine::Scene::Start() {
-	gravity = new b2Vec2(0.0f, 9.81f);
-	world = new b2World(*gravity);
 	activeTime = 0;
 
 	Camera = new BigNgine::Entity();
@@ -49,10 +47,6 @@ void BigNgine::Scene::Start() {
 }
 
 void BigNgine::Scene::Update(int deltaTime) {
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-
-	world->Step(deltaTime / 1000.0, velocityIterations, positionIterations);
 	activeTime += deltaTime;
 
 	_Update(this, deltaTime);
@@ -65,9 +59,6 @@ BigNgine::Scene::~Scene() {
 	for(auto & entity : entities) {
 		delete entity;
 	}
-
-	delete world;
-	delete gravity;
 
 	Scene::scenes.erase(std::remove(Scene::scenes.begin(), Scene::scenes.end(), this), Scene::scenes.end());
 }

@@ -13,8 +13,9 @@
 
 #include "behaviours/follow/follow.h"
 #include "behaviours/renderer/renderer.h"
-#include "behaviours/physicsStatic/physicsStatic.h"
-#include "behaviours/physics/physics.h"
+// #include "behaviours/physics/physics.h"
+#include "behaviours/physics/physicsDynamic/physicsDynamic.h"
+#include "behaviours/physics/physicsStatic/physicsStatic.h"
 #include "behaviours/platformerMovement/platformerMovement.h"
 #include "behaviours/follow/follow.h"
 #include "behaviours/animation/animation.h"

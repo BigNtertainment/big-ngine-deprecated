@@ -3,7 +3,7 @@
 BigNgine::PlatformerMovementBehaviour::PlatformerMovementBehaviour(float _speed, float _jumpForce, int _jumpCheckPrecision, float _coyoteTime) : speed(_speed), jumpForce(_jumpForce), jumpCheckPrecision(_jumpCheckPrecision), coyoteTime(_coyoteTime), jumpTimer(PLATFORMER_MOVEMENT_JUMP_TIMER) {}
 
 void BigNgine::PlatformerMovementBehaviour::Start() {
-	physics = parent->GetBehaviours<PhysicsBehaviour>();
+	physics = parent->GetBehaviours<PhysicsDynamicBehaviour>();
 	_jumpTimer = 0.0f;
 }
 
@@ -15,7 +15,7 @@ void BigNgine::PlatformerMovementBehaviour::Update(int deltaTime) {
 	// TODO: Check if player is grounded
 	bool jumping = Input::Get(JumpButton) && _jumpTimer <= 0.0f;
 
-	for(PhysicsBehaviour* physicsBehaviour : physics) {
+	for(PhysicsDynamicBehaviour* physicsBehaviour : physics) {
 		if(horizontalMovement != 0.0)
 //			physicsBehaviour->MoveBy(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));
 			physicsBehaviour->ApplyForce(Vector2(horizontalMovement * speed * deltaTime / 1000, 0.0f));

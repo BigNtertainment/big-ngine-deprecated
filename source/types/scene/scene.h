@@ -33,9 +33,6 @@ namespace BigNgine {
 		Entity* Camera;
 		float CameraZoom;
 
-		b2Vec2* gravity;
-		b2World* world;
-
 		Scene(scene_startfunc Start, scene_updatefunc Update);
 
 ///		Adds entity to Scene
