@@ -101,10 +101,8 @@ namespace BigNgine
 	{
 	
 	public:
-		std::vector<const char *> texturePaths;
 		std::string vertShader = FileSystem::LoadFile("assets/shaders/vert/text.glsl");
 		std::string fragShader = FileSystem::LoadFile("assets/shaders/frag/textStandard.glsl");
-		bool yFlipped, xFlipped;
 		
 		void Start() override;
 		
@@ -112,30 +110,23 @@ namespace BigNgine
 		
 		void Destroy() override;
 		
-		///Set vertex shader
-		///@param vertexShader code in string
-		///@default Default set to standard BigNgine vertex shader
-//	void SetVertShader(std::string vertexShader);
+		void setText(const std::string &_text);
 		
-		///Set fragment shader
-		///@param fragmentShader code in string
-		///@default Default set to standard BigNgine fragment texture shader
-//	void SetFragShader(std::string fragmentShader);
+		void setMarginBottom(short marginBottom);
 		
-		///		Set font
-		///		@param _font Path to your font of choice(should be .ttf)
-//		void SetFont(const char *_file);
+		void setMarginTop(short marginTop);
 		
-		void setText(const std::string &text);
-	
+		void setFontSize(short fontSize);
+		
+		void setFont(const std::string &font);
 	
 	private:
 		FT_Library ft;
 		FT_Face face;
 		unsigned int VBO, VAO, EBO, program;
-		short int font_size = 8, margin_top = 0, margin_bottom = 0;
+		short int font_size = 12, margin_top = 0, margin_bottom = 0;
 		std::map<char, BigNgine::Character> Characters = std::map<char, BigNgine::Character>();
-		std::string text;
+		std::string text, font = "assets/fonts/JetBrainsMono-Medium.ttf";
 		std::string::const_iterator c;
 	};
 }

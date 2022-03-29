@@ -9,15 +9,14 @@ void BigNgine::TextRendererBehaviour::Start()
 		Logger::Error("Could not initialize FreeType Library");
 		return;
 	}
-//	TODO(imustend): add font path as variable so we can have multiple fonts
+
 //	loading font
-	if (FT_New_Face(ft, "assets/fonts/JetBrainsMono-Medium.ttf", 0, &face))
+	if (FT_New_Face(ft, font.c_str(), 0, &face))
 	{
-		Logger::Error("Could not load font at: ");
+		Logger::Error("Could not load font at: " + font);
 		return;
 	}
 
-//	TODO(imustend): add pixel height as variable so we can have different sizes
 //	setting font size
 //	putting 0 sets width to automatic
 	FT_Set_Pixel_Sizes(face, 0, font_size);
@@ -25,9 +24,6 @@ void BigNgine::TextRendererBehaviour::Start()
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
 	
 	
-	
-	
-	std::map<char, Character> temp_chars;
 	for (unsigned char i = 0; i < 128; ++i)
 	{
 //		loading character
@@ -66,13 +62,6 @@ void BigNgine::TextRendererBehaviour::Start()
 				face->glyph->advance.x
 		};
 		Characters.insert(std::pair<char, Character>(i, character));
-//		Character character = {
-//				1,
-//				BigNgine::Vector2(1.f, 1.f),
-//				BigNgine::Vector2(1.f, 1.f),
-//				1
-//		};
-	
 	}
 
 
@@ -251,10 +240,34 @@ void BigNgine::TextRendererBehaviour::Destroy()
 		glDeleteTextures(1, &ch.TextureID);
 	}
 	Characters.clear();
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+	glDeleteProgram(program);
 }
 
-void BigNgine::TextRendererBehaviour::setText(const std::string &text)
+void BigNgine::TextRendererBehaviour::setText(const std::string &_text)
 {
-	TextRendererBehaviour::text = text;
+	TextRendererBehaviour::text = _text;
+}
+
+void BigNgine::TextRendererBehaviour::setFontSize(short fontSize)
+{
+	font_size = fontSize;
+}
+
+void BigNgine::TextRendererBehaviour::setMarginTop(short marginTop)
+{
+	margin_top = marginTop;
+}
+
+void BigNgine::TextRendererBehaviour::setMarginBottom(short marginBottom)
+{
+	margin_bottom = marginBottom;
+}
+
+void BigNgine::TextRendererBehaviour::setFont(const std::string &font)
+{
+	TextRendererBehaviour::font = font;
 }
 
