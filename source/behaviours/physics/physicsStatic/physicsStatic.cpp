@@ -2,5 +2,5 @@
 
 void BigNgine::PhysicsStaticBehaviour::_Start()
 {
-	fixtureDef.density = 0.0f;
+	fixtureDef->density = 0.0f;
 }

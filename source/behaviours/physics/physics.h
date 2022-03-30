@@ -21,13 +21,15 @@ namespace BigNgine {
 
 		b2BodyDef bodyDef;
 		b2Body* body;
-		b2PolygonShape bodyBox;
-		b2FixtureDef fixtureDef;
+		b2PolygonShape* bodyBox;
+		b2FixtureDef* fixtureDef;
 
 		static b2World* world;
 		static b2Vec2* gravity;
 
 	private:
+		b2Fixture* fixture;
+
 		static uint32_t instanceCount;
 		static uint32_t updateCount;
 		const int32 velocityIterations = 6;

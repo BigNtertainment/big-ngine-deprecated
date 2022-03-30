@@ -10,8 +10,8 @@ void BigNgine::PhysicsDynamicBehaviour::_Start()
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.fixedRotation = constraintRotation;
 
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
+	fixtureDef->density = 1.0f;
+	fixtureDef->friction = 0.3f;
 }
 
 void BigNgine::PhysicsDynamicBehaviour::_Update(int deltaTime)
@@ -52,11 +52,11 @@ void BigNgine::PhysicsDynamicBehaviour::ConstrainRotation(bool _constrain) {
 }
 
 void BigNgine::PhysicsDynamicBehaviour::SetDensity(float density) {
-	fixtureDef.density = density;
+	fixtureDef->density = density;
 }
 
 void BigNgine::PhysicsDynamicBehaviour::SetFriction(float friction) {
-	fixtureDef.friction = friction;
+	fixtureDef->friction = friction;
 }
 
 bool BigNgine::PhysicsDynamicBehaviour::IsRotationConstrained() const {
@@ -64,11 +64,11 @@ bool BigNgine::PhysicsDynamicBehaviour::IsRotationConstrained() const {
 }
 
 float BigNgine::PhysicsDynamicBehaviour::GetDensity() const {
-	return fixtureDef.density;
+	return fixtureDef->density;
 }
 
 float BigNgine::PhysicsDynamicBehaviour::GetFriction() const {
-	return fixtureDef.friction;
+	return fixtureDef->friction;
 }
 
 bool BigNgine::PhysicsDynamicBehaviour::IsGrounded() const {

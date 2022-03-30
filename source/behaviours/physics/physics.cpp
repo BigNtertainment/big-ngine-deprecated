@@ -19,13 +19,23 @@ void BigNgine::PhysicsBehaviour::Start()
 
 	body = world->CreateBody(&bodyDef);
 
-	bodyBox.SetAsBox(parent->size.x / 2 / PIXELS_PER_METERS, parent->size.y / 2 / PIXELS_PER_METERS);
+	bodyBox = new b2PolygonShape();
 
-	fixtureDef.shape = &bodyBox;
+	bodyBox->SetAsBox(parent->size.x / 2 / PIXELS_PER_METERS, parent->size.y / 2 / PIXELS_PER_METERS);
+
+	fixtureDef = new b2FixtureDef();
+
+	fixtureDef->shape = bodyBox;
 
 	Logger::Log(1);
 
-	body->CreateFixture(&fixtureDef);
+	Logger::Log(body);
+	Logger::Log(bodyBox);
+	Logger::Log(fixtureDef);
+
+	fixture = body->CreateFixture(fixtureDef);
+
+	Logger::Log(fixture);
 
 	Logger::Log(2);
 
@@ -45,7 +55,10 @@ void BigNgine::PhysicsBehaviour::Update(int deltaTime)
 
 void BigNgine::PhysicsBehaviour::Destroy()
 {
+	body->DestroyFixture(fixture);
 	body = nullptr;
+	delete fixtureDef;
+	delete bodyBox;
 
 	instanceCount--;
 
