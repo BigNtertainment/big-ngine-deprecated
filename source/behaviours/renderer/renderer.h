@@ -110,14 +110,31 @@ namespace BigNgine
 		
 		void Destroy() override;
 		
+		///Set rendered text
+		///@param _text  you want to render
+		///@note Next line character should work fine. Change spacing between lines with SetMarginTop and SetMarginBottom
+		///@default Default set to empty string
 		void setText(const std::string &_text);
 		
+		///Set bottom margin of text line
+		///@param marginBottom bottom margin of line in pixels
+		///@dafault Default set to 0 pixels
 		void setMarginBottom(short marginBottom);
 		
+		///Set top margin of text line
+		///@param marginTop top margin of line in pixels
+		///@dafault Default set to 0 pixels
 		void setMarginTop(short marginTop);
 		
+		///Set font size in pixels
+		///@param fontSize font size in pixels
+		///@default 12 pixels
 		void setFontSize(short fontSize);
 		
+		///Set font
+		///@param font path to font from main.exe. IT MUST BE .ttf FILE
+		///@note All font files should be in /assets/fonts/
+		///@default Default set to Jetbrains Mono font in /assets/fonts/ folder
 		void setFont(const std::string &font);
 	
 	private:
