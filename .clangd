@@ -1,0 +1,28 @@
+CompileFlags:
+    Add:
+        - -std=c++20
+        - -Wall
+        - -Wextra
+        - -I./source/external/Box2D/include
+        - -I./source/external/Box2D/src 
+        - -I./source/external/GLFW/include
+        - -I./source/external/GLAD
+        - -I./source/external/STBI
+        - -I./source/external/FreeType/include
+        - -I./source
+        - -I.
+        - -I./
+        - -I..
+        - -I../..
+        - -I../external/Box2D/include
+        - -I../external/Box2D/src 
+        - -I../external/GLFW/include
+        - -I../external/GLAD
+        - -I../external/STBI
+        - -I../external/FreeType/include
+        - -I../../external/Box2D/include
+        - -I../../external/Box2D/src 
+        - -I../../external/GLFW/include
+        - -I../../external/GLAD
+        - -I../../external/STBI
+        - -I../../external/FreeType/include

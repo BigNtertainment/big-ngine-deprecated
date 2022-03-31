@@ -10,6 +10,8 @@
 #include "types/scene/scene.h"
 #include "types/behaviour/behaviour.h"
 #include "types/sound/sound.h"
+#include "types/vector2/vector2.h"
+#include "types/vector3/vector3.h"
 
 #include "behaviours/follow/follow.h"
 #include "behaviours/renderer/renderer.h"

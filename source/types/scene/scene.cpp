@@ -2,7 +2,7 @@
 
 std::vector<BigNgine::Scene *> BigNgine::Scene::scenes;
 
-BigNgine::Scene::Scene(scene_startfunc Start, scene_updatefunc Update)
+BigNgine::Scene::Scene(SceneStartFunction Start, SceneUpdateFunction Update)
 {
 	_Start = Start;
 	_Update = Update;

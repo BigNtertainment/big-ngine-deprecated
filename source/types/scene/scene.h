@@ -13,10 +13,11 @@
 
 namespace BigNgine {
 	class Scene;
-}
 
-typedef std::function<void(BigNgine::Scene*)> scene_startfunc;
-typedef std::function<void(BigNgine::Scene*, int)> scene_updatefunc;
+	
+	using SceneStartFunction = std::function<void(BigNgine::Scene*)>;
+	using SceneUpdateFunction = std::function<void(BigNgine::Scene*, int)>;
+}
 
 namespace Input {
 	class Callback;
@@ -36,7 +37,7 @@ namespace BigNgine {
 		b2Vec2* gravity;
 		b2World* world;
 
-		Scene(scene_startfunc Start, scene_updatefunc Update);
+		Scene(SceneStartFunction Start, SceneUpdateFunction Update);
 
 ///		Adds entity to Scene
 ///		@param entity BigNgine::Entity entity to be added to scene
@@ -61,8 +62,8 @@ namespace BigNgine {
 
 		static std::vector<Scene*> scenes;
 
-		scene_startfunc _Start;
-		scene_updatefunc _Update;
+		SceneStartFunction _Start;
+		SceneUpdateFunction _Update;
 		
 		unsigned int activeTime = 0;
 	};

@@ -14,6 +14,9 @@
 
 namespace Logger
 {
+	void SetConsoleColor(int color);
+	std::string CurrentDateTime();
+
 	template<typename T>
 	void Log(const T &message, std::ostream &stream = std::cout)
 	{
@@ -73,9 +76,5 @@ namespace Logger
 		
 		// Reset the console color
 		SetConsoleColor(CONSOLE_DEFAULT);
-	}
-	
-	void SetConsoleColor(int color);
-	
-	std::string CurrentDateTime();
+	}		
 }

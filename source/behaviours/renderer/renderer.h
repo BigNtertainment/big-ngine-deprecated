@@ -8,6 +8,7 @@
 #include "../../global/logger/logger.h"
 #include "../../types/texture/texture.h"
 #include "../../types/vector2/vector2.h"
+#include "../../types/vector3/vector3.h"
 #include "../../global/fileSystem/fileSystem.h"
 #include <string>
 #include <iostream>
@@ -136,6 +137,8 @@ namespace BigNgine
 		///@note All font files should be in /assets/fonts/
 		///@default Default set to Jetbrains Mono font in /assets/fonts/ folder
 		void setFont(const std::string &font);
+
+		void setColor(Vector3 color);
 	
 	private:
 		FT_Library ft;
@@ -144,6 +147,7 @@ namespace BigNgine
 		short int font_size = 12, margin_top = 0, margin_bottom = 0;
 		std::map<char, BigNgine::Character> Characters = std::map<char, BigNgine::Character>();
 		std::string text, font = "assets/fonts/JetBrainsMono-Medium.ttf";
+		Vector3 text_color = Vector3(255.f, 255.f, 255.f);
 		std::string::const_iterator c;
 	};
 }

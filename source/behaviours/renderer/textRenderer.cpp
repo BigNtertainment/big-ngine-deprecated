@@ -190,16 +190,12 @@ void BigNgine::TextRendererBehaviour::Update(int deltaTime)
 	glUniform2f(u_camera_position, parent->GetParentScene()->Camera->position.x,
 				parent->GetParentScene()->Camera->position.y);
 	glUniform1f(u_camera_zoom, parent->GetParentScene()->CameraZoom);
-//	TODO(color): color
-	glUniform3f(u_color, 1.f, 1.f, 1.f);
+	glUniform3f(u_color,text_color.x , text_color.y, text_color.z);
 	
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);
 	
-	
-	glActiveTexture(GL_TEXTURE0);
-	glBindVertexArray(VAO);
 	
 	float x = parent->position.x, y = parent->position.y + font_size + margin_top;
 //	 iterate through all characters
@@ -269,5 +265,10 @@ void BigNgine::TextRendererBehaviour::setMarginBottom(short marginBottom)
 void BigNgine::TextRendererBehaviour::setFont(const std::string &font)
 {
 	TextRendererBehaviour::font = font;
+}
+
+void BigNgine::TextRendererBehaviour::setColor(Vector3 color)
+{
+	text_color = color;
 }
 
