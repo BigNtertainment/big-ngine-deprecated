@@ -20,6 +20,9 @@ OBJECTS := $(patsubst $(SRC)/%.cpp,$(OBJ)/%.o,$(SOURCES))
 output: $(OBJECTS)
 	$(CC) $^ -o $(BLD)/main.exe $(LDFLAGS)
 
+release: $(OBJECTS)
+	$(CC) $(filter-out $(SRC)/main.cpp, $^) -o $(BLD)/bigngine.dll $(LDFLAGS) -shared
+
 $(OBJ)/%.o: $(SRC)/%.cpp
 	@if not exist "$(subst /,\,$(dir $@))" mkdir $(subst /,\,$(dir $@))
 	$(CC) $(CFLAGS) -c $^ -o $@
