@@ -1,5 +1,6 @@
 build/main.exe
 build/bigngine.dll
+build/bigngine.a
 obj/*
 .vscode
 obj

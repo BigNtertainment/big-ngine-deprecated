@@ -22,6 +22,8 @@ output: $(OBJECTS)
 
 release: $(OBJECTS)
 	$(CC) $(filter-out $(SRC)/main.cpp, $^) -o $(BLD)/bigngine.dll $(LDFLAGS) -shared
+	ar ruv $(BLD)/bigngine.a $(OBJECTS)
+	ranlib $(BLD)/bigngine.a
 
 $(OBJ)/%.o: $(SRC)/%.cpp
 	@if not exist "$(subst /,\,$(dir $@))" mkdir $(subst /,\,$(dir $@))
