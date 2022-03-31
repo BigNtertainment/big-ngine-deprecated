@@ -4,8 +4,7 @@
 BigNgine::Entity *pos;
 BigNgine::Entity *Player;
 auto *Scene = new BigNgine::Scene(
-		[](BigNgine::Scene *Scene)
-		{
+		[](BigNgine::Scene *Scene) -> void {
 			// Add Player to the Scene
 			
 			Player = new BigNgine::Entity(BigNgine::Vector2(100.0f, 100.0f), 0.0f,
@@ -20,14 +19,15 @@ auto *Scene = new BigNgine::Scene(
 			
 			auto *pMovement = new BigNgine::PlatformerMovementBehaviour();
 			
-			Player->AddBehaviour(pRendererBehaviour);
-			Player->AddBehaviour(pPhysicsBehaviour);
-			Player->AddBehaviour(pMovement);
+			Player->AddBehaviour((BigNgine::Behaviour *) pRendererBehaviour);
+			Player->AddBehaviour((BigNgine::Behaviour *) pPhysicsBehaviour);
+			Player->AddBehaviour((BigNgine::Behaviour *) pMovement);
 			
 			pos = new BigNgine::Entity(BigNgine::Vector2(.0f, .0f), 0.0f, BigNgine::Vector2(.0f, .0f));
 			pos->SetDepth(-1.f);
 			auto *posRen = new BigNgine::TextRendererBehaviour();
-			pos->AddBehaviour(posRen);
+			posRen->setColor(BigNgine::Vector3(255.f, 0.f, .0f));
+			pos->AddBehaviour((BigNgine::Behaviour *) posRen);
 
 //			Christmas tree
 			auto *christmas_tree = new BigNgine::Entity(BigNgine::Vector2(200.0f, 200.0f - 100), 0.0f,
@@ -40,8 +40,8 @@ auto *Scene = new BigNgine::Scene(
 			christmas_tree_animation->AddTexture("assets/img/christmas_tree_2.png");
 			
 			
-			christmas_tree->AddBehaviour(christmas_tree_renderer);
-			christmas_tree->AddBehaviour(christmas_tree_animation);
+			christmas_tree->AddBehaviour((BigNgine::Behaviour *) christmas_tree_renderer);
+			christmas_tree->AddBehaviour((BigNgine::Behaviour *) christmas_tree_animation);
 			// Make Camera follow the Player
 
 //			IMPORTANT(imustend): if i remember correctly, adding renderer to camera doesn't work, but i don't remember why
@@ -64,7 +64,7 @@ auto *Scene = new BigNgine::Scene(
 			auto *FPhysics = new BigNgine::PhysicsStaticBehaviour();
 			
 			Floor->AddBehaviour(FRenderer);
-			Floor->AddBehaviour(FPhysics);
+			Floor->AddBehaviour((BigNgine::Behaviour *) FPhysics);
 			
 			// Add a Floor2
 			
@@ -79,7 +79,7 @@ auto *Scene = new BigNgine::Scene(
 			auto *FPhysics2 = new BigNgine::PhysicsStaticBehaviour();
 			
 			Floor2->AddBehaviour(FRenderer2);
-			Floor2->AddBehaviour(FPhysics2);
+			Floor2->AddBehaviour((BigNgine::Behaviour *) FPhysics2);
 			
 			// Add a wall
 			
@@ -95,7 +95,7 @@ auto *Scene = new BigNgine::Scene(
 			auto *WPhysics = new BigNgine::PhysicsStaticBehaviour();
 			
 			Wall->AddBehaviour(WRenderer);
-			Wall->AddBehaviour(WPhysics);
+			Wall->AddBehaviour((BigNgine::Behaviour *) WPhysics);
 			
 			// Add a Sky Background
 			BigNgine::Game *game = BigNgine::Game::GetInstance();
@@ -130,7 +130,7 @@ auto *Scene = new BigNgine::Scene(
 			
 			// TODO: Move this to player movement behaviour
 			auto *flipTextureOnMovement = new Input::Callback(
-					[](int key, int scancode, int mods)
+					[](int key, int, int) -> void
 					{
 						if (key == BIGNGINE_KEY_A)
 						{
@@ -141,10 +141,10 @@ auto *Scene = new BigNgine::Scene(
 						}
 					}
 			);
-			
+
 			// It's bad :(
 			auto shoot = new Input::Callback(
-					[Scene](int key, int scancode, int mods)
+					[Scene](int key, int, int)
 					{
 						// On Q press
 						if (key == BIGNGINE_KEY_Q)
@@ -164,8 +164,8 @@ auto *Scene = new BigNgine::Scene(
 							
 							auto *bulletPhysics = new BigNgine::PhysicsBehaviour();
 							
-							bullet->AddBehaviour(bulletRenderer);
-							bullet->AddBehaviour(bulletPhysics);
+							bullet->AddBehaviour((BigNgine::Behaviour *) bulletRenderer);
+							bullet->AddBehaviour((BigNgine::Behaviour *) bulletPhysics);
 							
 							// Add bullet to scene
 							Scene->AddEntity(bullet);
@@ -203,7 +203,7 @@ void Update([[maybe_unused]] int deltaTime)
 {
 }
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char *args[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char **args)
 {
 	BigNgine::Game *game = BigNgine::Game::GetInstance();
 	
