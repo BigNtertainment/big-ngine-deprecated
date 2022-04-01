@@ -1,6 +1,6 @@
 #include "renderer.h"
 
-BigNgine::Game* game = BigNgine::Game::GetInstance();
+static BigNgine::Game* game = BigNgine::Game::GetInstance();
 
 void BigNgine::TextureRendererBehaviour::Start()
 {

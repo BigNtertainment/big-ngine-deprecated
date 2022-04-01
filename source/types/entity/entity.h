@@ -8,7 +8,7 @@
 
 #define DEFAULT_POSITION BigNgine::Vector2(0.0, 0.0)
 #define DEFAULT_ROTATION 0.0
-#define DEFAULT_SIZE BigNgine::Vector2(0.0, 0.0)
+#define DEFAULT_SIZE BigNgine::Vector2(1.0, 1.0)
 
 namespace BigNgine {
 	class Behaviour;
