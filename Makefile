@@ -23,7 +23,6 @@ output: $(OBJECTS)
 release: $(OBJECTS)
 	$(CC) $(filter-out $(SRC)/main.cpp, $^) -o $(BLD)/bigngine.dll $(LDFLAGS) -shared
 	ar rc $(BLD)/bigngine.lib $(OBJECTS)
-	ranlib $(BLD)/bigngine.lib
 	ar ruv $(BLD)/bigngine.a $(OBJECTS)
 	ranlib $(BLD)/bigngine.a
 
