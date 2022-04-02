@@ -22,8 +22,12 @@ output: $(OBJECTS)
 
 release: $(OBJECTS)
 	$(CC) $(filter-out $(SRC)/main.cpp, $^) -o $(BLD)/bigngine.dll $(LDFLAGS) -shared
-	ar rc $(BLD)/bigngine.lib $(OBJECTS)
-	ar ruv $(BLD)/bigngine.a $(OBJECTS)
+	llvm-ar rc 	$(BLD)/bigngine.lib $(OBJECTS) \
+				$(SRC)/external/GLFW/lib/glfw3dll.lib \
+				$(SRC)/external/FreeType/lib/freetype.lib
+	ar ruv 	$(BLD)/bigngine.lib $(OBJECTS) \
+			$(SRC)/external/GLFW/lib/glfw3dll.lib \
+			$(SRC)/external/FreeType/lib/freetype.lib
 	ranlib $(BLD)/bigngine.a
 
 $(OBJ)/%.o: $(SRC)/%.cpp
