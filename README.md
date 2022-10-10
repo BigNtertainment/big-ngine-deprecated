@@ -1,15 +1,15 @@
 # big-ngine
 
-
-https://bigntertainment.github.io/BigNgine
-
-
-
-the coolest engine of them all
+the most deprecated engine of them all
 
 https://trello.com/b/QMKhWjB4/bigngine
 
 ---
+
+# Deprecation
+
+BigNgine hasn't turned out how we wanted. When we started this project, we were inexperienced and learnt a lot while working on it.
+We aim to make BigNgine 2 in Rust, but that's a plan for a far future. For now, we recommend the [Bevy](https://github.com/bevyengine/bevy) game engine.
 
 ## Technologies
 
